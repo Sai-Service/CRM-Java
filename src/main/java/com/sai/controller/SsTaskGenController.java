@@ -185,7 +185,8 @@ public class SsTaskGenController {
        // SaiResponse apiResponse = null;
         try {
 
-            List<SSTaskGen> input=taskGenImpl.getTasksGenProforma();
+            List<SSTaskGen> input=taskGenImpl.getTasksGenPrfMysql();
+            
               for (SSTaskGen task : input) {
             SsTaskDetails details = new SsTaskDetails();
             details.setTaskType(task.getTASK_TYPE());

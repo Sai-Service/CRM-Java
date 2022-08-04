@@ -120,6 +120,44 @@ public class SSTaskGen{
         this.gatepassId = gatepassId;
     }
 
+    public SSTaskGen(String TASK_TYPE, String STATUS, Date CALL_DUE_DATE, Integer cust_id, String cust_name, String cust_address1, String contact_person, String cust_type, BigInteger contact_no1, String contact_no2, String email_id, String chassis_no, String engine_no, String model, Date Date_of_purchase, String Dealer_code, String AMC, String sales_exec_name, Integer loc_id, Integer org_id, String REFERENCE_NO, Date next_servc_dt, String next_servc_type, Date creation_date, String created_by, Date last_update_date, String last_updated_by, String attribute1, Date SERVICE_DUE_DT, Date DELIVERY_DATE, Integer gatepassId) {
+        this.TASK_TYPE = TASK_TYPE;
+        this.STATUS = STATUS;
+        this.CALL_DUE_DATE = CALL_DUE_DATE;
+        this.cust_id = cust_id;
+        this.cust_name = cust_name;
+        this.cust_address1 = cust_address1;
+        this.contact_person = contact_person;
+        this.cust_type = cust_type;
+        this.contact_no1 = contact_no1;
+        this.contact_no2 = contact_no2;
+        this.email_id = email_id;
+        this.chassis_no = chassis_no;
+        this.engine_no = engine_no;
+        this.model = model;
+        this.Date_of_purchase = Date_of_purchase;
+        this.Dealer_code = Dealer_code;
+        this.AMC = AMC;
+        this.sales_exec_name = sales_exec_name;
+        this.loc_id = loc_id;
+        this.org_id = org_id;
+        this.REFERENCE_NO = REFERENCE_NO;
+        this.next_servc_dt = next_servc_dt;
+        this.next_servc_type = next_servc_type;
+        this.creation_date = creation_date;
+        this.created_by = created_by;
+        this.last_update_date = last_update_date;
+        this.last_updated_by = last_updated_by;
+        this.attribute1 = attribute1;
+        this.SERVICE_DUE_DT = SERVICE_DUE_DT;
+        this.DELIVERY_DATE = DELIVERY_DATE;
+        this.gatepassId = gatepassId;
+    }
+
+    
+    
+    
+    
     public String getTask_id() {
         return task_id;
     }
