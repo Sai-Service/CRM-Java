@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -185,55 +186,41 @@ public class SsTaskGenController {
        // SaiResponse apiResponse = null;
         try {
 
-            List<SSTaskGen> input=taskGenImpl.getTasksGenPrfMysql();
+            List<Map> input=taskGenImpl.getTasksGenPrfMysql();
             
-              for (SSTaskGen task : input) {
+              for (Map task : input) {
             SsTaskDetails details = new SsTaskDetails();
-            details.setTaskType(task.getTASK_TYPE());
-            details.setTaskStatus(task.getSTATUS());
-            details.setCallDuDt(task.getCALL_DUE_DATE());
-            details.setCustId(task.getCust_id());
-            details.setCustAdd(task.getCust_address1());
-            details.setContactPerson(task.getContact_person());
-            details.setContactNo1(String.valueOf(task.getContact_no1()));
-            details.setContactNo2(task.getContact_no2());
-            details.setEmailAdd(task.getEmail_id());
-            details.setVehicleNo(task.getVeh_no());
-            details.setSalesExecName(task.getSales_exec_name());
-            details.setLocId(task.getLoc_id());
-            details.setOrgId(task.getOrg_id());
-            details.setReferenceNo(task.getREFERENCE_NO());
-            details.setServcGrp(task.getServc_grp());
-            details.setInventoryItemId(task.getItem_id());
-            details.setContacted(task.getContacted());
-            details.setReason(task.getReason());
-            details.setRemarks(task.getRemarks());
-            details.setTaskReason(task.getTask_reason());
-            if (task.getLast_servc_dt() != null) {
-                details.setLastServcDt(task.getLast_servc_dt());
-            }
-            details.setLastServcType(task.getLast_servc_type());
-            details.setLastServcLoc(task.getService_loc());
-            details.setLastServcKm(task.getLast_km());
-            if (task.getNext_servc_dt() != null) {
-                details.setNextServcDt(task.getNext_servc_dt());
-            }
-            details.setNextServcType(task.getNext_servc_type());
-            details.setCreationDate(task.getCreation_date());
-            details.setCreatedBy(Integer.parseInt(task.getCreated_by()));
-            details.setLastUpdateDate(task.getLast_update_date());
-            details.setLastUpdatedBy(Integer.parseInt(task.getLast_updated_by()));
-            details.setAttribute1(task.getAttribute1());
-            details.setAttribute2(task.getAttribute2());
-            details.setAttribute3(task.getAttribute3());
-            details.setAttribute4(task.getAttribute4());
-            details.setAttribute5(task.getAttribute5());
-            details.setCustAdd(task.getCust_name());
-            details.setCustType(task.getCust_type());
+            details.setTaskType((String)task.get("TASK_TYPE"));
+            details.setTaskStatus((String)task.get("STATUS"));
+            details.setCallDuDt((Date)task.get("CALL_DUE_DATE"));
+            details.setCustId((long)task.get("custAcctNo"));
+            details.setCustAdd((String)task.get("cust_address1"));
+            details.setContactPerson((String)task.get("contact_person"));
+            details.setContactNo1((String)task.get("contact_no1"));
+            details.setContactNo2((String)task.get("contact_no2"));
+            details.setEmailAdd((String)task.get("email_id"));
+         //   details.setVehicleNo((String)task.get("Veh_no"));
+            details.setSalesExecName((String)task.get("sales_exec_name"));
+            details.setLocId((Integer)task.get("loc_id"));
+            details.setOrgId((Integer)task.get("org_id"));
+            details.setReferenceNo((String)task.get("REFERENCE_NO"));
+           //     details.set((String)task.get("REFERENCE_NO"));
+            //details.setServcGrp(task.getServc_grp());
+          //  details.setInventoryItemId(task.getItem_id());
+          //  details.setContacted(task.getContacted());
+          //  details.setReason(task.getReason());
+          //  details.setRemarks(task.getRemarks());
+          //  details.setTaskReason(task.getTask_reason());
+          //  details.setLastServcLoc(task.getService_loc());
+          //  details.setLastServcKm(task.getLast_km());
+            details.setCreationDate((Date)task.get("creation_date"));
+            details.setCreatedBy(1);
+            details.setLastUpdateDate((Date)task.get("creation_date"));
+            details.setLastUpdatedBy(1);
             
             SsTaskDetails sd1 = taskCreation.save(details);
           
-            proformHead.updateTaskId(sd1.getTaskId(),new BigInteger(task.getREFERENCE_NO()));
+            proformHead.updateTaskId(sd1.getTaskId(),(String)task.get("REFERENCE_NO"));
          
 
         }

@@ -26,6 +26,6 @@ public interface ProformaHeaderDao extends CrudRepository<ProformaHeadersAll, In
      @Modifying
     @Transactional
     @Query(value = "update ProformaHeadersAll set lastUpdatedDate=CURRENT_DATE,taskId=?1 where orderNumber=?2")
-    public void updateTaskId(long taskId,BigInteger orderNumber);
+    public void updateTaskId(long taskId,String orderNumber);
 
 }

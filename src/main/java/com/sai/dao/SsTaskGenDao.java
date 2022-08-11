@@ -101,6 +101,6 @@ public interface SsTaskGenDao extends CrudRepository<SsTaskDetails, Long> {
             + " and pha.orgId=SE.org_id and se.dept='SA' and se.active_status='ACTIVE'\n"
             + " AND SE.service_type='PRF' and pha.custAcctNo=sc.CUST_ID and se.type='C'\n"
             + " and pha.orderedDate like curdate() ", nativeQuery = true)
-    public List<SSTaskGen> getTasksGenPrfMysql();
+    public List<Map> getTasksGenPrfMysql();
 
 }
