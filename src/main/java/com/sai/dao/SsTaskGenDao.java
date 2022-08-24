@@ -90,17 +90,17 @@ public interface SsTaskGenDao extends CrudRepository<SsTaskDetails, Long> {
             + "    ", nativeQuery = true)
     public List<SSTaskGen> getTasksGenProformaOracle();
 
-    @Query(value = "select distinct 'SALES-PROFORMA' TASK_TYPE,'NEW' STATUS,pha.orderedDate + interval se.when_to_action DAY CALL_DUE_DATE, \n"
-            + " pha.custAcctNo,sc.cust_name, concat(sc.ADDRESS1, sc.ADDRESS2 , sc.ADDRESS3, sc.PINCODE, sc.CITY, sc.STATE_NAME) cust_address1, \n"
-            + "sc.cust_name contact_person,sc.cust_type,sc.contact_no1,sc.contact_no2,sc.email_id,\n"
-            + "variant chassis_no, pha.color engine_no,pha.model,pha.orderedDate Date_of_purchase,null dealer_code,'N' AMC, pha.issuedBy sales_exec_name,pha.locationId loc_id,pha.orgid org_id, \n"
-            + "pha.orderNumber REFERENCE_NO,( pha.orderedDate  + interval SE.DAYS_AFTER_DELIVERY day) next_servc_dt,se.sub_category next_servc_type, \n"
-            + "curdate() creation_date,'1111' created_by, curdate() last_update_date,'1111' last_updated_by,'1FS' attribute1,(pha.orderedDate + interval SE.days_after_delivery day) SERVICE_DUE_DT,\n"
-            + "pha.orderedDate,pha.headerId as gatepassId \n"
-            + " FROM PROFORMA_HEADERS_ALL PHA,ss_event se,ss_customer sc where pha.locationId=SE.LOC_ID \n"
-            + " and pha.orgId=SE.org_id and se.dept='SA' and se.active_status='ACTIVE'\n"
-            + " AND SE.service_type='PRF' and pha.custAcctNo=sc.CUST_ID and se.type='C'\n"
-            + " and pha.orderedDate like curdate() ", nativeQuery = true)
+    @Query(value = "select distinct 'SALES-PROFORMA' TASK_TYPE,'NEW' STATUS,pha.orderedDate + interval se.when_to_action DAY CALL_DUE_DATE, \n" +
+"             pha.custAcctNo,sc.cust_name, concat(sc.ADDRESS1, sc.ADDRESS2 , sc.ADDRESS3, sc.PINCODE, sc.CITY, sc.STATE_NAME) cust_address1, \n" +
+"            sc.cust_name contact_person,sc.cust_type,sc.contact_no1,ifnull(contact_no2,0)contact_no2,sc.email_id,\n" +
+"            variant chassis_no, pha.color engine_no,pha.model,pha.orderedDate Date_of_purchase,1 dealer_code,'N' AMC, pha.issuedBy sales_exec_name,pha.locationId loc_id,pha.orgid org_id, \n" +
+"            pha.orderNumber REFERENCE_NO,( pha.orderedDate  + interval SE.DAYS_AFTER_DELIVERY day) next_servc_dt,se.sub_category next_servc_type, \n" +
+"            curdate() creation_date,'1111' created_by, curdate() last_update_date,'1111' last_updated_by,'1FS' attribute1,(pha.orderedDate + interval SE.days_after_delivery day) SERVICE_DUE_DT,\n" +
+"            pha.orderedDate,pha.headerId as gatepassId \n" +
+"             FROM PROFORMA_HEADERS_ALL PHA,ss_event se,ss_customer sc where pha.locationId=SE.LOC_ID \n" +
+"             and pha.orgId=SE.org_id and se.dept='SA' and se.active_status='ACTIVE'\n" +
+"             AND SE.service_type='PRF' and pha.custAcctNo=sc.CUST_ID and se.type='C'\n" +
+"             and pha.orderedDate like curdate()", nativeQuery = true)
     public List<Map> getTasksGenPrfMysql();
 
 }

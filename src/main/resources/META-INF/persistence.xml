@@ -11,6 +11,7 @@
     <class>com.sai.model.Deptmaster</class>
     <class>com.sai.model.SsSqlJobCreation</class>
     <class>com.sai.model.insurance.SsInsEventMaster</class>
+    <class>com.sai.model.SalesTaskDetails</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://111.119.219.134:3306/crm?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

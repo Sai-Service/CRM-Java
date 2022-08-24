@@ -193,17 +193,25 @@ public class SsTaskGenController {
             details.setTaskType((String)task.get("TASK_TYPE"));
             details.setTaskStatus((String)task.get("STATUS"));
             details.setCallDuDt((Date)task.get("CALL_DUE_DATE"));
-            details.setCustId((long)task.get("custAcctNo"));
+            details.setCustId((Integer)task.get("custAcctNo"));
             details.setCustAdd((String)task.get("cust_address1"));
             details.setContactPerson((String)task.get("contact_person"));
-            details.setContactNo1((String)task.get("contact_no1"));
+            details.setVehicleNo("1");
+            String conNo1St = null;
+          if(task.get("contact_no1")!=null)
+            {
+                BigInteger conNo1=(BigInteger)task.get("contact_no1");
+               conNo1St=  conNo1.toString();
+            
+            }
+            details.setContactNo1(conNo1St);
             details.setContactNo2((String)task.get("contact_no2"));
             details.setEmailAdd((String)task.get("email_id"));
          //   details.setVehicleNo((String)task.get("Veh_no"));
             details.setSalesExecName((String)task.get("sales_exec_name"));
             details.setLocId((Integer)task.get("loc_id"));
             details.setOrgId((Integer)task.get("org_id"));
-            details.setReferenceNo((String)task.get("REFERENCE_NO"));
+            details.setReferenceNo(((BigInteger)task.get("REFERENCE_NO")).toString());
            //     details.set((String)task.get("REFERENCE_NO"));
             //details.setServcGrp(task.getServc_grp());
           //  details.setInventoryItemId(task.getItem_id());
@@ -220,7 +228,7 @@ public class SsTaskGenController {
             
             SsTaskDetails sd1 = taskCreation.save(details);
           
-            proformHead.updateTaskId(sd1.getTaskId(),(String)task.get("REFERENCE_NO"));
+            proformHead.updateTaskId(sd1.getTaskId(),((BigInteger)task.get("REFERENCE_NO")).toString());
          
 
         }

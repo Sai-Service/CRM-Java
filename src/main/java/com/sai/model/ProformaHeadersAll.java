@@ -168,7 +168,7 @@ public class ProformaHeadersAll implements Serializable {
     
     @Column(name = "LOCATIONID")
     private Integer locationId;
-    private Integer taskId;
+    private long taskId;
 //    @JsonIgnoreProperties("headerid")
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "headerid")   
 //    private List<ProformaLinesAll> proformaLinesAllList;
@@ -193,11 +193,11 @@ public class ProformaHeadersAll implements Serializable {
         this.creationdate = creationdate;
     }
 
-    public Integer getTaskId() {
+    public long getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(Integer taskId) {
+    public void setTaskId(long taskId) {
         this.taskId = taskId;
     }
     
