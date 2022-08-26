@@ -37,6 +37,9 @@ public class SalesTaskDetails implements Serializable {
     @Size(max = 200)
     private String custDetails;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    private String custName;
+    private String contactNo;
+    private String tlName;
     private Double baseamount;
     private Double discamount;
     private Double taxableamt;
@@ -85,6 +88,30 @@ public class SalesTaskDetails implements Serializable {
     private Date creationDate;
 
     public SalesTaskDetails() {
+    }
+
+    public String getCustName() {
+        return custName;
+    }
+
+    public void setCustName(String custName) {
+        this.custName = custName;
+    }
+
+    public String getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
+    }
+
+    public String getTlName() {
+        return tlName;
+    }
+
+    public void setTlName(String tlName) {
+        this.tlName = tlName;
     }
 
     public SalesTaskDetails(Integer taskId) {
@@ -339,6 +366,4 @@ public class SalesTaskDetails implements Serializable {
         this.creationDate = creationDate;
     }
 
-
-    
 }
