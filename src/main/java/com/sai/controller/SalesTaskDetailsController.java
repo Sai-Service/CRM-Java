@@ -39,7 +39,12 @@ public class SalesTaskDetailsController {
     }
     
    
-    
+         @GetMapping("/SalesTaskDetails/UserSumm/{taskAssigneeId}")
+    public List<SalesTaskDetails> getByAssigneeId(@PathVariable String taskAssigneeId) {
+        List<SalesTaskDetails> userData = ssTaskDetRepo.findByTaskAssigneeIdAndTaskStatus(taskAssigneeId,"NEW");
+      //  SalesTaskDetails locDet1 = locDet.isPresent() ? locDet.get() : null;
+        return userData;
+    }
     
     
 }

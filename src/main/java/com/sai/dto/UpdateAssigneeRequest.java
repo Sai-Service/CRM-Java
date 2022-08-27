@@ -19,6 +19,7 @@ public class UpdateAssigneeRequest {
     private long maxcount;
     @JsonProperty("assignee")
     private Assignee assignee;
+    
 
     @JsonProperty("mincount")
     public long getMincount() {

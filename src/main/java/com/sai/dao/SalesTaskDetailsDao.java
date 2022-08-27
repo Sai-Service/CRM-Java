@@ -34,8 +34,19 @@ public interface SalesTaskDetailsDao extends CrudRepository<SalesTaskDetails, In
     
     @Modifying
    @Transactional
-   @Query(value="update sales_task_details set assignee=?1,taskAssigneeId=?2 WHERE taskId=?3 and taskstatus!='CLOSED'",nativeQuery=true)
+   @Query(value="update sales_task_details set assignee=?1,taskAssigneeId=?2 WHERE taskId=?3 and taskStatus!='CLOSED'",nativeQuery=true)
     public void UpdateAssigneeTaskIdwise(String assignee ,String ASSIGNEE_ID,long taskId );  
    
 
+       @Modifying(clearAutomatically = true)
+    @Transactional
+    @Query(value=" update sales_task_details sad set sad.assignee=?1 , sad.taskAssigneeId=?2 "
+            + " where  sad.taskStatus!='CLOSED' and sad.taskId between ?3 and ?4 and sad.locId=?5",nativeQuery=true)
+    int updateAssignIdwithLocPR(String assignee,String taskAssigneeId, long FROMTASK_ID,long TOTASK_ID , long loc_id );
+
+    public List<SalesTaskDetails> findByTaskAssigneeId(String taskAssigneeId);
+
+    public List<SalesTaskDetails> findByTaskAssigneeIdAndTaskStatus(String taskAssigneeId, String aNEW);
+   
+    
 }

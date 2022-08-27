@@ -229,4 +229,19 @@ public class LocAccessLoginWiseController {
         return userDetail;
     }
 
+    
+        ////UPDATE THE ASSIGNEE ID AND ASSIGNEE NAME///Proforma
+    @RequestMapping(value = "/UpdateAssigneeIdProforma", method = RequestMethod.PUT, produces = {"application/JSON"})
+    SaiResponse UpdateAssigneeProforma(@RequestBody UpdateAssigneeRequest updatedAssignee) {
+        SaiResponse apiResponse;
+        try {
+            Assignee assignee = updatedAssignee.getAssignee();
+            //  public void UpdateAssignee(String assignee ,String ASSIGNEE_ID,long FROMTASK_ID,long TOTASK_ID );  
+            ssSalesTaskRepo.updateAssignIdwithLocPR(assignee.getEmpName(), assignee.getTicketNo(), updatedAssignee.getMincount(), updatedAssignee.getMaxcount(), assignee.getLocId());
+//         taskGenImpl.UpdateAssignee(assignee.getEmpName(), assignee.getTicketNo(), updatedAssignee.getMincount(), updatedAssignee.getMaxcount()); 
+        } catch (Exception e) {
+            apiResponse = new SaiResponse(400, "Updation not Done", null);
+        }
+        return apiResponse = new SaiResponse(200, "Ok", null);
+    }
 }
