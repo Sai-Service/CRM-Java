@@ -9,6 +9,7 @@ import com.sai.SaiResponse;
 import com.sai.dao.LocAccessLoginwiseDao;
 import com.sai.dao.SSAdministratorDataDao;
 import com.sai.dao.SSTaskCreationDao;
+import com.sai.dao.SalesTaskDetailsDao;
 import com.sai.dao.UpdateAssigneeDao;
 import com.sai.dao.UserLoginDao;
 import com.sai.dto.Assignee;
@@ -37,6 +38,9 @@ public class LocAccessLoginWiseController {
     private SSTaskCreationDao taskCreation;
 
     @Autowired
+    private SalesTaskDetailsDao ssSalesTaskRepo;
+
+    @Autowired
     private UpdateAssigneeDao updateTaskAssignee;
 
     @Autowired
@@ -45,7 +49,7 @@ public class LocAccessLoginWiseController {
     @Autowired
     private SSAdministratorDataDao ssAdminData;
 
-      //////////////TO UPDATE THE ASSIGNEE ID AUTOMATICALLY TO ALL THE TASK-///////
+    //////////////TO UPDATE THE ASSIGNEE ID AUTOMATICALLY TO ALL THE TASK-///////
     @RequestMapping(value = "/LocAccessLoginwise/{login_name}", method = RequestMethod.GET, produces = {"application/JSON"})
     public List<Map> getUserList(@PathVariable String login_name) {
         List<Map> userDetail = taskGenImpl.getUserList(login_name);
@@ -69,7 +73,7 @@ public class LocAccessLoginWiseController {
                 perUsertaskcount = totalTaskCount / totalusercntfrLoc;
                 leftTaskCount = totalTaskCount % totalusercntfrLoc;
                 incrementalCnt = 0;
-                
+
             }
 
             fromCount = (Long) taskcount.get(incrementalCnt);
@@ -89,13 +93,12 @@ public class LocAccessLoginWiseController {
             location = (Integer) map1.get("loc_access");
         }
         for (UpdateAssignee detail : toAssignee) {
-     //       taskGenImpl.UpdateAssignee(detail.getAssignee(), detail.getAssigneeId(), detail.getFromTaskId(), detail.getToTaskId());
-       taskGenImpl.UpdateAssigneeTaskIdwise(detail.getAssignee(), detail.getAssigneeId(), detail.getFromTaskId());
-      
+            //       taskGenImpl.UpdateAssignee(detail.getAssignee(), detail.getAssigneeId(), detail.getFromTaskId(), detail.getToTaskId());
+            taskGenImpl.UpdateAssigneeTaskIdwise(detail.getAssignee(), detail.getAssigneeId(), detail.getFromTaskId());
+
         }
         return userDetail;
     }
-
 
     //GET USERCOUNT FROM LIS
     @RequestMapping(value = "/UserCountLoginwise/{login_name}", method = RequestMethod.GET, produces = {"application/JSON"})
@@ -123,7 +126,7 @@ public class LocAccessLoginWiseController {
         return apiResponse = new SaiResponse(200, "Ok", null);
     }
 
-     @RequestMapping(value = "/taskupdateManually/assingee", method = RequestMethod.GET, produces = {"application/JSON"})
+    @RequestMapping(value = "/taskupdateManually/assingee", method = RequestMethod.GET, produces = {"application/JSON"})
     public SaiResponse assignTaskToUsersManually(@RequestParam Map<String, Object> map) {
         try {
             Integer fromTaskId = 0;
@@ -172,4 +175,58 @@ public class LocAccessLoginWiseController {
         }
         return new SaiResponse(200, "Assignee updated successfully", null);
     }
+
+    //////////////TO UPDATE THE ASSIGNEE ID AUTOMATICALLY TO ALL THE TASK--Proforma-///////
+    //Update assignee to task
+    @RequestMapping(value = "/LocAccessLoginwise1/{login_name}", method = RequestMethod.GET, produces = {"application/JSON"})
+    public List<Map> getUserListProforma(@PathVariable String login_name) {
+        List<Map> userDetail = taskGenImpl.getUserListProforma(login_name);
+        List<UpdateAssignee> toAssignee = new ArrayList<>();
+
+        int perUsertaskcount = 0;
+        Integer location = 0;
+        int incrementalCnt = 0;
+        Long toCount = 0L;
+        Long fromCount = 0L;
+        List<Object> taskcount = null;
+        int leftTaskCount = 0;
+
+        for (Map map1 : userDetail) {
+            if (!(location == ((Integer) map1.get("loc_access")))) {
+                
+                taskcount = ssSalesTaskRepo.getTaskProforma((Integer) map1.get("loc_access"));
+                BigInteger userCount = (BigInteger) taskGenImpl.getUsercountProforma(login_name);
+                int totalTaskCount = taskcount.size();
+                int totalusercntfrLoc = userCount.intValue();
+
+                perUsertaskcount = totalTaskCount / totalusercntfrLoc;
+                leftTaskCount = totalTaskCount % totalusercntfrLoc;
+                incrementalCnt = 0;
+
+            }
+
+            fromCount = (Long) taskcount.get(incrementalCnt);
+            int nextCount = 0;
+            if (leftTaskCount > 0) {
+                nextCount = incrementalCnt + perUsertaskcount + 1;
+                leftTaskCount = leftTaskCount - 1;
+            } else {
+                nextCount = incrementalCnt + perUsertaskcount;
+            }
+            toCount = (Long) taskcount.get(nextCount - 1);
+            // toCount = (Long) taskcount.get(incrementalCnt + perUsertaskcount);
+            UpdateAssignee assineeDetails = new UpdateAssignee((String) map1.get("username"), (String) map1.get("emp_name"), 0, fromCount, toCount);
+            toAssignee.add(assineeDetails);
+            //  incrementalCnt = incrementalCnt + perUsertaskcount;
+            incrementalCnt = nextCount;
+            location = (Integer) map1.get("loc_access");
+        }
+        for (UpdateAssignee detail : toAssignee) {
+            //       taskGenImpl.UpdateAssignee(detail.getAssignee(), detail.getAssigneeId(), detail.getFromTaskId(), detail.getToTaskId());
+            ssSalesTaskRepo.UpdateAssigneeTaskIdwise(detail.getAssignee(), detail.getAssigneeId(), detail.getFromTaskId());
+
+        }
+        return userDetail;
+    }
+
 }

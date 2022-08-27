@@ -115,6 +115,7 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
     @Query("select distinct std.taskId as taskId  from SsTaskDetails std where std.callDuDt=CURRENT_DATE and std.locId=?1 and assigneeId is null  order by std.taskId")
     List<Object> getTaskId(Integer locId);
 
+    
     SsTaskDetails findByVehicleNoAndTaskStatus(String vehicle_no, String taskStatus);
 
     SsTaskDetails findByTaskId(long task_id);

@@ -26,7 +26,7 @@ public class SalesTaskDetailsController {
     
         @GetMapping("/SalesTaskDetails/{locId}")
     public List<SalesTaskDetails> getByLocId(@PathVariable Integer locId) {
-        List<SalesTaskDetails> locDet = ssTaskDetRepo.findByLocId(locId);
+        List<SalesTaskDetails> locDet = ssTaskDetRepo.findByLocIdAndTaskStatus(locId,"NEW");
       //  SalesTaskDetails locDet1 = locDet.isPresent() ? locDet.get() : null;
         return locDet;
     }
@@ -37,5 +37,9 @@ public class SalesTaskDetailsController {
        SalesTaskDetails taskDet1= taskDet.isPresent() ? taskDet.get() : null;
         return taskDet1;
     }
+    
+   
+    
+    
     
 }

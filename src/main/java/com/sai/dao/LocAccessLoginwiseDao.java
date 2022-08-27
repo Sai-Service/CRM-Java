@@ -29,6 +29,14 @@ public interface LocAccessLoginwiseDao extends CrudRepository<UserLogin, Long> {
     "and ul1.ticket_no=sed.ticketno", nativeQuery = true)
     public List<Map> getUserList(String login_name);
     
+   @Query(value="select distinct ul.login_name,sla.loc_access,SLA.LOCNAME,ul1.login_name as username ,sed.emp_name\n" +
+            "from test.user_login ul,test.user_login ul1, test.ss_loc_access sla, test.ss_executive_details sed\n" +
+            "where ul.login_name=sla.user_name AND sla.loc_access=UL1.loc_id and ul1.role='USER' and ul.type='PRPSF' and ul1.type='PRPSF' AND sla.valid='ACTIVE' and ul.login_name=?1\n" +
+    "and ul1.ticket_no=sed.ticketno", nativeQuery = true)
+    public List<Map> getUserListProforma(String login_name);
+   
+    
+    
     
     @Query(value="select distinct ul.login_name,sla.loc_access,SLA.LOCNAME,ul1.login_name as username ,sed.emp_name\n" +
     "from test.user_login ul,test.user_login ul1, test.ss_loc_access sla, test.ss_executive_details sed\n" +
@@ -46,6 +54,11 @@ public interface LocAccessLoginwiseDao extends CrudRepository<UserLogin, Long> {
     "where ul.login_name=sla.user_name AND sla.loc_access=UL1.loc_id and ul1.role='USER' and  ul.type='PSF' and sla.type='PSF' and ul1.type='PSF' AND sla.valid='ACTIVE'\n" +
     "and ul.login_name=?1",nativeQuery=true)
     public Object getUsercount(String login_name);  
+    
+        @Query(value="select distinct count(ul1.login_name)  as usercount from test.user_login ul,test.user_login ul1, test.ss_loc_access sla \n" +
+    "where ul.login_name=sla.user_name AND sla.loc_access=UL1.loc_id and ul1.role='USER' and  ul.type='PRPSF' and sla.type='PRPSF' and ul1.type='PRPSF' AND sla.valid='ACTIVE'\n" +
+    "and ul.login_name=?1",nativeQuery=true)
+    public Object getUsercountProforma(String login_name);  
     
    @Modifying
    @Transactional

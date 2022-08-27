@@ -13,8 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -83,11 +81,20 @@ public class SalesTaskDetails implements Serializable {
     private BigInteger convertSONo;
     @Size(max = 45)
     private String taskAssigneeId;
+    private String assignee;
     private Integer createdBy;
     @Temporal(TemporalType.DATE)
     private Date creationDate;
 
     public SalesTaskDetails() {
+    }
+
+    public String getAssignee() {
+        return assignee;
+    }
+
+    public void setAssignee(String assignee) {
+        this.assignee = assignee;
     }
 
     public String getCustName() {

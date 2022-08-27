@@ -8,6 +8,9 @@ package com.sai.dao;
 import com.sai.model.SalesTaskDetails;
 import java.util.List;
 import java.util.Optional;
+import javax.transaction.Transactional;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -20,6 +23,19 @@ public interface SalesTaskDetailsDao extends CrudRepository<SalesTaskDetails, In
  ///SalesTaskDetails
 
     public Optional<SalesTaskDetails> findByTaskId(Integer taskId);
+
+    public List<SalesTaskDetails> findByOrgIdAndTaskStatus(Integer orgId, String aNEW);
+
+    public List<SalesTaskDetails> findByLocIdAndTaskStatus(Integer locId, String aNEW);
+    
+     @Query("select distinct std.taskId as taskId  from SalesTaskDetails std where std.callDuDt=CURRENT_DATE and std.locId=?1 and taskAssigneeId is null  order by std.taskId")
+    List<Object> getTaskProforma(Integer locId);
     
     
+    @Modifying
+   @Transactional
+   @Query(value="update sales_task_details set assignee=?1,taskAssigneeId=?2 WHERE taskId=?3 and taskstatus!='CLOSED'",nativeQuery=true)
+    public void UpdateAssigneeTaskIdwise(String assignee ,String ASSIGNEE_ID,long taskId );  
+   
+
 }
