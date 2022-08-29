@@ -57,23 +57,15 @@ public class SalesTaskDetailsController {
     @Transactional
     @PostMapping("/SalesTaskDetails/SSReGenerate/{taskId}")
     SaiResponse ReSchedule(@RequestBody prfTaskRegenrate input, @PathVariable Integer taskId) throws Exception {
-        ///To regenerate and save new task////   
-
-//               String username = null;
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        if (principal instanceof UserDetails) {
-//            username = ((UserDetails) principal).getUsername();
-//        } else {
-//            username = principal.toString();
-//        }
-//        UserLogin user = userRepository.findByUsername(username);
-//        System.out.println("====Reschedule Task ====" + user.toString());
+          SaiResponse apiResponse = null;
+   try {
+       
         java.util.Date currentDate = Calendar.getInstance().getTime();
         //////////////Existing Task
         Optional<SalesTaskDetails> originalTask = ssTaskDetRepo.findByTaskId(taskId);
         SalesTaskDetails originalTask1 = originalTask.isPresent() ? originalTask.get() : null;
 
-        if(input.getTaskStatus().equalsIgnoreCase("CLOSED") && input.getRemark().equalsIgnoreCase("BOOKED"))
+        if(input.getTaskStatus().equalsIgnoreCase("CLOSED") && input.getReason().equalsIgnoreCase("BOOKED"))
         {
            //To close old Task      
         originalTask1.setTaskStatus("CLOSED");
@@ -138,9 +130,13 @@ public class SalesTaskDetailsController {
         ssTaskDetRepo.save(originalTask1);
         }
         ////////////////////////////////Close Appoinment/////////////////////////
-     
+     apiResponse = new SaiResponse(200, "Task Updated Successfully", originalTask1.getTaskId());
 
-        return new SaiResponse(200, "OK", null);
+         } catch (Exception e) {
+            e.printStackTrace();
+            apiResponse = new SaiResponse(400, "Error while task updation", e.getMessage());
+        }
+        return apiResponse;
     }
 
 }
