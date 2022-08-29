@@ -113,7 +113,7 @@ public class SalesTaskDetailsController {
         newTask.setTaskStatus("NEW");
         newTask.setTaskAssigneeId(originalTask1.getTaskAssigneeId());
         newTask.setAssignee(originalTask1.getAssignee());
-        newTask.setCallDuDt(input.getCallDuDt());
+        newTask.setCallDuDt(input.getNextflwupDt());
         
     
         newTask.setCreatedBy(1);
@@ -122,7 +122,7 @@ public class SalesTaskDetailsController {
         
            //To close old Task      
         originalTask1.setTaskStatus("CLOSED");
-        originalTask1.setCallDuDt(input.getCallDuDt());
+        originalTask1.setCallDuDt(input.getNextflwupDt());
         originalTask1.setReason(input.getReason());
         originalTask1.setRemark(input.getRemark());
         originalTask1.setContacted(input.getContacted());

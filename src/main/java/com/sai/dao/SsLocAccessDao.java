@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
    //  @Query("select * from SsLocAccess")
      //public List<Object> getLocAccNames();
         
-    @Query(value="SELECT sla.loc_access as locId, sla.locName as locName FROM test.ss_loc_access sla,test.ss_location sl\n" +
+    @Query(value="SELECT sla.loc_access as locId, sla.locName as locName FROM ss_loc_access sla,ss_location sl\n" +
 "where sla.loc_access= sl.loc_id and sla.type=?1 and sl.org_id=?2 and sla.user_name=?3", nativeQuery = true)
     public List<Map> getLocNameTypeOrgWise(String type,long orgId,String username);
     
