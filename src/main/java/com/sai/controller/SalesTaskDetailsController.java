@@ -73,7 +73,7 @@ public class SalesTaskDetailsController {
         Optional<SalesTaskDetails> originalTask = ssTaskDetRepo.findByTaskId(taskId);
         SalesTaskDetails originalTask1 = originalTask.isPresent() ? originalTask.get() : null;
 
-        if(input.getTaskStatus().equalsIgnoreCase("Close") && input.getRemark().equalsIgnoreCase("Booked"))
+        if(input.getTaskStatus().equalsIgnoreCase("CLOSED") && input.getRemark().equalsIgnoreCase("BOOKED"))
         {
            //To close old Task      
         originalTask1.setTaskStatus("CLOSED");
@@ -98,6 +98,7 @@ public class SalesTaskDetailsController {
         newTask.setCustDetails(originalTask1.getCustDetails());
         newTask.setCustName(originalTask1.getCustName());
         newTask.setContactNo(originalTask1.getContactNo());
+        newTask.setContactNo1(originalTask1.getContactNo1());
         newTask.setTlName(originalTask1.getTlName());
         newTask.setBaseamount(originalTask1.getBaseamount());
         newTask.setDiscamount(originalTask1.getDiscamount());

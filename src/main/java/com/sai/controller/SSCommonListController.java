@@ -350,4 +350,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
         List<Despositions> objLists = commonRepository.getSmsType();
         return objLists;
     }
+    
+    
+      @GetMapping("/ssCommonLists/findByType/{cmType}")//////////////
+    public List<SsCommonList> findByType(@PathVariable String cmType) throws Exception{
+        List<SsCommonList> cmnType = commonRepository.findByType(cmType);
+        return cmnType;
+    }
 }

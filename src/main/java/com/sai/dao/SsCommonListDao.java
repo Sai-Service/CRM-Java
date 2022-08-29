@@ -92,7 +92,7 @@ public List<CommonAllType>  getDisTypes();
 @Query("select distinct NEW com.sai.model.TaskStatus(scl.cmCode,scl.cmName,scl.cmDesc,scl.type)  from SsCommonList scl where scl.type='TASKTYPE'")
  public List<TaskStatus> getTaskType(); 
  
- 
+ public List<SsCommonList> findByType(String type);
  
  public List<SsCommonList> findByCmnType(String type);
   
