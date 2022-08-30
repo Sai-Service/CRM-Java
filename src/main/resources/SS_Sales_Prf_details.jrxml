@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SS_Sales_Prf_details" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bb833c09-08f0-4e4d-a621-763060b8c651">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Mysql-Test"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Dataset1" uuid="617057b3-6882-4a5d-83d1-3eef3e1fec34">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Mysql-Test"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT * FROM sales_task_details where locId=2209 and orgId=22 and prfOrdereddate between '2022-08-01'
+and '2022-08-30']]>
+		</queryString>
+		<field name="taskId" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="taskId"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="custAcctNo" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="custAcctNo"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="custName" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="custName"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="contactNo" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="contactNo"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="contactNo1" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="contactNo1"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="colorCode" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="colorCode"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="salesExe" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="salesExe"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="model" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="model"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="variant" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="variant"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="prfOrderNo" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.label" value="prfOrderNo"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="prfOrdereddate" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.label" value="prfOrdereddate"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="callDuDt" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.label" value="callDuDt"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="locId" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="locId"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="taskStatus" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="taskStatus"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="contacted" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="contacted"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="reason" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="reason"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="remark" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="remark"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="nextflwupDt" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.label" value="nextflwupDt"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="convertSOYN" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="convertSOYN"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="convertSONo" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.label" value="convertSONo"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+		<field name="taskAssigneeId" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="taskAssigneeId"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+		</field>
+	</subDataset>
+	<queryString>
+		<![CDATA[SELECT * FROM sales_task_details where locId=2209 and orgId=22 and prfOrdereddate between '2022-08-01'
+and '2022-08-30']]>
+	</queryString>
+	<field name="taskId" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="taskId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="custAcctNo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="custAcctNo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="custDetails" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="custDetails"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="custName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="custName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="contactNo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="contactNo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="contactNo1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="contactNo1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="tlName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tlName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="baseamount" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="baseamount"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="discamount" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="discamount"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="taxableamt" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="taxableamt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="totaltax" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="totaltax"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="totalamt" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="totalamt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="colorCode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="colorCode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="colorDesc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="colorDesc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="financeyn" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="financeyn"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="exchangeyn" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="exchangeyn"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="salesExe" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="salesExe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="model" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="model"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="variant" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="variant"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="varDesc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="varDesc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="prfOrderNo" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="prfOrderNo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="prfOrdereddate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="prfOrdereddate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="locId" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="locId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="orgId" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="orgId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="callDuDt" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="callDuDt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="taskStatus" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="taskStatus"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="contacted" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="contacted"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="reason" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="reason"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="remark" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="remark"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="nextflwupDt" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="nextflwupDt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="convertSOYN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="convertSOYN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="convertSONo" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="convertSONo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="taskAssigneeId" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="taskAssigneeId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="createdBy" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="createdBy"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="creationDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="creationDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<field name="assignee" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="assignee"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="72" splitType="Stretch">
+			<componentElement>
+				<reportElement x="0" y="5" width="560" height="61" uuid="2b40548c-d79e-45f8-a9c9-b0ea35ea184a">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Dataset1" uuid="c8464c68-7051-4c68-988f-a25141c1b482">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="25" uuid="f06211e3-f5b6-4b92-8a9c-d8a9fcca9ce2">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="d91ad680-1c08-4e3f-bfb9-b23ea747cd8d"/>
+								<text><![CDATA[taskId]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="25" height="30" uuid="879fef12-57fc-43f9-8b63-41013e3443a9"/>
+								<textFieldExpression><![CDATA[$F{taskId}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="22a8b513-773b-401d-9527-e9b8f571158e">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="44e5d878-5caf-4ca4-a787-bcd1df919595"/>
+								<text><![CDATA[custAcctNo]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="25" height="30" uuid="b11737c1-d123-42fe-bf44-1b533b79f4c8"/>
+								<textFieldExpression><![CDATA[$F{custAcctNo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="d54f7ec0-9ad1-4bfb-aeed-e740ed5d919e">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="ead851a2-04f6-4cbb-8548-f90c93a8a30c"/>
+								<text><![CDATA[custName]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="25" height="30" uuid="571b140a-e95d-47fd-ad70-b341971a5d1b"/>
+								<textFieldExpression><![CDATA[$F{custName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="f8bf4bb0-78d8-4c16-8968-898e6fd736ef">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="c3686db2-75bd-4121-84da-1edd2cc0a4a3"/>
+								<text><![CDATA[contactNo]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="25" height="30" uuid="c16dba4a-9150-4f52-94ac-292298c5d79f"/>
+								<textFieldExpression><![CDATA[$F{contactNo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="2c75e994-0167-4425-aa89-080dc35d054f">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="c8717f24-0fe9-4d31-adf6-b6c59d4c36a5"/>
+								<text><![CDATA[contactNo1]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="25" height="30" uuid="0e96e7db-b78a-4b67-a3bd-fe2486b07caa"/>
+								<textFieldExpression><![CDATA[$F{contactNo1}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="16754cb2-1553-4757-86a1-b2372df53044">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="ab67ab63-78e2-427a-a5a2-4db10e30b848"/>
+								<text><![CDATA[colorCode]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="25" height="30" uuid="d5294ccc-1213-48dc-8466-94b3837bfa34"/>
+								<textFieldExpression><![CDATA[$F{colorCode}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="a9c6c084-0fdb-4407-81a4-b80c99360ad1">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="56fc786f-7d28-40f3-8ad2-de2a0d4a7feb"/>
+								<text><![CDATA[salesExe]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="25" height="30" uuid="040b0b8e-e59a-42fb-91a9-24dcfcf26d1a"/>
+								<textFieldExpression><![CDATA[$F{salesExe}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="4e1a1699-4222-422d-94eb-5d63c6274a86">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="860c4492-26f8-4119-82a9-2bb649d626be"/>
+								<text><![CDATA[model]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="25" height="30" uuid="e4a01e4c-bd7d-42b2-85b7-6b5d81f4b109"/>
+								<textFieldExpression><![CDATA[$F{model}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="1e21b389-6c34-485d-99ae-cdc7ecca96c4">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="3df6cb9e-88cb-4713-88e7-9303421e7e00"/>
+								<text><![CDATA[variant]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="25" height="30" uuid="367c5773-1124-4c66-8cd9-23f504f55da1"/>
+								<textFieldExpression><![CDATA[$F{variant}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="8043c12a-e2fe-4767-867d-a1c995c399f9">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="f8974f12-a139-479a-954e-7f6d5b707d9a"/>
+								<text><![CDATA[prfOrderNo]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="25" height="30" uuid="e366637f-344c-4be2-87e0-1335c609fcea"/>
+								<textFieldExpression><![CDATA[$F{prfOrderNo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="286762e7-7a88-452b-ae92-dab0ad3342da">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="06684f17-101e-452b-b8b8-df9e97fd1e10"/>
+								<text><![CDATA[prfOrdereddate]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="25" height="30" uuid="a296218a-417c-4702-9a28-dda70e79c196"/>
+								<textFieldExpression><![CDATA[$F{prfOrdereddate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="bf4895f7-3ec6-47dc-a7ac-9b09412d9c11">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="873ba238-925e-43d8-8536-abc315d2b86c"/>
+								<text><![CDATA[callDuDt]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="25" height="30" uuid="33e5e2da-90f0-444b-8cad-84168065fbbf"/>
+								<textFieldExpression><![CDATA[$F{callDuDt}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="85276b61-3c2e-4103-9fc2-e67978f02560">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="6a04519b-8370-4aaa-8434-902afb72b505"/>
+								<text><![CDATA[locId]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="25" height="30" uuid="33687e6f-88ed-4efd-abd6-796650ba0f1a"/>
+								<textFieldExpression><![CDATA[$F{locId}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="4e7f6171-fcae-4db8-bdcc-4e0d8809090d">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="7fa2e362-f148-496a-bb22-024bac9107c2"/>
+								<text><![CDATA[taskStatus]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="25" height="30" uuid="ded398de-19e1-46c6-b9eb-283705aca093"/>
+								<textFieldExpression><![CDATA[$F{taskStatus}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="5b90b217-438d-447e-b4dc-4338bf99c591">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="ed046780-b722-49fc-a1c9-a73f84dd942f"/>
+								<text><![CDATA[contacted]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="25" height="30" uuid="6243e70c-15eb-4d87-8001-6c2e6c60002e"/>
+								<textFieldExpression><![CDATA[$F{contacted}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="9f57fed9-49c6-4086-b1de-f1a84bed6d64">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="4dc2f2f5-7d7b-462f-830a-742f78af8612"/>
+								<text><![CDATA[reason]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="25" height="30" uuid="b8f6153a-1d9e-4d75-b10c-365d818d96ce"/>
+								<textFieldExpression><![CDATA[$F{reason}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="1dc87040-7b3e-45e3-814c-a7d0849038b4">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="e31eaaa9-3971-4b13-9f44-2edcc666f415"/>
+								<text><![CDATA[remark]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="25" height="30" uuid="f8aeebd8-b7b3-4959-8f32-8296d1df2b63"/>
+								<textFieldExpression><![CDATA[$F{remark}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="397b2e56-8693-4d59-be8f-d8c53015deb0">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="165e10c7-a045-40cd-adbb-b9cb5333df55"/>
+								<text><![CDATA[nextflwupDt]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="25" height="30" uuid="fceb98b0-3392-46d4-a024-f91d596ba114"/>
+								<textFieldExpression><![CDATA[$F{nextflwupDt}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="84cd2e6b-71b1-46e5-acf0-7ea2c23261cf">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="d4dfe53d-e4b4-4cd7-a921-ce0302278241"/>
+								<text><![CDATA[convertSOYN]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="25" height="30" uuid="d82d20da-a4c4-4888-b1ae-9f9669ff4d44"/>
+								<textFieldExpression><![CDATA[$F{convertSOYN}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="5c2c71f2-d544-478b-a41f-af099e7d5e49">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="66bcd17b-c52e-468e-85a4-c97f24240dc0"/>
+								<text><![CDATA[convertSONo]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="25" height="30" uuid="79b68b3d-3a8c-4268-a3a4-c992feae7a33"/>
+								<textFieldExpression><![CDATA[$F{convertSONo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="25" uuid="75c9139e-24ed-4e8c-877d-3bec28e7c235">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="30" uuid="24d4d6f0-268f-4a87-bd5a-22577d5229bb"/>
+								<text><![CDATA[taskAssigneeId]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="25" height="30" uuid="cb628726-d617-4cb1-90f1-8f8eb47b74d8"/>
+								<textFieldExpression><![CDATA[$F{taskAssigneeId}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
