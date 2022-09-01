@@ -28,7 +28,7 @@ public interface SalesTaskDetailsDao extends CrudRepository<SalesTaskDetails, In
 
     public List<SalesTaskDetails> findByLocIdAndTaskStatus(Integer locId, String aNEW);
     
-     @Query("select distinct std.taskId as taskId  from SalesTaskDetails std where std.callDuDt=CURRENT_DATE and std.locId=?1 and taskAssigneeId is null  order by std.taskId")
+     @Query("select distinct std.taskId as taskId  from SalesTaskDetails std where std.locId=?1 and taskAssigneeId is null  order by std.taskId")
     List<Object> getTaskProforma(Integer locId);
     
     

@@ -186,8 +186,8 @@ public class LocAccessLoginWiseController {
         int perUsertaskcount = 0;
         Integer location = 0;
         int incrementalCnt = 0;
-        Long toCount = 0L;
-        Long fromCount = 0L;
+        Integer toCount = 0;
+        Integer fromCount = 0;
         List<Object> taskcount = null;
         int leftTaskCount = 0;
 
@@ -204,9 +204,8 @@ public class LocAccessLoginWiseController {
                 incrementalCnt = 0;
 
             }
-            if (incrementalCnt == 0) {
-            } else {
-                fromCount = (Long) taskcount.get(incrementalCnt);
+           
+                fromCount = (Integer)taskcount.get(incrementalCnt);
                 int nextCount = 0;
                 if (leftTaskCount > 0) {
                     nextCount = incrementalCnt + perUsertaskcount + 1;
@@ -214,16 +213,16 @@ public class LocAccessLoginWiseController {
                 } else {
                     nextCount = incrementalCnt + perUsertaskcount;
                 }
-                toCount = (Long) taskcount.get(nextCount - 1);
+                toCount = (Integer) taskcount.get(nextCount - 1);
                 // toCount = (Long) taskcount.get(incrementalCnt + perUsertaskcount);
                 UpdateAssignee assineeDetails = new UpdateAssignee((String) map1.get("username"), (String) map1.get("emp_name"), 0, fromCount, toCount);
                 toAssignee.add(assineeDetails);
                 //  incrementalCnt = incrementalCnt + perUsertaskcount;
                 incrementalCnt = nextCount;
                 location = (Integer) map1.get("loc_access");
-            }
+            
             for (UpdateAssignee detail : toAssignee) {
-                //       taskGenImpl.UpdateAssignee(detail.getAssignee(), detail.getAssigneeId(), detail.getFromTaskId(), detail.getToTaskId());
+              //  taskGenImpl.UpdateAssignee(detail.getAssignee(), detail.getAssigneeId(), detail.getFromTaskId(), detail.getToTaskId());
                 ssSalesTaskRepo.UpdateAssigneeTaskIdwise(detail.getAssignee(), detail.getAssigneeId(), detail.getFromTaskId());
 
             }
@@ -245,4 +244,5 @@ public class LocAccessLoginWiseController {
         }
         return apiResponse = new SaiResponse(200, "Ok", null);
     }
+    
 }

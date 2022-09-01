@@ -15,16 +15,27 @@ import com.sai.model.SsAdministratorData;
 import com.sai.model.SsCustomer;
 import com.sai.model.SsTaskDetails;
 import com.sai.model.SsVehicleMaster;
+import com.sai.report.ReportService;
+import java.io.ByteArrayInputStream;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -44,6 +55,12 @@ public class SSAdminSummaryController {
 
     @Autowired
     private SsVehicleMasterDao vehicleRepo;
+
+    @Autowired
+    ReportService reportPrintService;
+
+    @Value("${ReportFiles.path}")
+    private String filesPath;
 
     @GetMapping("/ssAdminSummary")
     public List<SsAdministratorData> getAdminSummary() {
@@ -81,12 +98,9 @@ public class SSAdminSummaryController {
         vcm.setTaskReason(orgtaskid.getTaskReason());
         vcm.setTaskType(orgtaskid.getTaskType());
         vcm.setTaskStatus(orgtaskid.getTaskStatus());
-         vcm.setLastServcDt(orgtaskid.getLastServcDt());
-         vcm.setDealerCd(vehicle.getDealerCode());
-        
-        
-        
-        
+        vcm.setLastServcDt(orgtaskid.getLastServcDt());
+        vcm.setDealerCd(vehicle.getDealerCode());
+
         return vcm;
 
         // return orgtaskid;
@@ -147,9 +161,44 @@ public class SSAdminSummaryController {
 //        return AdminRepository.getAdminId(taskId);
 //      
 //    }
+
     /*     @GetMapping("/ssAdminSummary/ByTaskId/{locId}")//////////////
     public List<Map> getTaskId(@PathVariable long locId) {
         List<Map> locIdUser = TaskRepository.getTaskId(locId);
          return locIdUser;
   }*/
+
+    @GetMapping("/CommonReport")
+    public ResponseEntity<InputStreamResource> CommonReport(@RequestParam Date fromDate, @RequestParam Date toDate, @RequestParam Integer ouId, @RequestParam(required = false) Integer locId) throws Exception {
+        try {
+            Map<String, Object> parameter = new HashMap<>();
+            String fileName = null;
+            fileName = filesPath + "Sales Details" + ouId + ".xls";
+           
+            parameter.put("fromDate", fromDate);
+            parameter.put("toDate", toDate);
+            parameter.put("ouId", ouId);
+            parameter.put("locId", locId);
+
+            ByteArrayInputStream in;
+            try {
+                in = reportPrintService.getSalePrFDet(parameter, fileName);
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Content-Disposition", "attachment; filename=/download/" + fileName);
+                return ResponseEntity
+                        .ok()
+                        .headers(headers)
+                        .body(new InputStreamResource(in));
+            } catch (Exception ex) {
+                Logger.getLogger(this.getClass()
+                        .getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            }
+        } catch (Exception ex) {
+
+            throw ex;
+        }
+        return null;
+    }
+
 }
