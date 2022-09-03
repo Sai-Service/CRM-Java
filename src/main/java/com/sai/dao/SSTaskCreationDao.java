@@ -139,14 +139,14 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
     public List<Map> getSlotAvail(long serv_loc_id);
 
     /////TO DISPLAY DATA IN THE USER SUMMARY FORM login wise/////////////////
-    @Query(value = "select std.task_id as taskId,std.task_type as taskType,std.cust_id as custId ,std.contact_no1 as contactNo1,std.cust_name as custName"
+    @Query(value = "select std.task_id as taskId,std.task_type as taskType,std.cust_name,std.cust_id as custId ,std.contact_no1 as contactNo1,std.cust_name as custName"
             + ",std.vehicle_no as vehicleNo, std.last_servc_type as lastServcType,std.remarks,std.last_servc_loc as lastServcLoc,std.next_servc_type as attribute1,std.call_du_dt as callDuDt"
             + ",std.next_servc_dt as servDuDt,std.task_status as taskStatus,std.loc_id as locId,std.cust_type as custType from ss_task_details std,ss_gatepass_all sgp \n"
             + "where  std.task_status!='CLOSED' and std.call_du_dt=curdate() and std.task_id=sgp.task_id  AND std.assignee_id=?1", nativeQuery = true)
     List<Map> getUserSummLoginwise(String assignee_id);
 
     //To display admin summary--NEW UPDATE ON 11-JUL-2020
-    @Query(value = "SELECT std.task_id as taskid,std.cust_id as custid,\n"
+    @Query(value = "SELECT std.task_id as taskid,std.cust_id as custid,std.cust_name,\n"
             + "std.contact_no1 as contactno1,std.vehicle_no as vehicleno,std.last_servc_dt as lstservdt,std.last_servc_type as lstservtype,last_servc_loc as lstservloc,\n"
             + "std.next_servc_Dt as nxtservdt,std.next_servc_type as nxtservtype,std.assignee,std.assignee_id as assigneeid\n"
             + "from test.ss_task_details std\n"
