@@ -112,7 +112,7 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
     public List<Map> getTotalApptExewise(Integer loc_id);
 
     //////TO DISPLAY TASK ID//////////////////////         
-    @Query("select distinct std.taskId as taskId  from SsTaskDetails std where std.callDuDt=CURRENT_DATE and std.locId=?1 and assigneeId is null  order by std.taskId")
+    @Query("select distinct std.taskId as taskId  from SsTaskDetails std where std.callDuDt=CURRENT_DATE and taskStatus='NEW' and std.locId=?1 and assigneeId is null  order by std.taskId")
     List<Object> getTaskId(Integer locId);
 
     

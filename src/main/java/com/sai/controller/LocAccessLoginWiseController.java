@@ -50,56 +50,55 @@ public class LocAccessLoginWiseController {
     private SSAdministratorDataDao ssAdminData;
 
     //////////////TO UPDATE THE ASSIGNEE ID AUTOMATICALLY TO ALL THE TASK-///////
-    @RequestMapping(value = "/LocAccessLoginwise/{login_name}", method = RequestMethod.GET, produces = {"application/JSON"})
-    public List<Map> getUserList(@PathVariable String login_name) {
-        List<Map> userDetail = taskGenImpl.getUserList(login_name);
-        List<UpdateAssignee> toAssignee = new ArrayList<>();
-
-        int perUsertaskcount = 0;
-        Integer location = 0;
-        int incrementalCnt = 0;
-        Long toCount = 0L;
-        Long fromCount = 0L;
-        List<Object> taskcount = null;
-        int leftTaskCount = 0;
-
-        for (Map map1 : userDetail) {
-            if (!(location == ((Integer) map1.get("loc_access")))) {
-                taskcount = taskCreation.getTaskId((Integer) map1.get("loc_access"));
-                BigInteger userCount = (BigInteger) taskGenImpl.getUsercount(login_name);
-                int totalTaskCount = taskcount.size();
-                int totalusercntfrLoc = userCount.intValue();
-
-                perUsertaskcount = totalTaskCount / totalusercntfrLoc;
-                leftTaskCount = totalTaskCount % totalusercntfrLoc;
-                incrementalCnt = 0;
-
-            }
-
-            fromCount = (Long) taskcount.get(incrementalCnt);
-            int nextCount = 0;
-            if (leftTaskCount > 0) {
-                nextCount = incrementalCnt + perUsertaskcount + 1;
-                leftTaskCount = leftTaskCount - 1;
-            } else {
-                nextCount = incrementalCnt + perUsertaskcount;
-            }
-            toCount = (Long) taskcount.get(nextCount - 1);
-            // toCount = (Long) taskcount.get(incrementalCnt + perUsertaskcount);
-            UpdateAssignee assineeDetails = new UpdateAssignee((String) map1.get("username"), (String) map1.get("emp_name"), 0, fromCount, toCount);
-            toAssignee.add(assineeDetails);
-            //  incrementalCnt = incrementalCnt + perUsertaskcount;
-            incrementalCnt = nextCount;
-            location = (Integer) map1.get("loc_access");
-        }
-        for (UpdateAssignee detail : toAssignee) {
-            //       taskGenImpl.UpdateAssignee(detail.getAssignee(), detail.getAssigneeId(), detail.getFromTaskId(), detail.getToTaskId());
-            taskGenImpl.UpdateAssigneeTaskIdwise(detail.getAssignee(), detail.getAssigneeId(), detail.getFromTaskId());
-
-        }
-        return userDetail;
-    }
-
+//    @RequestMapping(value = "/LocAccessLoginwise", method = RequestMethod.GET, produces = {"application/JSON"})
+//    public List<Map> getUserList(@PathVariable String login_name) {
+//        List<Map> userDetail = taskGenImpl.getUserList(login_name);
+//        List<UpdateAssignee> toAssignee = new ArrayList<>();
+//
+//        int perUsertaskcount = 0;
+//        Integer location = 0;
+//        int incrementalCnt = 0;
+//        Long toCount = 0L;
+//        Long fromCount = 0L;
+//        List<Object> taskcount = null;
+//        int leftTaskCount = 0;
+//
+//        for (Map map1 : userDetail) {
+//            if (!(location == ((Integer) map1.get("loc_access")))) {
+//                taskcount = taskCreation.getTaskId((Integer) map1.get("loc_access"));
+//                BigInteger userCount = (BigInteger) taskGenImpl.getUsercount(login_name);
+//                int totalTaskCount = taskcount.size();
+//                int totalusercntfrLoc = userCount.intValue();
+//
+//                perUsertaskcount = totalTaskCount / totalusercntfrLoc;
+//                leftTaskCount = totalTaskCount % totalusercntfrLoc;
+//                incrementalCnt = 0;
+//
+//            }
+//
+//            fromCount = (Long) taskcount.get(incrementalCnt);
+//            int nextCount = 0;
+//            if (leftTaskCount > 0) {
+//                nextCount = incrementalCnt + perUsertaskcount + 1;
+//                leftTaskCount = leftTaskCount - 1;
+//            } else {
+//                nextCount = incrementalCnt + perUsertaskcount;
+//            }
+//            toCount = (Long) taskcount.get(nextCount - 1);
+//            // toCount = (Long) taskcount.get(incrementalCnt + perUsertaskcount);
+//            UpdateAssignee assineeDetails = new UpdateAssignee((String) map1.get("username"), (String) map1.get("emp_name"), 0, fromCount, toCount);
+//            toAssignee.add(assineeDetails);
+//            //  incrementalCnt = incrementalCnt + perUsertaskcount;
+//            incrementalCnt = nextCount;
+//            location = (Integer) map1.get("loc_access");
+//        }
+//        for (UpdateAssignee detail : toAssignee) {
+//            //       taskGenImpl.UpdateAssignee(detail.getAssignee(), detail.getAssigneeId(), detail.getFromTaskId(), detail.getToTaskId());
+//            taskGenImpl.UpdateAssigneeTaskIdwise(detail.getAssignee(), detail.getAssigneeId(), detail.getFromTaskId());
+//
+//        }
+//        return userDetail;
+//    }
     //GET USERCOUNT FROM LIS
     @RequestMapping(value = "/UserCountLoginwise/{login_name}", method = RequestMethod.GET, produces = {"application/JSON"})
     public List<Map> getUsercountList(@PathVariable String login_name) {
@@ -204,25 +203,25 @@ public class LocAccessLoginWiseController {
                 incrementalCnt = 0;
 
             }
-           
-                fromCount = (Integer)taskcount.get(incrementalCnt);
-                int nextCount = 0;
-                if (leftTaskCount > 0) {
-                    nextCount = incrementalCnt + perUsertaskcount + 1;
-                    leftTaskCount = leftTaskCount - 1;
-                } else {
-                    nextCount = incrementalCnt + perUsertaskcount;
-                }
-                toCount = (Integer) taskcount.get(nextCount - 1);
-                // toCount = (Long) taskcount.get(incrementalCnt + perUsertaskcount);
-                UpdateAssignee assineeDetails = new UpdateAssignee((String) map1.get("username"), (String) map1.get("emp_name"), 0, fromCount, toCount);
-                toAssignee.add(assineeDetails);
-                //  incrementalCnt = incrementalCnt + perUsertaskcount;
-                incrementalCnt = nextCount;
-                location = (Integer) map1.get("loc_access");
-            
+
+            fromCount = (Integer) taskcount.get(incrementalCnt);
+            int nextCount = 0;
+            if (leftTaskCount > 0) {
+                nextCount = incrementalCnt + perUsertaskcount + 1;
+                leftTaskCount = leftTaskCount - 1;
+            } else {
+                nextCount = incrementalCnt + perUsertaskcount;
+            }
+            toCount = (Integer) taskcount.get(nextCount - 1);
+            // toCount = (Long) taskcount.get(incrementalCnt + perUsertaskcount);
+            UpdateAssignee assineeDetails = new UpdateAssignee((String) map1.get("username"), (String) map1.get("emp_name"), 0, fromCount, toCount);
+            toAssignee.add(assineeDetails);
+            //  incrementalCnt = incrementalCnt + perUsertaskcount;
+            incrementalCnt = nextCount;
+            location = (Integer) map1.get("loc_access");
+
             for (UpdateAssignee detail : toAssignee) {
-              //  taskGenImpl.UpdateAssignee(detail.getAssignee(), detail.getAssigneeId(), detail.getFromTaskId(), detail.getToTaskId());
+                //  taskGenImpl.UpdateAssignee(detail.getAssignee(), detail.getAssigneeId(), detail.getFromTaskId(), detail.getToTaskId());
                 ssSalesTaskRepo.UpdateAssigneeTaskIdwise(detail.getAssignee(), detail.getAssigneeId(), detail.getFromTaskId());
 
             }
@@ -244,5 +243,98 @@ public class LocAccessLoginWiseController {
         }
         return apiResponse = new SaiResponse(200, "Ok", null);
     }
-    
+
+    /////////////////////////////////////////////////////////////////////////
+    ///NEW---08-SEP-2022
+    //////////////TO UPDATE THE ASSIGNEE ID AUTOMATICALLY TO ALL THE TASK-///////
+    @RequestMapping(value = "/UpdateAutoAssignNew", method = RequestMethod.GET, produces = {"application/JSON"})
+    public List<Map> updateTaskAssignee(@RequestParam String login_name, @RequestParam Integer locId) throws Exception {
+    List<Map> userDetail=null;
+        try{
+        userDetail = taskGenImpl.getUserList(login_name, locId);
+        List<UpdateAssignee> toAssignee = new ArrayList<>();
+
+        int perUsertaskcount = 0;
+        Integer location = 0;
+        int incrementalCnt = 0;
+        Long toCount = 0L;
+        Long fromCount = 0L;
+        List<Object> taskList = null;
+        int leftTaskCount = 0;
+        taskList = taskCreation.getTaskId(locId);//10//Total Number of Task
+        Integer userCount = userDetail.size();//Total No. of Users
+        int totalTaskCount = taskList.size();
+        perUsertaskcount = totalTaskCount / userCount;
+        leftTaskCount = totalTaskCount % userCount;
+        int leftTaskPerUser = 0;
+        if (leftTaskCount >= userCount) {
+            leftTaskPerUser = leftTaskCount / userCount;
+        } else {
+            leftTaskPerUser = leftTaskCount;
+        }
+
+//        for (Map map1 : userDetail) {
+//            //  if (!(location == ((Integer) map1.get("loc_access")))) {
+//            //     BigInteger userCount = (BigInteger) taskGenImpl.getUsercount(login_name);
+//
+//            incrementalCnt = 0;
+//
+//            //  }
+//            fromCount = (Long) taskList.get(incrementalCnt);
+//            
+//            int nextCount = 0;
+//            if (leftTaskCount > 0) {
+//                nextCount = incrementalCnt + perUsertaskcount + 1;
+//                leftTaskCount = leftTaskCount - 1;
+//            } else {
+//                nextCount = incrementalCnt + perUsertaskcount;
+//            }
+//            toCount = (Long) taskList.get(nextCount - 1);
+//            // toCount = (Long) taskcount.get(incrementalCnt + perUsertaskcount);
+//            UpdateAssignee assineeDetails = new UpdateAssignee((String) map1.get("username"), (String) map1.get("emp_name"), 0, fromCount, toCount);
+//            toAssignee.add(assineeDetails);
+//            //  incrementalCnt = incrementalCnt + perUsertaskcount;
+//            incrementalCnt = nextCount;
+//            l;ocation = (Integer) map1.get("loc_access");
+//        }
+        int assignTaskCnt = 0;
+//        for (Object task : taskList) {
+
+        List<Object> orgList = taskList;
+        for (Map map1 : userDetail) {
+
+            for (int i = 0; i < perUsertaskcount; i++) {
+                taskGenImpl.UpdateAssigneeTaskIdwise((String) map1.get("username"), (String) map1.get("emp_name"), (long) taskList.get(assignTaskCnt));
+             //   orgList.remove(taskList.get(assignTaskCnt));
+                
+              if(i == perUsertaskcount -1)
+              {
+              System.out.println("i Value"+ i);
+              }
+              else{
+                assignTaskCnt++;
+              }
+            }
+
+        }
+
+        int assignPendingTaskCnt = 0;
+
+        for (Map map1 : userDetail) {
+
+            for (int i = 0; i < leftTaskPerUser; i++) {
+                taskGenImpl.UpdateAssigneeTaskIdwise((String) map1.get("username"), (String) map1.get("emp_name"), (long) orgList.get(assignPendingTaskCnt));
+                // orgList.remove(taskList.get(assignTaskCnt));
+                assignPendingTaskCnt++;
+            }
+
+        }
+   } catch (Exception e) {
+        //    apiResponse = new SaiResponse(400, "Updation not Done", null);
+        e.printStackTrace();
+        throw e;
+        }
+        return userDetail;
+
+    }
 }
