@@ -37,6 +37,7 @@ public class SsCustomer implements Serializable {
     @NotNull()
     @Column(name = "CUST_ID")
     private int custId;
+    private int custAcctNo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 145)
@@ -165,6 +166,16 @@ public class SsCustomer implements Serializable {
         this.custId = custId;
     }
 
+    public int getCustAcctNo() {
+        return custAcctNo;
+    }
+
+    public void setCustAcctNo(int custAcctNo) {
+        this.custAcctNo = custAcctNo;
+    }
+
+    
+    
     public String getCustName() {
         return custName;
     }

@@ -175,60 +175,6 @@ public class LocAccessLoginWiseController {
         return new SaiResponse(200, "Assignee updated successfully", null);
     }
 
-    //////////////TO UPDATE THE ASSIGNEE ID AUTOMATICALLY TO ALL THE TASK--Proforma-///////
-    //Update assignee to task
-    @RequestMapping(value = "/LocAccessLoginwise1/{login_name}", method = RequestMethod.GET, produces = {"application/JSON"})
-    public List<Map> getUserListProforma(@PathVariable String login_name) throws Exception {
-        List<Map> userDetail = taskGenImpl.getUserListProforma(login_name);
-        List<UpdateAssignee> toAssignee = new ArrayList<>();
-
-        int perUsertaskcount = 0;
-        Integer location = 0;
-        int incrementalCnt = 0;
-        Integer toCount = 0;
-        Integer fromCount = 0;
-        List<Object> taskcount = null;
-        int leftTaskCount = 0;
-
-        for (Map map1 : userDetail) {
-            if (!(location == ((Integer) map1.get("loc_access")))) {
-
-                taskcount = ssSalesTaskRepo.getTaskProforma((Integer) map1.get("loc_access"));
-                BigInteger userCount = (BigInteger) taskGenImpl.getUsercountProforma(login_name);
-                int totalTaskCount = taskcount.size();
-                int totalusercntfrLoc = userCount.intValue();
-
-                perUsertaskcount = totalTaskCount / totalusercntfrLoc;
-                leftTaskCount = totalTaskCount % totalusercntfrLoc;
-                incrementalCnt = 0;
-
-            }
-
-            fromCount = (Integer) taskcount.get(incrementalCnt);
-            int nextCount = 0;
-            if (leftTaskCount > 0) {
-                nextCount = incrementalCnt + perUsertaskcount + 1;
-                leftTaskCount = leftTaskCount - 1;
-            } else {
-                nextCount = incrementalCnt + perUsertaskcount;
-            }
-            toCount = (Integer) taskcount.get(nextCount - 1);
-            // toCount = (Long) taskcount.get(incrementalCnt + perUsertaskcount);
-            UpdateAssignee assineeDetails = new UpdateAssignee((String) map1.get("username"), (String) map1.get("emp_name"), 0, fromCount, toCount);
-            toAssignee.add(assineeDetails);
-            //  incrementalCnt = incrementalCnt + perUsertaskcount;
-            incrementalCnt = nextCount;
-            location = (Integer) map1.get("loc_access");
-
-            for (UpdateAssignee detail : toAssignee) {
-                //  taskGenImpl.UpdateAssignee(detail.getAssignee(), detail.getAssigneeId(), detail.getFromTaskId(), detail.getToTaskId());
-                ssSalesTaskRepo.UpdateAssigneeTaskIdwise(detail.getAssignee(), detail.getAssigneeId(), detail.getFromTaskId());
-
-            }
-        }
-        return userDetail;
-    }
-
     ////UPDATE THE ASSIGNEE ID AND ASSIGNEE NAME///Proforma
     @RequestMapping(value = "/UpdateAssigneeIdProforma", method = RequestMethod.PUT, produces = {"application/JSON"})
     SaiResponse UpdateAssigneeProforma(@RequestBody UpdateAssigneeRequest updatedAssignee) {
@@ -249,90 +195,125 @@ public class LocAccessLoginWiseController {
     //////////////TO UPDATE THE ASSIGNEE ID AUTOMATICALLY TO ALL THE TASK-///////
     @RequestMapping(value = "/UpdateAutoAssignNew", method = RequestMethod.GET, produces = {"application/JSON"})
     public List<Map> updateTaskAssignee(@RequestParam String login_name, @RequestParam Integer locId) throws Exception {
-    List<Map> userDetail=null;
-        try{
-        userDetail = taskGenImpl.getUserList(login_name, locId);
-        List<UpdateAssignee> toAssignee = new ArrayList<>();
+        List<Map> userDetail = null;
+        try {
+            userDetail = taskGenImpl.getUserList(login_name, locId);
+            List<UpdateAssignee> toAssignee = new ArrayList<>();
 
-        int perUsertaskcount = 0;
-        Integer location = 0;
-        int incrementalCnt = 0;
-        Long toCount = 0L;
-        Long fromCount = 0L;
-        List<Object> taskList = null;
-        int leftTaskCount = 0;
-        taskList = taskCreation.getTaskId(locId);//10//Total Number of Task
-        Integer userCount = userDetail.size();//Total No. of Users
-        int totalTaskCount = taskList.size();
-        perUsertaskcount = totalTaskCount / userCount;
-        leftTaskCount = totalTaskCount % userCount;
-        int leftTaskPerUser = 0;
-        if (leftTaskCount >= userCount) {
-            leftTaskPerUser = leftTaskCount / userCount;
-        } else {
-            leftTaskPerUser = leftTaskCount;
-        }
-
-//        for (Map map1 : userDetail) {
-//            //  if (!(location == ((Integer) map1.get("loc_access")))) {
-//            //     BigInteger userCount = (BigInteger) taskGenImpl.getUsercount(login_name);
-//
-//            incrementalCnt = 0;
-//
-//            //  }
-//            fromCount = (Long) taskList.get(incrementalCnt);
-//            
-//            int nextCount = 0;
-//            if (leftTaskCount > 0) {
-//                nextCount = incrementalCnt + perUsertaskcount + 1;
-//                leftTaskCount = leftTaskCount - 1;
-//            } else {
-//                nextCount = incrementalCnt + perUsertaskcount;
-//            }
-//            toCount = (Long) taskList.get(nextCount - 1);
-//            // toCount = (Long) taskcount.get(incrementalCnt + perUsertaskcount);
-//            UpdateAssignee assineeDetails = new UpdateAssignee((String) map1.get("username"), (String) map1.get("emp_name"), 0, fromCount, toCount);
-//            toAssignee.add(assineeDetails);
-//            //  incrementalCnt = incrementalCnt + perUsertaskcount;
-//            incrementalCnt = nextCount;
-//            l;ocation = (Integer) map1.get("loc_access");
-//        }
-        int assignTaskCnt = 0;
-//        for (Object task : taskList) {
-
-        List<Object> orgList = taskList;
-        for (Map map1 : userDetail) {
-
-            for (int i = 0; i < perUsertaskcount; i++) {
-                taskGenImpl.UpdateAssigneeTaskIdwise((String) map1.get("username"), (String) map1.get("emp_name"), (long) taskList.get(assignTaskCnt));
-             //   orgList.remove(taskList.get(assignTaskCnt));
-                
-              if(i == perUsertaskcount -1)
-              {
-              System.out.println("i Value"+ i);
-              }
-              else{
-                assignTaskCnt++;
-              }
+            int perUsertaskcount = 0;
+            Integer location = 0;
+            int incrementalCnt = 0;
+            Long toCount = 0L;
+            Long fromCount = 0L;
+            List<Object> taskList = null;
+            int leftTaskCount = 0;
+            taskList = taskCreation.getTaskId(locId);//10//Total Number of Task
+            Integer userCount = userDetail.size();//Total No. of Users
+            int totalTaskCount = taskList.size();
+            perUsertaskcount = totalTaskCount / userCount;
+            leftTaskCount = totalTaskCount % userCount;
+            int leftTaskPerUser = 0;
+            if (leftTaskCount >= userCount) {
+                leftTaskPerUser = leftTaskCount / userCount;
+            } else {
+                leftTaskPerUser = leftTaskCount;
             }
 
-        }
+            int assignTaskCnt = 0;
 
-        int assignPendingTaskCnt = 0;
+            List<Object> orgList = taskList;
+            for (Map map1 : userDetail) {
 
-        for (Map map1 : userDetail) {
+                for (int i = 0; i < perUsertaskcount; i++) {
+                    taskGenImpl.UpdateAssigneeTaskIdwise((String) map1.get("username"), (String) map1.get("emp_name"), (long) taskList.get(assignTaskCnt));
+                    System.out.println("i Value" + i);
 
-            for (int i = 0; i < leftTaskPerUser; i++) {
-                taskGenImpl.UpdateAssigneeTaskIdwise((String) map1.get("username"), (String) map1.get("emp_name"), (long) orgList.get(assignPendingTaskCnt));
-                // orgList.remove(taskList.get(assignTaskCnt));
-                assignPendingTaskCnt++;
+                    assignTaskCnt++;
+                }
+                System.out.println("assignTaskCnt Value" + assignTaskCnt);
             }
 
+            int assignPendingTaskCnt = assignTaskCnt;
+
+            while (assignPendingTaskCnt < taskList.size()) {
+                for (Map map1 : userDetail) {
+
+                    if (assignPendingTaskCnt >= taskList.size()) {
+                        break;
+                    }
+                    taskGenImpl.UpdateAssigneeTaskIdwise((String) map1.get("username"), (String) map1.get("emp_name"), (long) orgList.get(assignPendingTaskCnt));
+                    assignPendingTaskCnt++;
+                }
+
+            }
+        } catch (Exception e) {
+            //    apiResponse = new SaiResponse(400, "Updation not Done", null);
+            e.printStackTrace();
+            throw e;
         }
-   } catch (Exception e) {
-        //    apiResponse = new SaiResponse(400, "Updation not Done", null);
-        e.printStackTrace();
-        throw e;
+        return userDetail;
+
+    }
+
+    ///NEW---08-SEP-2022
+    //////////////TO UPDATE THE ASSIGNEE ID AUTOMATICALLY TO ALL THE SALES PROFORMA TASK-///////
+    @RequestMapping(value = "/LocAccessLoginwise1", method = RequestMethod.GET, produces = {"application/JSON"})
+    public List<Map> getUserListProforma(@RequestParam String login_name, @RequestParam Integer locId) throws Exception {
+        List<Map> userDetail = null;
+        try {
+            userDetail = taskGenImpl.getUserListProforma(login_name, locId);
+            List<UpdateAssignee> toAssignee = new ArrayList<>();
+
+            int perUsertaskcount = 0;
+            Integer location = 0;
+            int incrementalCnt = 0;
+            Long toCount = 0L;
+            Long fromCount = 0L;
+            List<Object> taskList = null;
+            int leftTaskCount = 0;
+            taskList = ssSalesTaskRepo.getTaskProforma(locId);//10//Total Number of Task
+            Integer userCount = userDetail.size();//Total No. of Users
+            int totalTaskCount = taskList.size();
+            perUsertaskcount = totalTaskCount / userCount;
+            leftTaskCount = totalTaskCount % userCount;
+            int leftTaskPerUser = 0;
+            if (leftTaskCount >= userCount) {
+                leftTaskPerUser = leftTaskCount / userCount;
+            } else {
+                leftTaskPerUser = leftTaskCount;
+            }
+
+            int assignTaskCnt = 0;
+
+            List<Object> orgList = taskList;
+            for (Map map1 : userDetail) {
+
+                for (int i = 0; i < perUsertaskcount; i++) {
+                    ssSalesTaskRepo.UpdateAssigneeTaskIdwise((String) map1.get("username"), (String) map1.get("emp_name"), (long) taskList.get(assignTaskCnt));
+                    System.out.println("i Value" + i);
+
+                    assignTaskCnt++;
+                }
+                System.out.println("assignTaskCnt Value" + assignTaskCnt);
+            }
+
+            int assignPendingTaskCnt = assignTaskCnt;
+
+            while (assignPendingTaskCnt < taskList.size()) {
+                for (Map map1 : userDetail) {
+
+                    if (assignPendingTaskCnt >= taskList.size()) {
+                        break;
+                    }
+                    ssSalesTaskRepo.UpdateAssigneeTaskIdwise((String) map1.get("username"), (String) map1.get("emp_name"), (long) orgList.get(assignPendingTaskCnt));
+                    assignPendingTaskCnt++;
+                }
+
+            }
+        } catch (Exception e) {
+            //    apiResponse = new SaiResponse(400, "Updation not Done", null);
+            e.printStackTrace();
+            throw e;
         }
         return userDetail;
 

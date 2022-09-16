@@ -32,8 +32,8 @@ public interface LocAccessLoginwiseDao extends CrudRepository<UserLogin, Long> {
    @Query(value="select distinct ul.reporting_to login_name,sla.loc_access,SLA.LOCNAME,ul1.login_name as username ,sed.emp_name\n" +
             "from test.user_login ul,test.user_login ul1, test.ss_loc_access sla, test.ss_executive_details sed\n" +
             "where ul.login_name=sla.user_name AND sla.loc_access=UL1.loc_id and ul1.role='USER' and ul.type='PRPSF' and ul1.type='PRPSF' AND sla.valid='ACTIVE' and ul.reporting_to=?1\n" +
-    "and ul1.ticket_no=sed.ticketno", nativeQuery = true)
-    public List<Map> getUserListProforma(String login_name);
+    "and ul1.ticket_no=sed.ticketno and sla.loc_access=?2", nativeQuery = true)
+    public List<Map> getUserListProforma(String login_name,Integer locId);
    
     
     
