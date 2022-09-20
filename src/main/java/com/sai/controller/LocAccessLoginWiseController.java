@@ -193,7 +193,7 @@ public class LocAccessLoginWiseController {
     /////////////////////////////////////////////////////////////////////////
     ///NEW---08-SEP-2022
     //////////////TO UPDATE THE ASSIGNEE ID AUTOMATICALLY TO ALL THE TASK-///////
-    @RequestMapping(value = "/UpdateAutoAssignNew", method = RequestMethod.GET, produces = {"application/JSON"})
+    @RequestMapping(value = "/LocAccessLoginwise", method = RequestMethod.GET, produces = {"application/JSON"})
     public List<Map> updateTaskAssignee(@RequestParam String login_name, @RequestParam Integer locId) throws Exception {
         List<Map> userDetail = null;
         try {
