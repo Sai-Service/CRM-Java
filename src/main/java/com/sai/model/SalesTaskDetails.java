@@ -30,7 +30,7 @@ public class SalesTaskDetails implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Basic(optional = false)
-    private Integer taskId;
+    private long taskId;
     private Integer custAcctNo;
     @Size(max = 200)
     private String custDetails;
@@ -126,11 +126,11 @@ public class SalesTaskDetails implements Serializable {
         this.taskId = taskId;
     }
 
-    public Integer getTaskId() {
+    public long getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(Integer taskId) {
+    public void setTaskId(long taskId) {
         this.taskId = taskId;
     }
 
