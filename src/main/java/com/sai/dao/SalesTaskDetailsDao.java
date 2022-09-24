@@ -6,6 +6,7 @@
 package com.sai.dao;
 
 import com.sai.model.SalesTaskDetails;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -17,12 +18,12 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author Lenovo
  */
-public interface SalesTaskDetailsDao extends CrudRepository<SalesTaskDetails, Integer>{
+public interface SalesTaskDetailsDao extends CrudRepository<SalesTaskDetails, Long>{
 
     public List<SalesTaskDetails> findByLocId(Integer locId);
  ///SalesTaskDetails
 
-    public Optional<SalesTaskDetails> findByTaskId(Integer taskId);
+    public Optional<SalesTaskDetails> findByTaskId(long taskId);
 
     public List<SalesTaskDetails> findByOrgIdAndTaskStatus(Integer orgId, String aNEW);
 
@@ -48,5 +49,9 @@ public interface SalesTaskDetailsDao extends CrudRepository<SalesTaskDetails, In
 
     public List<SalesTaskDetails> findByTaskAssigneeIdAndTaskStatus(String taskAssigneeId, String aNEW);
    
+  //    public List<SalesTaskDetails> findByTaskAssigneeIdAndTaskStatus(String taskAssigneeId, String aNEW);
+      
+   @Query("select distinct std from SalesTaskDetails std where std.taskAssigneeId=?1 and std.callDuDt between ?2 and ?3 and std.taskStatus='NEW'  order by std.taskId")
+    List<SalesTaskDetails> getTaskProformaByDate(String taskAssigneeId,Date fromDate,Date toDate1);
     
 }

@@ -9,8 +9,8 @@ import com.sai.SaiResponse;
 import com.sai.dao.SalesTaskDetailsDao;
 import com.sai.dto.prfTaskRegenrate;
 import com.sai.model.SalesTaskDetails;
-import com.sai.model.SsTaskDetails;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -33,22 +34,29 @@ public class SalesTaskDetailsController {
     private SalesTaskDetailsDao ssTaskDetRepo;
 
     @GetMapping("/SalesTaskDetails/{locId}")
-    public List<SalesTaskDetails> getByLocId(@PathVariable Integer locId) {
+    public List<SalesTaskDetails> getByLocId(@PathVariable Integer locId)  throws Exception  {
         List<SalesTaskDetails> locDet = ssTaskDetRepo.findByLocIdAndTaskStatus(locId, "NEW");
         //  SalesTaskDetails locDet1 = locDet.isPresent() ? locDet.get() : null;
         return locDet;
     }
 
     @GetMapping("/SalesTaskDetails/taskId/{taskId}")
-    public SalesTaskDetails getBytaskId(@PathVariable Integer taskId) {
+    public SalesTaskDetails getBytaskId(@PathVariable Integer taskId)  throws Exception {
         Optional<SalesTaskDetails> taskDet = ssTaskDetRepo.findByTaskId(taskId);
         SalesTaskDetails taskDet1 = taskDet.isPresent() ? taskDet.get() : null;
         return taskDet1;
     }
 
     @GetMapping("/SalesTaskDetails/UserSumm/{taskAssigneeId}")
-    public List<SalesTaskDetails> getByAssigneeId(@PathVariable String taskAssigneeId) {
+    public List<SalesTaskDetails> getByAssigneeId(@PathVariable String taskAssigneeId)  throws Exception {
         List<SalesTaskDetails> userData = ssTaskDetRepo.findByTaskAssigneeIdAndTaskStatus(taskAssigneeId, "NEW");
+        //  SalesTaskDetails locDet1 = locDet.isPresent() ? locDet.get() : null;
+        return userData;
+    }
+
+      @GetMapping("/SalesTaskDetails/UserSummDatewise")
+    public List<SalesTaskDetails> UserSummDatewise(@RequestParam String taskAssigneeId,@RequestParam Date fromDate,@RequestParam Date toDate1)  throws Exception  {
+        List<SalesTaskDetails> userData = ssTaskDetRepo.getTaskProformaByDate(taskAssigneeId, fromDate, toDate1);
         //  SalesTaskDetails locDet1 = locDet.isPresent() ? locDet.get() : null;
         return userData;
     }
