@@ -225,7 +225,7 @@ public class LocAccessLoginWiseController {
             for (Map map1 : userDetail) {
 
                 for (int i = 0; i < perUsertaskcount; i++) {
-                    taskGenImpl.UpdateAssigneeTaskIdwise((String) map1.get("username"), (String) map1.get("emp_name"), (long) taskList.get(assignTaskCnt));
+                    taskGenImpl.UpdateAssigneeTaskIdwise((String) map1.get("emp_name"), (String) map1.get("username"), (long) taskList.get(assignTaskCnt));
                     System.out.println("i Value" + i);
 
                     assignTaskCnt++;
@@ -241,7 +241,7 @@ public class LocAccessLoginWiseController {
                     if (assignPendingTaskCnt >= taskList.size()) {
                         break;
                     }
-                    taskGenImpl.UpdateAssigneeTaskIdwise((String) map1.get("username"), (String) map1.get("emp_name"), (long) orgList.get(assignPendingTaskCnt));
+                    taskGenImpl.UpdateAssigneeTaskIdwise((String) map1.get("emp_name"), (String) map1.get("username"), (long) orgList.get(assignPendingTaskCnt));
                     assignPendingTaskCnt++;
                 }
 
@@ -289,7 +289,7 @@ public class LocAccessLoginWiseController {
             for (Map map1 : userDetail) {
 
                 for (int i = 0; i < perUsertaskcount; i++) {
-                    ssSalesTaskRepo.UpdateAssigneeTaskIdwise((String) map1.get("username"), (String) map1.get("emp_name"), (long) taskList.get(assignTaskCnt));
+                    ssSalesTaskRepo.UpdateAssigneeTaskIdwise((String) map1.get("emp_name"), (String) map1.get("username"), (long) taskList.get(assignTaskCnt));
                     System.out.println("i Value" + i);
 
                     assignTaskCnt++;
@@ -305,7 +305,7 @@ public class LocAccessLoginWiseController {
                     if (assignPendingTaskCnt >= taskList.size()) {
                         break;
                     }
-                    ssSalesTaskRepo.UpdateAssigneeTaskIdwise((String) map1.get("username"), (String) map1.get("emp_name"), (long) orgList.get(assignPendingTaskCnt));
+                    ssSalesTaskRepo.UpdateAssigneeTaskIdwise((String) map1.get("emp_name"), (String) map1.get("username"), (long) orgList.get(assignPendingTaskCnt));
                     assignPendingTaskCnt++;
                 }
 
