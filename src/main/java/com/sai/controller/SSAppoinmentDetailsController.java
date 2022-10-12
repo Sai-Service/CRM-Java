@@ -187,20 +187,20 @@ public class SSAppoinmentDetailsController {
            
 //            Date apptDate=new SimpleDateFormat("mm/dd/yyyy").parse(apptDtEx);
             
-//            SsSlotAvailable sltavail = slotAvail.findBySerLocIdAndServiceDateAndTiming(servLoc.getLocId(),appts.getApptDate(), timeSlot[0]);
-//            
-//            if (sltavail==null)
-//            {
-//            throw new Exception("Slot not found for given parameters");
-//            }
-//            else
-//            {
-//            long quota = sltavail.getQuota();
-//            quota = quota - 1;
+            SsSlotAvailable sltavail = slotAvail.findBySerLocIdAndServiceDateAndTiming(servLoc.getLocId(),appts.getApptDate(), timeSlot[0]);
+            
+            if (sltavail==null)
+            {
+            throw new Exception("Slot not found for given parameters");
+            }
+            else
+            {
+            long quota = sltavail.getQuota();
+           quota = quota - 1;
 //
-//            sltavail.setQuota(quota);
-//            slotAvail.save(sltavail);
-//            }
+            sltavail.setQuota(quota);
+            slotAvail.save(sltavail);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return apiResponse = new SaiResponse(400, "Data Not Inserted", e.getMessage());
@@ -379,12 +379,12 @@ public class SSAppoinmentDetailsController {
             apptDetails.setLstUpDt(currentDate);
             apptDetails.setLastUpdatedBy(user.getUserId());
 
-//            SsSlotAvailable sltavail = slotAvail.findByLocId(lstServLoc.getLocId(), slotDetails[0]);
-//            long quota = sltavail.getQuota();
-//            quota = quota - 1;
-//
-//            sltavail.setQuota(quota);
-//            slotAvail.save(sltavail);
+            SsSlotAvailable sltavail = slotAvail.findByLocId(lstServLoc.getLocId(), slotDetails[0]);
+            long quota = sltavail.getQuota();
+            quota = quota - 1;
+
+            sltavail.setQuota(quota);
+            slotAvail.save(sltavail);
 
             SSAppoinmentDetails saveApptDetail = appoinmentRepository.save(apptDetails);
             System.out.println("Appoinment Id is--" + saveApptDetail.getAppmntId());

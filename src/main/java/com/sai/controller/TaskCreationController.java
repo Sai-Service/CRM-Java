@@ -291,14 +291,14 @@ public class TaskCreationController {
         //    SsTaskDetails taskObj = taskRepository.findByTaskId(sd1.getTaskId());
         //  taskObj.setApptmtId(saveApptDetail.getAppmntId());
 //
-//        SsSlotAvailable sltavail = slotAvail.findByLocId(servLoc.getLocId(), slotDetails[0]);
-//        long quota = sltavail.getQuota();
-//        quota = quota - 1;
-//
-//        sltavail.setQuota(quota);
-//        sltavail.setLstUpBy(user.getUserId());
-////            sltavail.setLstUpDate(currentDate.toString());
-//        slotAvail.save(sltavail);
+        SsSlotAvailable sltavail = slotAvail.findByLocId(servLoc.getLocId(), slotDetails[0]);
+        long quota = sltavail.getQuota();
+        quota = quota - 1;
+
+        sltavail.setQuota(quota);
+        sltavail.setLstUpBy(user.getUserId());
+//            sltavail.setLstUpDate(currentDate.toString());
+        slotAvail.save(sltavail);
 
         ////////////////////////////////Close Appoinment/////////////////////////
         //To close old Task      
