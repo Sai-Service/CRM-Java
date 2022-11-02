@@ -114,7 +114,7 @@ public class SSAppoinmentDetailsController {
             SSAppoinmentDetails apptDetails = new SSAppoinmentDetails();
             //     apptDetails.setAppmntId(appts.getAppmntId());
             apptDetails.setTaskId(appts.getTaskId());
-           // apptDetails.setAdminId(appts.getAdmnId());
+            // apptDetails.setAdminId(appts.getAdmnId());
             apptDetails.setTaskType(appts.getTaskType());
             apptDetails.setVehicleNo(appts.getVehicleNo());
             apptDetails.setServType(appts.getServType());
@@ -130,7 +130,7 @@ public class SSAppoinmentDetailsController {
             apptDetails.setApptAttended(exeName[1]); /// exeName--ASHWINI
             apptDetails.setApptAttLoc(servLoc.getLocName());
             apptDetails.setApptAttDt(appts.getApptDate());
-              apptDetails.setLocationId(servLoc.getLocId());
+            apptDetails.setLocationId(servLoc.getLocId());
             apptDetails.setPickupMms(appts.getPickupMms());
             apptDetails.setPickupTime(appts.getPickupTime()); // add apptdate+time
             apptDetails.setAdvName(serviceGrpDetails[1]);
@@ -180,26 +180,20 @@ public class SSAppoinmentDetailsController {
             taskObj.setAssigneeId(exeName[0]);
             taskObj.setAssignee(exeName[1]);
             taskcreation.save(taskObj);
-           
-           // System.out.println("appoinment date :"+appts.getApptDate());
-//            String apptDtEx=new SimpleDateFormat("yyyy-mm-dd").format(appts.getApptDate());
 
-           
+            // System.out.println("appoinment date :"+appts.getApptDate());
+//            String apptDtEx=new SimpleDateFormat("yyyy-mm-dd").format(appts.getApptDate());
 //            Date apptDate=new SimpleDateFormat("mm/dd/yyyy").parse(apptDtEx);
-            
-            SsSlotAvailable sltavail = slotAvail.findBySerLocIdAndServiceDateAndTiming(servLoc.getLocId(),appts.getApptDate(), timeSlot[0]);
-            
-            if (sltavail==null)
-            {
-            throw new Exception("Slot not found for given parameters");
-            }
-            else
-            {
-            long quota = sltavail.getQuota();
-           quota = quota - 1;
+            SsSlotAvailable sltavail = slotAvail.findBySerLocIdAndServiceDateAndTiming(servLoc.getLocId(), appts.getApptDate(), timeSlot[0]);
+
+            if (sltavail == null) {
+                throw new Exception("Slot not found for given parameters");
+            } else {
+                long quota = sltavail.getQuota();
+                quota = quota - 1;
 //
-            sltavail.setQuota(quota);
-            slotAvail.save(sltavail);
+                sltavail.setQuota(quota);
+                slotAvail.save(sltavail);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -236,7 +230,12 @@ public class SSAppoinmentDetailsController {
             /////To insert customer Data
             SsCustomer SSCust = new SsCustomer();
 
-            SSCust.setCustId(newcustappt.getCustId());
+            Integer accNo = customerRepo.getMaxCustAccountNo();
+
+            Integer custId = customerRepo.getMaxCustId();
+
+            SSCust.setCustId(custId + 1);
+            SSCust.setCustAcctNo(accNo + 1);
             SSCust.setInputType("CRM");
             SSCust.setCustName(newcustappt.getCustName());
             SSCust.setCustType(newcustappt.getCustType());
@@ -258,13 +257,23 @@ public class SSAppoinmentDetailsController {
             SsCustomer custDet = customerRepo.save(SSCust);
 
             SsVehicleMaster vehicle = new SsVehicleMaster();
-            vehicle.setCustId(custDet.getId());
+            vehicle.setCustId(custDet.getCustId());
             vehicle.setVehicleNo(newcustappt.getVehicleNo());
             vehicle.setChassis(newcustappt.getChassisNo());
             vehicle.setEngine(newcustappt.getEngineNo());
             vehicle.setModel(newcustappt.getModel());
             vehicle.setVariant(newcustappt.getModel());
-              vehicle.setVehicleType("ARENA");//NEED TO CHANGE
+            vehicle.setModelDesc(newcustappt.getModel());
+            vehicle.setSegment1(newcustappt.getModel());
+            vehicle.setColor(newcustappt.getModel());
+            //vehicle.setFuelType(newcustappt.());
+
+            vehicle.setVehicleType("BAJAJ");
+            vehicle.setDealerCode(newcustappt.getDealerCd());
+            vehicle.setContactPerson(newcustappt.getCustName());
+
+            vehicle.setTypeOfVeh("ARENA");//NEED TO CHANGE
+            //  vehicle.setVinNo(newcustappt.get);
             vehicle.setDealerCode(newcustappt.getEngineNo());
             vehicle.setDtOfPurchase(newcustappt.getDtOfPurchase());
             vehicle.setCreatedBy(new Long(user.getUserId()).intValue());
@@ -283,6 +292,7 @@ public class SSAppoinmentDetailsController {
             //  details.setCustName(SSCust.getCustName());
             details.setCustAdd(SSCust.getAddress1() + "," + SSCust.getAddress2() + "," + SSCust.getAddress3() + "," + SSCust.getLocation() + "," + SSCust.getPincode() + "," + SSCust.getCity() + "," + SSCust.getStateName());
             details.setContactPerson(SSCust.getCustName());
+            details.setCustId(SSCust.getCustId());
             //        details.setCustType(SSCust.getCustType());
             details.setContactNo1(String.valueOf(SSCust.getContactNo1().intValue()));
             details.setContactNo2(SSCust.getContactNo2());
@@ -295,15 +305,17 @@ public class SSAppoinmentDetailsController {
 //            details.setDealerCode(vehicleMaster.getDealerCode());
 //            details.setAmc(newcustappt.getAmc());//
             details.setSalesExecName(newcustappt.getSalesExeName());
-            //   details.setLocId(lstServLoc.getLocId());
+            details.setLocId(lstServLoc.getLocId());
             details.setOrgId(user.getOrgId());
             details.setServcGrp(serviceGrpDetails[0]);
             details.setSalesExecName(serviceGrpDetails[1]);
 
-            //   details.setContacted(newcustappt.getContacted());
+            details.setContacted("Y");
             details.setRemarks(newcustappt.getRemarks());
-            //     details.setTaskReason(newcustappt.getLastDesposition());
+            details.setTaskReason("APPOINMENT CONFIRM");
             details.setReason("New Customer Appointment Booked");
+            details.setRemarks("Direct Appoinment");
+
             if (newcustappt.getApptDate() != null) {
                 details.setNextServcDt(newcustappt.getApptDate());
             }
@@ -318,6 +330,8 @@ public class SSAppoinmentDetailsController {
             //           details.setServDuDt(currentDate);
             details.setAssigneeId(executiveDetails[0]);
             details.setAssignee(executiveDetails[1]);
+            details.setCustName(newcustappt.getCustName());
+            details.setCustType(newcustappt.getCustType());
 
             SsTaskDetails sd1 = taskcreation.save(details);///This will save data in the Task Creation Table
 
@@ -379,10 +393,15 @@ public class SSAppoinmentDetailsController {
             apptDetails.setLstUpDt(currentDate);
             apptDetails.setLastUpdatedBy(user.getUserId());
 
-            SsSlotAvailable sltavail = slotAvail.findByLocId(lstServLoc.getLocId(), slotDetails[0]);
+        //    String apptDtEx = new SimpleDateFormat("yyyy-mm-dd").format(newcustappt.getApptDate());
+
+           // Date apptDate = new SimpleDateFormat("yyyy-mm-dd").format(newcustappt.getApptDate());
+           
+           
+
+            SsSlotAvailable sltavail = slotAvail.findBySerLocIdAndServiceDateAndTiming(lstServLoc.getLocId(), newcustappt.getApptDate(), slotDetails[0]);
             long quota = sltavail.getQuota();
             quota = quota - 1;
-
             sltavail.setQuota(quota);
             slotAvail.save(sltavail);
 
@@ -393,7 +412,7 @@ public class SSAppoinmentDetailsController {
             taskObj.setApptmtId(saveApptDetail.getAppmntId());
             taskcreation.save(taskObj);
         } catch (Exception e) {
-             e.printStackTrace();
+            e.printStackTrace();
             return new SaiResponse(400, "New Customer appoinment Not Inserted", null);
         }
         return apiResponse = new SaiResponse(200, "Ok", null);
@@ -406,9 +425,8 @@ public class SSAppoinmentDetailsController {
 
         return appoinmentRepository.getAppoinmentCount(locId);
     }
-    
-    
-       ///////////////////TO DISPLAY MARQUEE VALUE FOR appoinemtn taken executive ON HOME PAGE///////////
+
+    ///////////////////TO DISPLAY MARQUEE VALUE FOR appoinemtn taken executive ON HOME PAGE///////////
     @RequestMapping(value = "/ssAppoinment/getAppoinmentCountExewise/{apptAttended}", method = RequestMethod.GET, produces = {"application/JSON"})
     public Map getAppoinmentCountExewise(@PathVariable String apptAttended) {
 
@@ -421,8 +439,8 @@ public class SSAppoinmentDetailsController {
 
         return appoinmentRepository.getAppoinmentPickup(locId);
     }
-    
-     ///////////////////TO DISPLAY MARQUEE VALUE FOR appoinemtn taken executive ON HOME PAGE///////////
+
+    ///////////////////TO DISPLAY MARQUEE VALUE FOR appoinemtn taken executive ON HOME PAGE///////////
     @RequestMapping(value = "/ssAppoinment/getAppoinmentPickupExecwise/{locId}", method = RequestMethod.GET, produces = {"application/JSON"})
     public Map getAppoinmentPickupExecwise(@PathVariable String apptAttended) {
 

@@ -167,4 +167,11 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
       @Query(value = " select concat(TIMING,\" - \",QUOTA) Slot from test.ss_slot_available WHERE serv_loc_id=?1 and SERVICE_DATE=?2 and valid='Y' ", nativeQuery = true)
     public List<Map> getSlotAvailDatewise(long serv_loc_id, String serviceDate);
 
+    public List<SsTaskDetails> findByAssigneeIdAndLocIdAndTaskStatus(String assigneeId,int locId,String status);//Need to Add Date Also
+   
+    
+     public List<SsTaskDetails> findByAssigneeIdAndLocIdAndLastServcTypeAndTaskStatus(String assigneeId,int locId,String servc_type,String status);//Need to Add Date Also
+     
+ public List<SsTaskDetails> findByLocIdAndLastServcTypeAndTaskStatus(int locId,String servc_type,String status);//Need to Add Date Also
+   
 }

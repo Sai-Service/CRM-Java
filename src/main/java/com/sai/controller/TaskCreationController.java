@@ -291,8 +291,10 @@ public class TaskCreationController {
         //    SsTaskDetails taskObj = taskRepository.findByTaskId(sd1.getTaskId());
         //  taskObj.setApptmtId(saveApptDetail.getAppmntId());
 //
-        SsSlotAvailable sltavail = slotAvail.findByLocId(servLoc.getLocId(), slotDetails[0]);
-        long quota = sltavail.getQuota();
+     //   SsSlotAvailable sltavail = slotAvail.findByLocId(servLoc.getLocId(), slotDetails[0]);
+      SsSlotAvailable sltavail = slotAvail.findBySerLocIdAndServiceDateAndTiming(servLoc.getLocId(), apptInsert.getApptDate(), slotDetails[0]);
+     
+     long quota = sltavail.getQuota();
         quota = quota - 1;
 
         sltavail.setQuota(quota);

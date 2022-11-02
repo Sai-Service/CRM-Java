@@ -14,8 +14,9 @@ import com.sai.dao.UpdateAssigneeDao;
 import com.sai.dao.UserLoginDao;
 import com.sai.dto.Assignee;
 import com.sai.dto.UpdateAssigneeRequest;
+import com.sai.dto.updateTaskDto;
+import com.sai.model.SsTaskDetails;
 import com.sai.model.UpdateAssignee;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -124,6 +125,49 @@ public class LocAccessLoginWiseController {
         }
         return apiResponse = new SaiResponse(200, "Ok", null);
     }
+    
+     ////UPDATE THE ASSIGNEE ID AND ASSIGNEE NAME--Type & assignee Wise
+    @RequestMapping(value = "/UpdateAssigneeTypeWise", method = RequestMethod.PUT, produces = {"application/JSON"})
+    SaiResponse UpdateAssigneeTypeWise(@RequestBody updateTaskDto updatedAssignee) {
+        SaiResponse apiResponse;
+        try {
+            Assignee frmAssignee = updatedAssignee.getFrmExe();
+            Assignee toAssignee = updatedAssignee.getToExe();
+
+            List<SsTaskDetails> taskList = taskCreation.findByAssigneeIdAndLocIdAndLastServcTypeAndTaskStatus(frmAssignee.getTicketNo(), updatedAssignee.getLocId(), updatedAssignee.getSerType(), "NEW");  //findByAssigneeIdAndLocIdAndLastServcTypeAndTaskStatus
+
+            for (SsTaskDetails map1 : taskList) {
+                taskGenImpl.UpdateAssigneeTaskIdwise(toAssignee.getTicketNo(), toAssignee.getEmpName(), map1.getTaskId());
+
+            }
+
+        } catch (Exception e) {
+            apiResponse = new SaiResponse(400, "Updation not Done", null);
+        }
+        return apiResponse = new SaiResponse(200, "Ok", null);
+    }
+    
+    //Update From Assignee To Some Other Assignee
+     @RequestMapping(value = "/UpdateTaskFrmAssigneeToOther", method = RequestMethod.PUT, produces = {"application/JSON"})
+    SaiResponse UpdateTaskFrmAssigneeToOther(@RequestBody updateTaskDto updatedAssignee) {
+        SaiResponse apiResponse;
+        try {
+            Assignee frmAssignee = updatedAssignee.getFrmExe();
+            Assignee toAssignee = updatedAssignee.getToExe();
+
+            List<SsTaskDetails> taskList = taskCreation.findByAssigneeIdAndLocIdAndTaskStatus(frmAssignee.getTicketNo(), updatedAssignee.getLocId(),  "NEW");  //findByAssigneeIdAndLocIdAndLastServcTypeAndTaskStatus
+
+            for (SsTaskDetails map1 : taskList) {
+                taskGenImpl.UpdateAssigneeTaskIdwise(toAssignee.getTicketNo(), toAssignee.getEmpName(), map1.getTaskId());
+
+            }
+
+        } catch (Exception e) {
+            apiResponse = new SaiResponse(400, "Updation not Done", null);
+        }
+        return apiResponse = new SaiResponse(200, "Ok", null);
+    }
+
 
     @RequestMapping(value = "/taskupdateManually/assingee", method = RequestMethod.GET, produces = {"application/JSON"})
     public SaiResponse assignTaskToUsersManually(@RequestParam Map<String, Object> map) {

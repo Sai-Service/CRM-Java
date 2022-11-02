@@ -17,7 +17,14 @@ import org.springframework.data.repository.CrudRepository;
  */
     
     public interface SsCustomerDao extends CrudRepository<SsCustomer, Long>{
-   //  @Query("select * from SsCustomer")
+   
+@Query("select max(custAcctNo) from SsCustomer")
+    public Integer getMaxCustAccountNo();
+
+    @Query("select max(custId) from SsCustomer")
+    public Integer getMaxCustId();
+    
+//  @Query("select * from SsCustomer")
     // public List<Object> getCustNames();
         
  //        SsCustomer findByVehicleNo(String vehicle_no);

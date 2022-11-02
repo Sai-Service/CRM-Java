@@ -5,7 +5,6 @@
  */
 package com.sai.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
@@ -13,6 +12,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.data.annotation.Id;
 
@@ -46,7 +47,8 @@ public class SsSlotAvailable implements Serializable {
     @Column(name = "QUOTA")
     private long quota;
 
-    @JsonFormat(pattern="dd/MM/yyyy")
+    // @JsonFormat(pattern="yyyy-mm-dd")
+    @Temporal(TemporalType.DATE)
     @Column(name = "SERVICE_DATE")
     private Date serviceDate;
 

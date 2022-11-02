@@ -351,12 +351,22 @@ public class SsCustomerController {
             apptDetails.setLstUpDt(currentDate);
             apptDetails.setLastUpdatedBy(user.getUserId());
 
-//            SsSlotAvailable sltavail = slotAvail.findByLocId(servcLoc.getLocId(), slotDetails[0]);
-//            long quota = sltavail.getQuota();
-//            quota = quota - 1;
+    
+            SsSlotAvailable sltavail = slotAvail.findBySerLocIdAndServiceDateAndTiming(servcLoc.getLocId(),req.getApptDate(), slotDetails[0]);
+            
+            if (sltavail==null)
+            {
+            throw new Exception("Slot not found for given parameters");
+            }
+            else
+            {
+            long quota = sltavail.getQuota();
+           quota = quota - 1;
 //
-//            sltavail.setQuota(quota);
-//            slotAvail.save(sltavail);
+            sltavail.setQuota(quota);
+            slotAvail.save(sltavail);
+            }
+
 
             SSAppoinmentDetails saveApptDetail = appoinmentRepository.save(apptDetails);
             System.out.println("Appoinment Id is--" + saveApptDetail.getAppmntId());
