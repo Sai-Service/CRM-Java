@@ -383,21 +383,21 @@ public class TaskCreationController {
     ///////////////////TO DISPLAY MARQUEE VALUE FOR CONTACTED CUSTOMER ON HOME PAGE admin///////////
 
     @RequestMapping(value = "/ssTask/getContactedCust/{locId}", method = RequestMethod.GET, produces = {"application/JSON"})
-    public Map getContactedCust(@PathVariable Long locId) {
+    public Map getContactedCust(@PathVariable int locId) {
 
         return taskRepository.getContactedCust(locId);
     }
 
     ///////////////////TO DISPLAY MARQUEE VALUE FOR UNCONTACTED CUSTOMER ON HOME PAGE admin///////////
     @RequestMapping(value = "/ssTask/getUnContactedCust/{locId}", method = RequestMethod.GET, produces = {"application/JSON"})
-    public Map getUnContactedCust(@PathVariable Long locId) {
+    public Map getUnContactedCust(@PathVariable int locId) {
 
         return taskRepository.getUnContactedCust(locId);
     }
 
     ///////////////////TO DISPLAY MARQUEE VALUE FOR UNCONTACTED CUSTOMER ON HOME PAGE admin///////////
     @RequestMapping(value = "/ssTask/getSmsSend/{locId}", method = RequestMethod.GET, produces = {"application/JSON"})
-    public Map getTotalSMSSend(@PathVariable Long locId) {
+    public Map getTotalSMSSend(@PathVariable int locId) {
 
         return taskRepository.getTotalSMSSend(locId);
     }

@@ -41,13 +41,13 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
     //////TO DISPLAY MARQUEE VALUE FOR CONTACTED CUSTOMER ON HOME PAGE ADMIN//////////////////////         
     @Query("select  count(std.taskId) as contacted from SsTaskDetails std where callDuDt=CURRENT_DATE and contacted='Y' and std.locId=?1 order by std.taskId")
     // MassAssignData getMassAssCount(long locId); 
-    Map getContactedCust(long locId);
+    Map getContactedCust(int locId);
 
     ///////////////////FOR REPORT////////////////////
     @Query("select  NEW com.sai.model.SsTaskDetails(std.taskType,  std.taskStatus,  std.callDuDt,  std.custId,   std.custAdd,  std.contactPerson,   std.contactNo1,  std.contactNo2,  std.emailAdd,  std.vehicleNo,std.reason,  std.remarks,  std.taskReason,  std.lastServcDt,  std.lastServcType,  std.lastServcLoc,  std.lastServcKm, std.nextServcDt,  std.nextServcType\n"
-            + ") from SsTaskDetails std where callDuDt=CURRENT_DATE and contacted='Y' and std.locId=?1 order by std.taskId")
+            + ") from SsTaskDetails std where std.callDuDt=CURRENT_DATE and std.contacted='Y' and std.locId=?1 order by std.taskId")
     // MassAssignData getMassAssCount(long locId); 
-    List<SsTaskDetails> getContactedCustDetails(long locId);
+    List<SsTaskDetails> getContactedCustDetails(int locId);
 
     //////TO DISPLAY MARQUEE VALUE FOR CONTACTED CUSTOMER ON HOME PAGE EXECUTIVE//////////////////////         
     @Query("select  count(std.taskId) as contacted from SsTaskDetails std where callDuDt=CURRENT_DATE and contacted='Y' and std.assigneeId=?1 order by std.taskId")
@@ -67,9 +67,9 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
 
     //////TO DISPLAY MARQUEE VALUE FOR UNCONTACTED CUSTOMER ON HOME PAGE//////////////////////         
     @Query("select  NEW com.sai.model.SsTaskDetails(std.taskType,  std.taskStatus,  std.callDuDt,  std.custId,   std.custAdd,  std.contactPerson, std.contactNo1,  std.contactNo2,  std.emailAdd,  std.vehicleNo,  std.reason,  std.remarks,  std.taskReason,  std.lastServcDt,  std.lastServcType,  std.lastServcLoc,  std.lastServcKm, std.nextServcDt,  std.nextServcType\n"
-            + ") from SsTaskDetails std where callDuDt=CURRENT_DATE and contacted='N' and std.locId=?1 order by std.taskId")
+            + ") from SsTaskDetails std where std.callDuDt=CURRENT_DATE and std.contacted='N' and std.locId=?1 order by std.taskId")
     // MassAssignData getMassAssCount(long locId); 
-    List<SsTaskDetails> getUnContactedCustDetails(long locId);
+    List<SsTaskDetails> getUnContactedCustDetails(int locId);
 
     //////TO DISPLAY MARQUEE VALUE FOR UNCONTACTED CUSTOMER ON HOME PAGE executive//////////////////////         
     @Query("select  count(std.taskId) as uncontacted from SsTaskDetails std where callDuDt=CURRENT_DATE and contacted='N' and std.assigneeId=?1 order by std.taskId")
@@ -82,30 +82,30 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
     List<SsTaskDetails> getUnContactedCustDetailsExewise(String assigneeId);
 
     //////TO DISPLAY MARQUEE VALUE FOR TOTAL SMS SEND ON HOME PAGE admin//////////////////////         
-    @Query("select count(appmnt_id) as smssend from SSAppoinmentDetails std where creationDate=CURRENT_DATE and std.locationId=?1")
+    @Query("select count(appmnt_id) as smssend from SSAppoinmentDetails std where std.creationDt=CURRENT_DATE and std.locationId=?1")
     // MassAssignData getMassAssCount(long locId); 
-    Map getTotalSMSSend(long locId);
+    Map getTotalSMSSend(int locId);
 
     //////TO DISPLAY MARQUEE VALUE FOR TOTAL SMS SEND ON HOME PAGE//////////////////////         
     @Query("select NEW com.sai.model.SSAppoinmentDetails(std.appmntId,  std.vehicleNo,  std.servType,  std.servLoc,  std.servGroup,  std.apptDate,  std.apptTimeSlot,  std.apptStatus, std.pickUp,  std.amount, std.pickAdd, std.remark, std.lastDesposition, std.apptAttended) "
-            + " from SSAppoinmentDetails std where creationDate=CURRENT_DATE and std.locationId=?1")
+            + " from SSAppoinmentDetails std where std.creationDt=CURRENT_DATE and std.locationId=?1")
     // MassAssignData getMassAssCount(long locId); 
-    List<SSAppoinmentDetails> getTotalSMSSendDetails(long locId);
+    List<SSAppoinmentDetails> getTotalSMSSendDetails(Integer locationId);
 
     //////TO DISPLAY MARQUEE VALUE FOR TOTAL SMS SEND ON HOME PAGE executive//////////////////////         
-    @Query("select count(appmnt_id) as smssend from SSAppoinmentDetails std where creationDate=CURRENT_DATE and std.apptAttended=?1")
+    @Query("select count(appmnt_id) as smssend from SSAppoinmentDetails std where std.creationDt=CURRENT_DATE and std.apptAttended=?1")
     // MassAssignData getMassAssCount(long locId); 
     Map getTotalSMSSendExeWise(String apptAttended);
 
 //////TO DISPLAY MARQUEE VALUE FOR TOTAL SMS SEND ON HOME PAGE//////////////////////         
     @Query("select NEW com.sai.model.SSAppoinmentDetails(std.appmntId,  std.vehicleNo,  std.servType,  std.servLoc,  std.servGroup,  std.apptDate,  std.apptTimeSlot,  std.apptStatus, std.pickUp,  std.amount, std.pickAdd, std.remark, std.lastDesposition, std.apptAttended) "
-            + " from SSAppoinmentDetails std where creationDate=CURRENT_DATE and std.apptAttended=?1")
+            + " from SSAppoinmentDetails std where std.creationDt=CURRENT_DATE and std.apptAttended=?1")
     // MassAssignData getMassAssCount(long locId); 
     List<SSAppoinmentDetails> getTotalSMSSendDetailsExewise(String apptAttended);
 
     ////////TO DISPLAY HIGHEST APPOINMENT TAKEN///////
     @Query(value = "select a.* from (select  std.assignee_id,std.assignee,count(appt.APPMNT_ID) total\n"
-            + "from test.ss_task_details std,ss_appoinment_details appt\n"
+            + "from crm.ss_task_details std,ss_appoinment_details appt\n"
             + "where  std.task_status!='CLOSED' AND appt.creation_date =curdate() and std.loc_id=?1  \n"
             + " and appt.task_id=std.task_id\n"
             + " group by std.assignee,std.assignee_id) a order by total desc", nativeQuery = true)
@@ -123,18 +123,18 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
     ///////////////UPDATE THE SS_TASK_DETAILS & SS_ADMINISTRATOR_DATA TASK_TYPE AS CLOSED AFTER CLOSING THE TASK.////////
     @Modifying
     @Transactional
-    @Query(value = "update test.ss_task_details set task_status='CLOSED' WHERE TASK_ID=?1", nativeQuery = true)
+    @Query(value = "update crm.ss_task_details set task_status='CLOSED' WHERE TASK_ID=?1", nativeQuery = true)
     public void TaskStatusUpdate(Long TASK_ID);
 
     //////TO DISPLAY ALL THE Message for EW and MCP End//////////////////////         
-    @Query(value = " select concat(\"Customer EW Ending after 15 Days...Ew Date is : \" ,EWDate) Reminder from\n test.ss_vehicle_master where  vehicleNo=?1 and ewEnDate like (curdate()  + interval 15 day ) ", nativeQuery = true)
+    @Query(value = " select concat(\"Customer EW Ending after 15 Days...Ew Date is : \" ,EWDate) Reminder from\n crm.ss_vehicle_master where  vehicleNo=?1 and ewEnDate like (curdate()  + interval 15 day ) ", nativeQuery = true)
     // MassAssignData getMassAssCount(long locId); 
     Map getEWMessage(String vehicleNo);
 
-    @Query(value = " select concat(\"Customer MCP Ending after 15 Days...MCP Date is : \" ,MCPDate) Reminder from\n test.ss_vehicle_master where  vehicleNo=?1 and mcpEnDate like (curdate()  + interval 15 day ) ", nativeQuery = true)
+    @Query(value = " select concat(\"Customer MCP Ending after 15 Days...MCP Date is : \" ,MCPDate) Reminder from\n crm.ss_vehicle_master where  vehicleNo=?1 and mcpEnDate like (curdate()  + interval 15 day ) ", nativeQuery = true)
     Map getMCPMessage(String vehicleNo);
 
-    @Query(value = " select concat(TIMING,\" - \",QUOTA) Slot from test.ss_slot_available WHERE SERVICE_DATE=curdate()\n"
+    @Query(value = " select concat(TIMING,\" - \",QUOTA) Slot from crm.ss_slot_available WHERE SERVICE_DATE=curdate()\n"
             + "and serv_loc_id=?1 and valid='Y' ", nativeQuery = true)
     public List<Map> getSlotAvail(long serv_loc_id);
 
@@ -149,13 +149,13 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
     @Query(value = "SELECT std.task_id as taskid,std.cust_id as custid,std.cust_name,\n"
             + "std.contact_no1 as contactno1,std.vehicle_no as vehicleno,std.last_servc_dt as lstservdt,std.last_servc_type as lstservtype,last_servc_loc as lstservloc,\n"
             + "std.next_servc_Dt as nxtservdt,std.next_servc_type as nxtservtype,std.assignee,std.assignee_id as assigneeid\n"
-            + "from test.ss_task_details std\n"
+            + "from crm.ss_task_details std\n"
             + "where std.task_status!='CLOSED' AND std.call_du_dt =curdate() and  std.loc_id=?1  order by std.next_servc_type", nativeQuery = true)
     List<Map> getMainAdminSummary(Integer loc_id);
 
     ////////TO DISPLAY yesterday HIGHEST APPOINMENT TAKEN///////
     @Query(value = "select a.* from (select  std.assignee_id as assignee_id1 ,std.assignee as assignee1,count(appt.APPMNT_ID) total1\n"
-            + "from test.ss_task_details std,ss_appoinment_details appt\n"
+            + "from crm.ss_task_details std,ss_appoinment_details appt\n"
             + "where  std.task_status!='CLOSED' AND appt.creation_date =curdate()- interval 1 day and std.loc_id=?1  \n"
             + " and appt.task_id=std.task_id\n"
             + " group by std.assignee,std.assignee_id) a order by total1 desc  limit 0,10", nativeQuery = true)
@@ -164,14 +164,24 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
     public List<SsTaskDetails> findByVehicleNo(String vehicleNo);
 
    
-      @Query(value = " select concat(TIMING,\" - \",QUOTA) Slot from test.ss_slot_available WHERE serv_loc_id=?1 and SERVICE_DATE=?2 and valid='Y' ", nativeQuery = true)
+      @Query(value = " select concat(TIMING,\" - \",QUOTA) Slot from crm.ss_slot_available WHERE serv_loc_id=?1 and SERVICE_DATE=?2 and valid='Y' ", nativeQuery = true)
     public List<Map> getSlotAvailDatewise(long serv_loc_id, String serviceDate);
 
-    public List<SsTaskDetails> findByAssigneeIdAndLocIdAndTaskStatus(String assigneeId,int locId,String status);//Need to Add Date Also
+     public List<SsTaskDetails> findByAssigneeIdAndLocIdAndTaskStatus(String assigneeId,int locId,String status);//Need to Add Date Also
    
     
      public List<SsTaskDetails> findByAssigneeIdAndLocIdAndLastServcTypeAndTaskStatus(String assigneeId,int locId,String servc_type,String status);//Need to Add Date Also
      
  public List<SsTaskDetails> findByLocIdAndLastServcTypeAndTaskStatus(int locId,String servc_type,String status);//Need to Add Date Also
+
+    public List<SsTaskDetails> findByLocIdAndLastServcTypeAndTaskStatus(Integer locId, String serType, String aNEW);
+    
+     public List<SsTaskDetails> findByLocIdAndNextServcTypeAndTaskStatus(Integer locId, String serType, String aNEW);
    
+     public List<SsTaskDetails> findByLocIdAndNextServcTypeAndTaskStatusAndCallDuDt(Integer locId, String serType, String aNEW,Date callDuDt);
+
+        @Query(value = " select std.task_Id as taskId from crm.ss_task_details std WHERE std.loc_id=?1 and std.NEXT_SERVC_TYPE=?2 and std.task_status=?3 and std.call_du_dt=?4 ", nativeQuery = true)
+    public List<Map> getTaskIdNew(Integer locId, String serType, String aNEW,Date callDuDt);
+
+
 }

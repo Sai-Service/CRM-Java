@@ -320,7 +320,7 @@ public class CrmReportController {
     
 ////////////////////////////////ADMIN HOME PAGE////////////////////
     @GetMapping(value = "/download/OnClickTodayGetUnContactedCustExewiseDetails.xlsx/{locId}")
-    public ResponseEntity<InputStreamResource> genGetUnContactedCustDetails(@PathVariable long locId) throws Exception {
+    public ResponseEntity<InputStreamResource> genGetUnContactedCustDetails(@PathVariable int locId) throws Exception {
         ByteArrayInputStream in = null;
         HttpHeaders headers = new HttpHeaders();
         try {
@@ -367,7 +367,7 @@ public class CrmReportController {
     
     //////////////////////////ADMIN HOME PAGE///////////////////
     @GetMapping(value = "/download/OnClickTodayGetContactedCustDetails.xlsx/{locId}")
-    public ResponseEntity<InputStreamResource> genGetContactedCustDetails(@PathVariable long locId) throws Exception {
+    public ResponseEntity<InputStreamResource> genGetContactedCustDetails(@PathVariable int locId) throws Exception {
         ByteArrayInputStream in = null;
         HttpHeaders headers = new HttpHeaders();
         try {
@@ -415,7 +415,7 @@ public class CrmReportController {
     
     ///////////////////////ADMIN REPORT//////////////////////////////
     @GetMapping(value = "/download/OnClickTodayGetSMSSendDetails.xlsx/{locId}")
-    public ResponseEntity<InputStreamResource> genGetTotalSMSSendDetails(@PathVariable long locId) throws Exception {
+    public ResponseEntity<InputStreamResource> genGetTotalSMSSendDetails(@PathVariable Integer locId) throws Exception {
         ByteArrayInputStream in = null;
         HttpHeaders headers = new HttpHeaders();
         try {
