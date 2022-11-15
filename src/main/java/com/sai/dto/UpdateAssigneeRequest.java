@@ -19,7 +19,18 @@ public class UpdateAssigneeRequest {
     private long maxcount;
     @JsonProperty("assignee")
     private Assignee assignee;
+     private String callDuDt;
+
+    public String getCallDuDt() {
+        return callDuDt;
+    }
+
+    public void setCallDuDt(String callDuDt) {
+        this.callDuDt = callDuDt;
+    }
     
+     
+     
 
     @JsonProperty("mincount")
     public long getMincount() {

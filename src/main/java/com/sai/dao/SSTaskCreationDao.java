@@ -105,7 +105,7 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
 
     ////////TO DISPLAY HIGHEST APPOINMENT TAKEN///////
     @Query(value = "select a.* from (select  std.assignee_id,std.assignee,count(appt.APPMNT_ID) total\n"
-            + "from crm.ss_task_details std,ss_appoinment_details appt\n"
+            + "from test.ss_task_details std,ss_appoinment_details appt\n"
             + "where  std.task_status!='CLOSED' AND appt.creation_date =curdate() and std.loc_id=?1  \n"
             + " and appt.task_id=std.task_id\n"
             + " group by std.assignee,std.assignee_id) a order by total desc", nativeQuery = true)
@@ -123,18 +123,18 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
     ///////////////UPDATE THE SS_TASK_DETAILS & SS_ADMINISTRATOR_DATA TASK_TYPE AS CLOSED AFTER CLOSING THE TASK.////////
     @Modifying
     @Transactional
-    @Query(value = "update crm.ss_task_details set task_status='CLOSED' WHERE TASK_ID=?1", nativeQuery = true)
+    @Query(value = "update test.ss_task_details set task_status='CLOSED' WHERE TASK_ID=?1", nativeQuery = true)
     public void TaskStatusUpdate(Long TASK_ID);
 
     //////TO DISPLAY ALL THE Message for EW and MCP End//////////////////////         
-    @Query(value = " select concat(\"Customer EW Ending after 15 Days...Ew Date is : \" ,EWDate) Reminder from\n crm.ss_vehicle_master where  vehicleNo=?1 and ewEnDate like (curdate()  + interval 15 day ) ", nativeQuery = true)
+    @Query(value = " select concat(\"Customer EW Ending after 15 Days...Ew Date is : \" ,EWDate) Reminder from\n test.ss_vehicle_master where  vehicleNo=?1 and ewEnDate like (curdate()  + interval 15 day ) ", nativeQuery = true)
     // MassAssignData getMassAssCount(long locId); 
     Map getEWMessage(String vehicleNo);
 
-    @Query(value = " select concat(\"Customer MCP Ending after 15 Days...MCP Date is : \" ,MCPDate) Reminder from\n crm.ss_vehicle_master where  vehicleNo=?1 and mcpEnDate like (curdate()  + interval 15 day ) ", nativeQuery = true)
+    @Query(value = " select concat(\"Customer MCP Ending after 15 Days...MCP Date is : \" ,MCPDate) Reminder from\n test.ss_vehicle_master where  vehicleNo=?1 and mcpEnDate like (curdate()  + interval 15 day ) ", nativeQuery = true)
     Map getMCPMessage(String vehicleNo);
 
-    @Query(value = " select concat(TIMING,\" - \",QUOTA) Slot from crm.ss_slot_available WHERE SERVICE_DATE=curdate()\n"
+    @Query(value = " select concat(TIMING,\" - \",QUOTA) Slot from test.ss_slot_available WHERE SERVICE_DATE=curdate()\n"
             + "and serv_loc_id=?1 and valid='Y' ", nativeQuery = true)
     public List<Map> getSlotAvail(long serv_loc_id);
 
@@ -149,13 +149,13 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
     @Query(value = "SELECT std.task_id as taskid,std.cust_id as custid,std.cust_name,\n"
             + "std.contact_no1 as contactno1,std.vehicle_no as vehicleno,std.last_servc_dt as lstservdt,std.last_servc_type as lstservtype,last_servc_loc as lstservloc,\n"
             + "std.next_servc_Dt as nxtservdt,std.next_servc_type as nxtservtype,std.assignee,std.assignee_id as assigneeid\n"
-            + "from crm.ss_task_details std\n"
+            + "from test.ss_task_details std\n"
             + "where std.task_status!='CLOSED' AND std.call_du_dt =curdate() and  std.loc_id=?1  order by std.next_servc_type", nativeQuery = true)
     List<Map> getMainAdminSummary(Integer loc_id);
 
     ////////TO DISPLAY yesterday HIGHEST APPOINMENT TAKEN///////
     @Query(value = "select a.* from (select  std.assignee_id as assignee_id1 ,std.assignee as assignee1,count(appt.APPMNT_ID) total1\n"
-            + "from crm.ss_task_details std,ss_appoinment_details appt\n"
+            + "from test.ss_task_details std,ss_appoinment_details appt\n"
             + "where  std.task_status!='CLOSED' AND appt.creation_date =curdate()- interval 1 day and std.loc_id=?1  \n"
             + " and appt.task_id=std.task_id\n"
             + " group by std.assignee,std.assignee_id) a order by total1 desc  limit 0,10", nativeQuery = true)
@@ -164,13 +164,15 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
     public List<SsTaskDetails> findByVehicleNo(String vehicleNo);
 
    
-      @Query(value = " select concat(TIMING,\" - \",QUOTA) Slot from crm.ss_slot_available WHERE serv_loc_id=?1 and SERVICE_DATE=?2 and valid='Y' ", nativeQuery = true)
+      @Query(value = " select concat(TIMING,\" - \",QUOTA) Slot from test.ss_slot_available WHERE serv_loc_id=?1 and SERVICE_DATE=?2 and valid='Y' ", nativeQuery = true)
     public List<Map> getSlotAvailDatewise(long serv_loc_id, String serviceDate);
 
      public List<SsTaskDetails> findByAssigneeIdAndLocIdAndTaskStatus(String assigneeId,int locId,String status);//Need to Add Date Also
    
-    
-     public List<SsTaskDetails> findByAssigneeIdAndLocIdAndLastServcTypeAndTaskStatus(String assigneeId,int locId,String servc_type,String status);//Need to Add Date Also
+       public List<SsTaskDetails> findByAssigneeIdAndLocIdAndTaskStatusAndCallDuDt(String assigneeId,int locId,String status,Date inputDate);//Need to Add Date Also
+   
+     
+     public List<SsTaskDetails> findByAssigneeIdAndLocIdAndLastServcTypeAndTaskStatusAndCallDuDt(String assigneeId,int locId,String servc_type,String status,Date inputDate);//Need to Add Date Also
      
  public List<SsTaskDetails> findByLocIdAndLastServcTypeAndTaskStatus(int locId,String servc_type,String status);//Need to Add Date Also
 
@@ -180,7 +182,7 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
    
      public List<SsTaskDetails> findByLocIdAndNextServcTypeAndTaskStatusAndCallDuDt(Integer locId, String serType, String aNEW,Date callDuDt);
 
-        @Query(value = " select std.task_Id as taskId from crm.ss_task_details std WHERE std.loc_id=?1 and std.NEXT_SERVC_TYPE=?2 and std.task_status=?3 and std.call_du_dt=?4 ", nativeQuery = true)
+        @Query(value = " select std.task_Id as taskId from test.ss_task_details std WHERE std.loc_id=?1 and std.NEXT_SERVC_TYPE=?2 and std.task_status=?3 and std.call_du_dt=?4 ", nativeQuery = true)
     public List<Map> getTaskIdNew(Integer locId, String serType, String aNEW,Date callDuDt);
 
 

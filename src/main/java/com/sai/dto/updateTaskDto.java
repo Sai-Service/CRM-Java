@@ -19,14 +19,14 @@ public class updateTaskDto {
     @JsonProperty("toExe")
     private Assignee toExe;
     private String serType;
-    private Date callDuDt;
+    private String callDuDt;
     private Integer locId;
 
-    public Date getCallDuDt() {
+    public String getCallDuDt() {
         return callDuDt;
     }
 
-    public void setCallDuDt(Date callDuDt) {
+    public void setCallDuDt(String callDuDt) {
         this.callDuDt = callDuDt;
     }
 

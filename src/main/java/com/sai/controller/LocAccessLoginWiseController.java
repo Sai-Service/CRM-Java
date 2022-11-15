@@ -17,7 +17,9 @@ import com.sai.dto.UpdateAssigneeRequest;
 import com.sai.dto.updateTaskDto;
 import com.sai.model.SsTaskDetails;
 import com.sai.model.UpdateAssignee;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,27 +119,31 @@ public class LocAccessLoginWiseController {
         SaiResponse apiResponse;
         try {
             Assignee assignee = updatedAssignee.getAssignee();
-            //  public void UpdateAssignee(String assignee ,String ASSIGNEE_ID,long FROMTASK_ID,long TOTASK_ID );  
-            taskGenImpl.updateAssignIdwithLoc(assignee.getEmpName(), assignee.getTicketNo(), updatedAssignee.getMincount(), updatedAssignee.getMaxcount(), assignee.getLocId());
+            Date frmDt1 = new SimpleDateFormat("yyyy-MM-dd").parse(updatedAssignee.getCallDuDt());
+            taskGenImpl.updateAssignIdwithLoc(assignee.getEmpName(), assignee.getTicketNo(), updatedAssignee.getMincount(), updatedAssignee.getMaxcount(), assignee.getLocId(), frmDt1);
 //         taskGenImpl.UpdateAssignee(assignee.getEmpName(), assignee.getTicketNo(), updatedAssignee.getMincount(), updatedAssignee.getMaxcount()); 
         } catch (Exception e) {
             apiResponse = new SaiResponse(400, "Updation not Done", null);
         }
         return apiResponse = new SaiResponse(200, "Ok", null);
     }
-    
-     ////UPDATE THE ASSIGNEE ID AND ASSIGNEE NAME--Type & assignee Wise
+
+    ////UPDATE THE ASSIGNEE ID AND ASSIGNEE NAME--Type & assignee Wise
     @RequestMapping(value = "/UpdateAssigneeTypeWise", method = RequestMethod.PUT, produces = {"application/JSON"})
     SaiResponse UpdateAssigneeTypeWise(@RequestBody updateTaskDto updatedAssignee) {
         SaiResponse apiResponse;
         try {
             Assignee frmAssignee = updatedAssignee.getFrmExe();
             Assignee toAssignee = updatedAssignee.getToExe();
+            Date frmDt1 = new SimpleDateFormat("yyyy-MM-dd").parse(updatedAssignee.getCallDuDt());
 
-            List<SsTaskDetails> taskList = taskCreation.findByAssigneeIdAndLocIdAndLastServcTypeAndTaskStatus(frmAssignee.getTicketNo(), updatedAssignee.getLocId(), updatedAssignee.getSerType(), "NEW");  //findByAssigneeIdAndLocIdAndLastServcTypeAndTaskStatus
+            List<SsTaskDetails> taskList = taskCreation.findByAssigneeIdAndLocIdAndLastServcTypeAndTaskStatusAndCallDuDt(frmAssignee.getTicketNo(), updatedAssignee.getLocId(), updatedAssignee.getSerType(), "NEW", frmDt1);  //findByAssigneeIdAndLocIdAndLastServcTypeAndTaskStatus
+            //      List<SsTaskDetails> taskList = taskCreation.findByLocIdAndNextServcTypeAndTaskStatus(updatedAssignee.getLocId(), updatedAssignee.getSerType(), "NEW");  //findByAssigneeIdAndLocIdAndLastServcTypeAndTaskStatus
+
+            System.out.println("TaskList+++" + taskList.size());
 
             for (SsTaskDetails map1 : taskList) {
-                taskGenImpl.UpdateAssigneeTaskIdwise(toAssignee.getTicketNo(), toAssignee.getEmpName(), map1.getTaskId());
+                taskGenImpl.UpdateAssigneeTaskIdwise(toAssignee.getEmpName(), toAssignee.getTicketNo(), map1.getTaskId());
 
             }
 
@@ -146,19 +152,20 @@ public class LocAccessLoginWiseController {
         }
         return apiResponse = new SaiResponse(200, "Ok", null);
     }
-    
+
     //Update From Assignee To Some Other Assignee
-     @RequestMapping(value = "/UpdateTaskFrmAssigneeToOther", method = RequestMethod.PUT, produces = {"application/JSON"})
+    @RequestMapping(value = "/UpdateTaskFrmAssigneeToOther", method = RequestMethod.PUT, produces = {"application/JSON"})
     SaiResponse UpdateTaskFrmAssigneeToOther(@RequestBody updateTaskDto updatedAssignee) {
         SaiResponse apiResponse;
         try {
             Assignee frmAssignee = updatedAssignee.getFrmExe();
             Assignee toAssignee = updatedAssignee.getToExe();
+            Date frmDt1 = new SimpleDateFormat("yyyy-MM-dd").parse(updatedAssignee.getCallDuDt());
 
-            List<SsTaskDetails> taskList = taskCreation.findByAssigneeIdAndLocIdAndTaskStatus(frmAssignee.getTicketNo(), updatedAssignee.getLocId(),  "NEW");  //findByAssigneeIdAndLocIdAndLastServcTypeAndTaskStatus
+            List<SsTaskDetails> taskList = taskCreation.findByAssigneeIdAndLocIdAndTaskStatusAndCallDuDt(frmAssignee.getTicketNo(), updatedAssignee.getLocId(), "NEW", frmDt1);  //findByAssigneeIdAndLocIdAndLastServcTypeAndTaskStatus
 
             for (SsTaskDetails map1 : taskList) {
-                taskGenImpl.UpdateAssigneeTaskIdwise(toAssignee.getTicketNo(), toAssignee.getEmpName(), map1.getTaskId());
+                taskGenImpl.UpdateAssigneeTaskIdwise(toAssignee.getEmpName(), toAssignee.getTicketNo(), map1.getTaskId());
 
             }
 
@@ -168,57 +175,55 @@ public class LocAccessLoginWiseController {
         return apiResponse = new SaiResponse(200, "Ok", null);
     }
 
-
-    @RequestMapping(value = "/taskupdateManually/assingee", method = RequestMethod.GET, produces = {"application/JSON"})
-    public SaiResponse assignTaskToUsersManually(@RequestParam Map<String, Object> map) {
-        try {
-            Integer fromTaskId = 0;
-            Integer toTaskId = 0;
-            String assignee = null;
-            String assigneeId = null;
-            Integer locId = 0;
-            String model = null;
-            String vehicleType = null;
-
-            for (String searchKey : map.keySet()) {   //mincount=167&maxcount=171&assignee=M28796&locId=124
-                if (searchKey.equals("mincount")) {
-                    fromTaskId = Integer.parseInt((String) map.get("mincount"));
-                    toTaskId = Integer.parseInt((String) map.get("maxcount"));
-                    assignee = (String) map.get("assignee");
-//                      assignee_id = (String) map.get("assignee_id");
-                    locId = Integer.parseInt((String) map.get("locId"));
-                } else if (searchKey.equals("model")) {
-                    model = (String) map.get("model");
-                    assignee = (String) map.get("assignee");
-                    assigneeId = (String) map.get("assignee_id");
-                    locId = Integer.parseInt((String) map.get("locId"));
-                } else if (searchKey.equals("vehicleType")) {
-                    vehicleType = (String) map.get("vehicleType");
-                    assignee = (String) map.get("assignee");
-                    assigneeId = (String) map.get("assignee_id");
-                    locId = Integer.parseInt((String) map.get("locId"));
-                }
-
-            }
-            if (fromTaskId > 0 && toTaskId > 0) {
-                taskGenImpl.updateAssignIdwithLoc(assignee, assigneeId, fromTaskId, toTaskId, locId);
-            }
-
-            if (model != null) {
-                taskGenImpl.updateAssigneeByModel(assignee, assignee, model, locId);
-            }
-
-            if (vehicleType != null) {
-                taskGenImpl.updateAssigneeByModel(assignee, assignee, vehicleType, locId);
-            }
-//insTaskDetailsDao.updateAssignIdwithLoc(ua.getAssigneeId() ,new Long(ua.getFromTaskId()).intValue(), new Long(ua.getToTaskId()).intValue(), ua.getLocId());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new SaiResponse(400, "Error while updating Assignee ", null);
-        }
-        return new SaiResponse(200, "Assignee updated successfully", null);
-    }
-
+//    @RequestMapping(value = "/taskupdateManually/assingee", method = RequestMethod.GET, produces = {"application/JSON"})
+//    public SaiResponse assignTaskToUsersManually(@RequestParam Map<String, Object> map) {
+//        try {
+//            Integer fromTaskId = 0;
+//            Integer toTaskId = 0;
+//            String assignee = null;
+//            String assigneeId = null;
+//            Integer locId = 0;
+//            String model = null;
+//            String vehicleType = null;
+//
+//            for (String searchKey : map.keySet()) {   //mincount=167&maxcount=171&assignee=M28796&locId=124
+//                if (searchKey.equals("mincount")) {
+//                    fromTaskId = Integer.parseInt((String) map.get("mincount"));
+//                    toTaskId = Integer.parseInt((String) map.get("maxcount"));
+//                    assignee = (String) map.get("assignee");
+////                      assignee_id = (String) map.get("assignee_id");
+//                    locId = Integer.parseInt((String) map.get("locId"));
+//                } else if (searchKey.equals("model")) {
+//                    model = (String) map.get("model");
+//                    assignee = (String) map.get("assignee");
+//                    assigneeId = (String) map.get("assignee_id");
+//                    locId = Integer.parseInt((String) map.get("locId"));
+//                } else if (searchKey.equals("vehicleType")) {
+//                    vehicleType = (String) map.get("vehicleType");
+//                    assignee = (String) map.get("assignee");
+//                    assigneeId = (String) map.get("assignee_id");
+//                    locId = Integer.parseInt((String) map.get("locId"));
+//                }
+//
+//            }
+//            if (fromTaskId > 0 && toTaskId > 0) {
+//                taskGenImpl.updateAssignIdwithLoc(assignee, assigneeId, fromTaskId, toTaskId, locId);
+//            }
+//
+//            if (model != null) {
+//                taskGenImpl.updateAssigneeByModel(assignee, assignee, model, locId);
+//            }
+//
+//            if (vehicleType != null) {
+//                taskGenImpl.updateAssigneeByModel(assignee, assignee, vehicleType, locId);
+//            }
+////insTaskDetailsDao.updateAssignIdwithLoc(ua.getAssigneeId() ,new Long(ua.getFromTaskId()).intValue(), new Long(ua.getToTaskId()).intValue(), ua.getLocId());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new SaiResponse(400, "Error while updating Assignee ", null);
+//        }
+//        return new SaiResponse(200, "Assignee updated successfully", null);
+//    }
     ////UPDATE THE ASSIGNEE ID AND ASSIGNEE NAME///Proforma
     @RequestMapping(value = "/UpdateAssigneeIdProforma", method = RequestMethod.PUT, produces = {"application/JSON"})
     SaiResponse UpdateAssigneeProforma(@RequestBody UpdateAssigneeRequest updatedAssignee) {

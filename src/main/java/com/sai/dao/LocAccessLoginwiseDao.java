@@ -7,6 +7,7 @@ package com.sai.dao;
 
 import com.sai.model.LocAccessLoginwise;
 import com.sai.model.UserLogin;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.transaction.Transactional;
@@ -73,12 +74,12 @@ public interface LocAccessLoginwiseDao extends CrudRepository<UserLogin, Long> {
     public void UpdateAssigneeTaskIdwise(String assignee ,String ASSIGNEE_ID,long taskId );  
    
     
-        @Modifying(clearAutomatically = true)
+    @Modifying(clearAutomatically = true)
     @Transactional
-    @Query(value=" update test.ss_task_details sad set sad.assignee=?1 , sad.assignee_id=?2 "
-            + " where  sad.task_status!='CLOSED' and sad.task_id between ?3 and ?4 and sad.loc_id=?5",nativeQuery=true)
-    int updateAssignIdwithLoc(String assignee,String assignee_id, long FROMTASK_ID,long TOTASK_ID , long loc_id );
-   
+    @Query(value = " update test.ss_task_details sad set sad.assignee=?1 , sad.assignee_id=?2 "
+            + " where  sad.task_status!='CLOSED' and sad.task_id between ?3 and ?4 and sad.loc_id=?5 AND sad.call_du_dt=?6 ", nativeQuery = true)
+    int updateAssignIdwithLoc(String assignee, String assignee_id, long FROMTASK_ID, long TOTASK_ID, long loc_id,Date inputDate);
+
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query(value="Update test.ss_task_details std JOIN  test.ss_vehicle_master svm ON std.VEHICLE_NO=svm.vehicleNo "
