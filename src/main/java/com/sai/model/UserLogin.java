@@ -123,6 +123,14 @@ public class UserLogin implements Serializable {
         this.ticketNo = ticketNo;
     }
 
+    public UserLogin(Integer locId, String ticketNo, String username, String dept) {
+        this.locId = locId;
+        this.ticketNo = ticketNo;
+        this.username = username;
+        this.dept = dept;
+    }
+    
+
     
     
     public long getUserId() {

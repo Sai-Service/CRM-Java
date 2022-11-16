@@ -56,7 +56,6 @@ public class SsInsTaskDetailsController implements Serializable {
 
     @Autowired
     private SsCustomerDao customerDao;
-    
 
     @GetMapping("/task")
     public List<SsInsTaskDetails> getInsTasks() {
@@ -125,10 +124,9 @@ public class SsInsTaskDetailsController implements Serializable {
         try {
             SsInsTaskDetails taskDetail = insTaskDetailsDao.findByTaskId(id);
             if (taskDetail != null) {
-                
+
                 //{"taskId":5,"callDueDt":"2020-07-31","custStatus":"HOT","remark":"TEST","disposition":"TEST","apptYN":"Y",
                 //"apptAddress":"PUNE","apptDate":"2020-07-25"}
-
                 taskDetail.setCallDueDt(insTask.getCallDueDt());
                 taskDetail.setCustStatus(insTask.getCustStatus());
                 taskDetail.setRemark(insTask.getRemark());
@@ -136,8 +134,8 @@ public class SsInsTaskDetailsController implements Serializable {
                 taskDetail.setApptYN(insTask.getApptYN());
                 taskDetail.setApptAddress(insTask.getApptAddress());
                 taskDetail.setApptDate(insTask.getApptDate());
-            //    SsVehicleMaster vehicle = taskDetail.getVehicleNo();
-             //   taskDetail.setVehicleNo(insTask.getVehicleNo());
+                //    SsVehicleMaster vehicle = taskDetail.getVehicleNo();
+                //   taskDetail.setVehicleNo(insTask.getVehicleNo());
 
                 String username = null;
                 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -196,12 +194,12 @@ public class SsInsTaskDetailsController implements Serializable {
     @GetMapping("/task/{id}")
     public SSInsTaskContactYN getInsTaskDetailsById(@PathVariable Integer id) {
         SsInsTaskDetails taskDetails = insTaskDetailsDao.findByTaskId(id);
-         Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         java.util.Date currentDate = calendar.getTime();
-        List<SsInsTaskHistory> historyList= insTaskHistoryDao.findByTaskIdAndContactedDate(id,currentDate);
-       SSInsTaskContactYN tskconYN = new SSInsTaskContactYN();
-        BeanUtils.copyProperties(taskDetails,tskconYN);
-        BeanUtils.copyProperties(historyList,tskconYN);    
+        List<SsInsTaskHistory> historyList = insTaskHistoryDao.findByTaskIdAndContactedDate(id, currentDate);
+        SSInsTaskContactYN tskconYN = new SSInsTaskContactYN();
+        BeanUtils.copyProperties(taskDetails, tskconYN);
+        BeanUtils.copyProperties(historyList, tskconYN);
         return tskconYN;
     }
 
@@ -231,8 +229,8 @@ public class SsInsTaskDetailsController implements Serializable {
             Calendar calendar = Calendar.getInstance();
             java.util.Date currentDate = calendar.getTime();
 
-          List<UserLogin> userDetail = userRepository.findByReportedTo(login_name);
-          // List<Map> userDetail = insTaskDetailsDao.getUserList(login_name);
+            List<UserLogin> userDetail = userRepository.findByReportedTo(login_name);
+            // List<Map> userDetail = insTaskDetailsDao.getUserList(login_name);
             int totalusercnt = userDetail.size();
             List<UpdateAssignee> toAssignee = new ArrayList<>();
 
@@ -258,7 +256,7 @@ public class SsInsTaskDetailsController implements Serializable {
             int totalTaskCount = 0;
             int remainingTaskCount = 0;
             int equalTaskPerUserCount = 0;
-            for (UserLogin  map1 : userDetail) {
+            for (UserLogin map1 : userDetail) {
                 if (!(location == (map1.getLocId()))) {
 
                     taskList = insTaskDetailsDao.findByLocIdAndCallDueDt(new Long(map1.getLocId()).intValue(), currentDate);
@@ -295,6 +293,73 @@ public class SsInsTaskDetailsController implements Serializable {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /////////////New Method to autoassign all by jyoti t 15-11-2022
+    @RequestMapping(value = "/LocAccessLoginwise", method = RequestMethod.GET, produces = {"application/JSON"})
+    public List<Map> updateTaskAssignee(@RequestParam String login_name, @RequestParam Integer locId) throws Exception {
+        List<Map> userDetail = null;
+        try {
+            //  userDetail = taskGenImpl.getUserList(login_name, locId);
+            userDetail = userRepository.totalLogins(login_name,locId);
+
+            List<UpdateAssignee> toAssignee = new ArrayList<>();
+
+            Calendar calendar = Calendar.getInstance();
+            java.util.Date currentDate = calendar.getTime();
+            int perUsertaskcount = 0;
+          
+            List<SsInsTaskDetails> taskList = null;
+            int leftTaskCount = 0;
+            taskList = insTaskDetailsDao.findByLocIdAndCallDueDt(locId, currentDate);
+            Integer userCount = userDetail.size();//Total No. of Users
+            int totalTaskCount = taskList.size();
+            perUsertaskcount = totalTaskCount / userCount;
+            leftTaskCount = totalTaskCount % userCount;
+            int leftTaskPerUser = 0;
+            if (leftTaskCount >= userCount) {
+                leftTaskPerUser = leftTaskCount / userCount;
+            } else {
+                leftTaskPerUser = leftTaskCount;
+            }
+
+            int assignTaskCnt = 0;
+
+            List<SsInsTaskDetails> orgList = taskList;
+            
+            for (Map map1 : userDetail) {
+
+                for (int i = 0; i < perUsertaskcount; i++) {
+                    insTaskDetailsDao.UpdateAssigneeTaskIdwise((String) map1.get("ticketNo"),((SsInsTaskDetails)taskList.get(i)).getTaskId());
+                    System.out.println("i Value" + i);//locId ,ticketNo,username,dept
+
+                    assignTaskCnt++;
+                }
+                System.out.println("assignTaskCnt Value" + assignTaskCnt);
+            }
+
+            int assignPendingTaskCnt = assignTaskCnt;
+
+            while (assignPendingTaskCnt < taskList.size()) {
+                for (Map map1 : userDetail) {
+
+                    if (assignPendingTaskCnt >= taskList.size()) {
+                        break;
+                    }
+                //    taskGenImpl.UpdateAssigneeTaskIdwise((String) map1.get("emp_name"), (String) map1.get("username"), (long) orgList.get(assignPendingTaskCnt));
+                    insTaskDetailsDao.UpdateAssigneeTaskIdwise((String) map1.get("ticketNo"),((SsInsTaskDetails)orgList.get(assignPendingTaskCnt)).getTaskId());
+                   
+                    assignPendingTaskCnt++;
+                }
+
+            }
+        } catch (Exception e) {
+            //    apiResponse = new SaiResponse(400, "Updation not Done", null);
+            e.printStackTrace();
+            throw e;
+        }
+        return userDetail;
+
     }
 
     @RequestMapping(value = "/update/assingee", method = RequestMethod.GET, produces = {"application/JSON"})

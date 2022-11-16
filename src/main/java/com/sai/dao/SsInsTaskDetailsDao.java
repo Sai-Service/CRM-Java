@@ -29,8 +29,11 @@ public interface SsInsTaskDetailsDao extends CrudRepository<SsInsTaskDetails, In
     public SsInsTaskDetails findByTaskIdAndLocId(Integer id,Integer locId);
 
     public List<SsInsTaskDetails> findByLocIdAndAssignIdAndCallDueDt(Integer locId, String User, Date curdate);
-    public List<SsInsTaskDetails> findByLocIdAndCallDueDt(Integer locId, Date curdate);
+   public List<SsInsTaskDetails> findByLocIdAndCallDueDt(Integer locId, Date curdate);
 
+   //   public List<Object> findByLocIdAndCallDueDt(Integer locId, Date curdate);
+
+    
     public SsInsTaskDetails findByVehicleNo(String vehicleNo);
 
     //SELECT TICKET_NO FROM test.user_login where ROLE='USER' AND TYPE = 'INSURANCE' AND REPORTING_TO =?1 and LOC_ID=?2;
@@ -61,6 +64,12 @@ public interface SsInsTaskDetailsDao extends CrudRepository<SsInsTaskDetails, In
     @Query("UPDATE SsInsTaskDetails instask SET instask.assignId = ?1 WHERE instask.taskId BETWEEN ?2 AND ?3 ")
     int updateAssignId(String assigneeId, int start, int  end );
     
+      @Modifying
+   @Transactional
+   @Query(value="update ss_ins_task_details set assignId=?1 WHERE taskId=?2 and eventStatus!='CLOSED'",nativeQuery=true)
+    public void UpdateAssigneeTaskIdwise(String assignee ,long taskId );  
+   
+
   
     
 }

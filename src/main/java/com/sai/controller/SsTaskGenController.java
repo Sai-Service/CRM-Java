@@ -179,71 +179,70 @@ public class SsTaskGenController {
         return pojos;
     }
     
-    
-    
-    @RequestMapping(value = "/NewPost", method = RequestMethod.GET, produces = {"application/JSON"})
-    public  List<SSTaskGen>  postProformaCall() throws Exception {
-       // SaiResponse apiResponse = null;
-        try {
-
-            List<Map> input=taskGenImpl.getTasksGenPrfMysql();
-            
-              for (Map task : input) {
-            SsTaskDetails details = new SsTaskDetails();
-            details.setTaskType((String)task.get("TASK_TYPE"));
-            details.setTaskStatus((String)task.get("STATUS"));
-            details.setCallDuDt((Date)task.get("CALL_DUE_DATE"));
-            details.setCustId((Integer)task.get("custAcctNo"));
-            details.setCustAdd((String)task.get("cust_address1"));
-            details.setContactPerson((String)task.get("contact_person"));
-            details.setVehicleNo("1");
-            String conNo1St = null;
-          if(task.get("contact_no1")!=null)
-            {
-                BigInteger conNo1=(BigInteger)task.get("contact_no1");
-               conNo1St=  conNo1.toString();
-            
-            }
-            details.setContactNo1(conNo1St);
-            details.setContactNo2((String)task.get("contact_no2"));
-            details.setEmailAdd((String)task.get("email_id"));
-         //   details.setVehicleNo((String)task.get("Veh_no"));
-            details.setSalesExecName((String)task.get("sales_exec_name"));
-            details.setLocId((Integer)task.get("loc_id"));
-            details.setOrgId((Integer)task.get("org_id"));
-            details.setReferenceNo(((BigInteger)task.get("REFERENCE_NO")).toString());
-           //     details.set((String)task.get("REFERENCE_NO"));
-            //details.setServcGrp(task.getServc_grp());
-          //  details.setInventoryItemId(task.getItem_id());
-          //  details.setContacted(task.getContacted());
-          //  details.setReason(task.getReason());
-          //  details.setRemarks(task.getRemarks());
-          //  details.setTaskReason(task.getTask_reason());
-          //  details.setLastServcLoc(task.getService_loc());
-          //  details.setLastServcKm(task.getLast_km());
-            details.setCreationDate((Date)task.get("creation_date"));
-            details.setCreatedBy(1);
-            details.setLastUpdateDate((Date)task.get("creation_date"));
-            details.setLastUpdatedBy(1);
-            
-            SsTaskDetails sd1 = taskCreation.save(details);
-          
-            proformHead.updateTaskId(sd1.getTaskId(),((BigInteger)task.get("REFERENCE_NO")).toString());
-         
-
-        }
-      
-            
-           // apiResponse = new SaiResponse(200, " Order Inserted Successfully Done", orderNo);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-          //  apiResponse = new SaiResponse(400, "Error while inserting Order ", e.getMessage());
-        }
-        return null;
-
-    }
- 
+        
+//    @RequestMapping(value = "/NewPost", method = RequestMethod.GET, produces = {"application/JSON"})
+//    public  List<SSTaskGen>  postProformaCall() throws Exception {
+//       // SaiResponse apiResponse = null;
+//        try {
+//
+//            List<Map> input=taskGenImpl.getTasksGenPrfMysql();
+//            
+//              for (Map task : input) {
+//            SsTaskDetails details = new SsTaskDetails();
+//            details.setTaskType((String)task.get("TASK_TYPE"));
+//            details.setTaskStatus((String)task.get("STATUS"));
+//            details.setCallDuDt((Date)task.get("CALL_DUE_DATE"));
+//            details.setCustId((Integer)task.get("custAcctNo"));
+//            details.setCustAdd((String)task.get("cust_address1"));
+//            details.setContactPerson((String)task.get("contact_person"));
+//            details.setVehicleNo("1");
+//            String conNo1St = null;
+//          if(task.get("contact_no1")!=null)
+//            {
+//                BigInteger conNo1=(BigInteger)task.get("contact_no1");
+//               conNo1St=  conNo1.toString();
+//            
+//            }
+//            details.setContactNo1(conNo1St);
+//            details.setContactNo2((String)task.get("contact_no2"));
+//            details.setEmailAdd((String)task.get("email_id"));
+//         //   details.setVehicleNo((String)task.get("Veh_no"));
+//            details.setSalesExecName((String)task.get("sales_exec_name"));
+//            details.setLocId((Integer)task.get("loc_id"));
+//            details.setOrgId((Integer)task.get("org_id"));
+//            details.setReferenceNo(((BigInteger)task.get("REFERENCE_NO")).toString());
+//           //     details.set((String)task.get("REFERENCE_NO"));
+//            //details.setServcGrp(task.getServc_grp());
+//          //  details.setInventoryItemId(task.getItem_id());
+//          //  details.setContacted(task.getContacted());
+//          //  details.setReason(task.getReason());
+//          //  details.setRemarks(task.getRemarks());
+//          //  details.setTaskReason(task.getTask_reason());
+//          //  details.setLastServcLoc(task.getService_loc());
+//          //  details.setLastServcKm(task.getLast_km());
+//            details.setCreationDate((Date)task.get("creation_date"));
+//            details.setCreatedBy(1);
+//            details.setLastUpdateDate((Date)task.get("creation_date"));
+//            details.setLastUpdatedBy(1);
+//            
+//            SsTaskDetails sd1 = taskCreation.save(details);
+//          
+//            proformHead.updateTaskId(sd1.getTaskId(),((BigInteger)task.get("REFERENCE_NO")).toString());
+//         
+//
+//        }
+//      
+//            
+//           // apiResponse = new SaiResponse(200, " Order Inserted Successfully Done", orderNo);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//          //  apiResponse = new SaiResponse(400, "Error while inserting Order ", e.getMessage());
+//        }
+//        return null;
+//
+//    }
+// 
 
     
 }
