@@ -26,7 +26,7 @@ public interface UserLoginDao extends CrudRepository<UserLogin, Long> {
     public List<UserLogin> findByReportedTo(String loginName);
     
     @Query("SELECT NEW com.sai.model.UserLogin(locId ,ticketNo,username,dept)  FROM UserLogin where role='USER'  AND type = 'INSURANCE' AND reportTo =?1 and locId=?2 ")
-    public List<Map> totalLogins(String loginName,Integer locId);//Integer locId, String ticketNo, String username, String dept
+    public List<UserLogin> totalLogins(String loginName,Integer locId);//Integer locId, String ticketNo, String username, String dept
 }
 
    

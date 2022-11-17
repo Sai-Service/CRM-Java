@@ -11,15 +11,15 @@ import com.sai.dao.SsInsTaskDetailsDao;
 import com.sai.dao.SsInsTaskHistoryDao;
 import com.sai.dao.UserLoginDao;
 import com.sai.dto.SSInsTaskContactYN;
-import com.sai.model.SsCustomer;
-import com.sai.model.SsVehicleMaster;
 import com.sai.model.UpdateAssignee;
 import com.sai.model.UserLogin;
 import java.io.Serializable;
 import com.sai.model.insurance.SsInsTaskDetails;
 import com.sai.model.insurance.SsInsTaskHistory;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +75,30 @@ public class SsInsTaskDetailsController implements Serializable {
             return (List<SsInsTaskDetails>) insTaskDetailsDao.findByLocIdAndAssignIdAndCallDueDt(new Integer(locId), user.getTicketNo(), currentDate);
         } else {
             return (List<SsInsTaskDetails>) insTaskDetailsDao.findByLocIdAndCallDueDt(new Integer(locId), currentDate);
+        }
+
+    }
+
+    @GetMapping("/taskDateWise")
+    public List<SsInsTaskDetails> getInsTasksDateWise(@RequestParam String fromDate) throws Exception {
+        String username = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+          Date frmDt1 = new SimpleDateFormat("yyyy-MM-dd").parse(fromDate);
+          
+        UserLogin user = userRepository.findByUsername(username);
+        Calendar calendar = Calendar.getInstance();
+        java.util.Date currentDate = calendar.getTime();
+        //   return (List<SsInsTaskDetails>) insTaskDetailsDao.findAll();
+        int locId = new Long(user.getLocId()).intValue();
+        if (user.getRole().equals("USER")) {
+            return (List<SsInsTaskDetails>) insTaskDetailsDao.findByLocIdAndAssignIdAndCallDueDt(new Integer(locId), user.getTicketNo(), frmDt1);
+        } else {
+            return (List<SsInsTaskDetails>) insTaskDetailsDao.findByLocIdAndCallDueDt(new Integer(locId), frmDt1);
         }
 
     }
@@ -297,18 +321,18 @@ public class SsInsTaskDetailsController implements Serializable {
 
     /////////////New Method to autoassign all by jyoti t 15-11-2022
     @RequestMapping(value = "/LocAccessLoginwise", method = RequestMethod.GET, produces = {"application/JSON"})
-    public List<Map> updateTaskAssignee(@RequestParam String login_name, @RequestParam Integer locId) throws Exception {
-        List<Map> userDetail = null;
+    public List<UserLogin> updateTaskAssignee(@RequestParam String login_name, @RequestParam Integer locId) throws Exception {
+        List<UserLogin> userDetail = null;
         try {
             //  userDetail = taskGenImpl.getUserList(login_name, locId);
-            userDetail = userRepository.totalLogins(login_name,locId);
+            userDetail = userRepository.totalLogins(login_name, locId);
 
             List<UpdateAssignee> toAssignee = new ArrayList<>();
 
             Calendar calendar = Calendar.getInstance();
             java.util.Date currentDate = calendar.getTime();
             int perUsertaskcount = 0;
-          
+
             List<SsInsTaskDetails> taskList = null;
             int leftTaskCount = 0;
             taskList = insTaskDetailsDao.findByLocIdAndCallDueDt(locId, currentDate);
@@ -326,11 +350,11 @@ public class SsInsTaskDetailsController implements Serializable {
             int assignTaskCnt = 0;
 
             List<SsInsTaskDetails> orgList = taskList;
-            
-            for (Map map1 : userDetail) {
+
+            for (UserLogin map1 : userDetail) {
 
                 for (int i = 0; i < perUsertaskcount; i++) {
-                    insTaskDetailsDao.UpdateAssigneeTaskIdwise((String) map1.get("ticketNo"),((SsInsTaskDetails)taskList.get(i)).getTaskId());
+                    insTaskDetailsDao.UpdateAssigneeTaskIdwise((String) map1.getTicketNo(), ((SsInsTaskDetails) taskList.get(i)).getTaskId());
                     System.out.println("i Value" + i);//locId ,ticketNo,username,dept
 
                     assignTaskCnt++;
@@ -341,14 +365,14 @@ public class SsInsTaskDetailsController implements Serializable {
             int assignPendingTaskCnt = assignTaskCnt;
 
             while (assignPendingTaskCnt < taskList.size()) {
-                for (Map map1 : userDetail) {
+                for (UserLogin map1 : userDetail) {
 
                     if (assignPendingTaskCnt >= taskList.size()) {
                         break;
                     }
-                //    taskGenImpl.UpdateAssigneeTaskIdwise((String) map1.get("emp_name"), (String) map1.get("username"), (long) orgList.get(assignPendingTaskCnt));
-                    insTaskDetailsDao.UpdateAssigneeTaskIdwise((String) map1.get("ticketNo"),((SsInsTaskDetails)orgList.get(assignPendingTaskCnt)).getTaskId());
-                   
+                    //    taskGenImpl.UpdateAssigneeTaskIdwise((String) map1.get("emp_name"), (String) map1.get("username"), (long) orgList.get(assignPendingTaskCnt));
+                    insTaskDetailsDao.UpdateAssigneeTaskIdwise((String) map1.getTicketNo(), ((SsInsTaskDetails) orgList.get(assignPendingTaskCnt)).getTaskId());
+
                     assignPendingTaskCnt++;
                 }
 

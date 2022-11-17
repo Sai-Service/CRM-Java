@@ -29,6 +29,7 @@ public interface SsInsTaskDetailsDao extends CrudRepository<SsInsTaskDetails, In
     public SsInsTaskDetails findByTaskIdAndLocId(Integer id,Integer locId);
 
     public List<SsInsTaskDetails> findByLocIdAndAssignIdAndCallDueDt(Integer locId, String User, Date curdate);
+    
    public List<SsInsTaskDetails> findByLocIdAndCallDueDt(Integer locId, Date curdate);
 
    //   public List<Object> findByLocIdAndCallDueDt(Integer locId, Date curdate);

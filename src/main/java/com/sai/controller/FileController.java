@@ -80,6 +80,8 @@ public class FileController {
                 mapper.disable(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES);
                 mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
                 SsSlotAvailable ssSlotAvailable = mapper.convertValue(ssSlotDetails, SsSlotAvailable.class);
+                
+                
                 slotRepository.save(ssSlotAvailable);
 
             }

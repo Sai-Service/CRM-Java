@@ -21,6 +21,11 @@ import com.sai.model.SSAppoinmentDetails;
 import com.sai.model.SsSlotAvailable;
 import com.sai.model.SsTaskDetails;
 import com.sai.model.UserLogin;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +33,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.transaction.Transactional;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,6 +48,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -84,18 +93,18 @@ public class TaskCreationController {
     @PostMapping("/SSRegenrateTask/{task_id}")
     SaiResponse addNewTask(@RequestBody SsTaskDetailsRequest taskRequest, @PathVariable Long task_id) {
         java.util.Date currentDate = Calendar.getInstance().getTime();
-         UserLogin user = null;
+        UserLogin user = null;
         try {
             String username = new CommonDetail().getLoggedInUser();
             user = userRepository.findByUsername(username);
-            
+
         } catch (Exception ex) {
             Logger.getLogger(TaskCreationController.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             if (user != null) {
-                
-                 SsTaskDetails oldTaskid = taskRepository.findByTaskId(task_id);
+
+                SsTaskDetails oldTaskid = taskRepository.findByTaskId(task_id);
 
                 SsTaskDetails regenTask = new SsTaskDetails();
                 regenTask.setTaskType(taskRequest.getTaskType());
@@ -116,8 +125,8 @@ public class TaskCreationController {
                 regenTask.setLastServcLoc(oldTaskid.getLastServcLoc());
                 regenTask.setLastServcKm(oldTaskid.getLastServcKm());
                 regenTask.setNextServcType(oldTaskid.getNextServcType());
-                     regenTask.setNextServcDt(oldTaskid.getNextServcDt());
-            
+                regenTask.setNextServcDt(oldTaskid.getNextServcDt());
+
                 regenTask.setRemarks(taskRequest.getRemark());
                 regenTask.setContacted(taskRequest.getContacted());
                 regenTask.setReason(taskRequest.getReasonCode());
@@ -137,7 +146,6 @@ public class TaskCreationController {
                     regenTask.setNextServcDt(taskRequest.getNxtServDt());
                 }
 
-
                 regenTask.setReferenceNo(oldTaskid.getReferenceNo());
                 regenTask.setInventoryItemId(oldTaskid.getInventoryItemId());
                 regenTask.setAttribute1(oldTaskid.getAttribute1());
@@ -148,13 +156,12 @@ public class TaskCreationController {
                 regenTask.setTaskStatus("Task-Regenerated");
                 SsTaskDetails sd1 = taskRepository.save(regenTask);
 
-           
                 oldTaskid.setTaskStatus("CLOSED");
                 oldTaskid.setLastUpdateDate(currentDate);
                 oldTaskid.setLastUpdatedBy(user.getUserId());
                 taskRepository.save(oldTaskid);
 
-                 }
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return new SaiResponse(400, "Invalid Inputs", null);
@@ -291,10 +298,10 @@ public class TaskCreationController {
         //    SsTaskDetails taskObj = taskRepository.findByTaskId(sd1.getTaskId());
         //  taskObj.setApptmtId(saveApptDetail.getAppmntId());
 //
-     //   SsSlotAvailable sltavail = slotAvail.findByLocId(servLoc.getLocId(), slotDetails[0]);
-      SsSlotAvailable sltavail = slotAvail.findBySerLocIdAndServiceDateAndTiming(servLoc.getLocId(), apptInsert.getApptDate(), slotDetails[0]);
-     
-     long quota = sltavail.getQuota();
+        //   SsSlotAvailable sltavail = slotAvail.findByLocId(servLoc.getLocId(), slotDetails[0]);
+        SsSlotAvailable sltavail = slotAvail.findBySerLocIdAndServiceDateAndTiming(servLoc.getLocId(), apptInsert.getApptDate(), slotDetails[0]);
+
+        long quota = sltavail.getQuota();
         quota = quota - 1;
 
         sltavail.setQuota(quota);
@@ -345,21 +352,19 @@ public class TaskCreationController {
 
     @RequestMapping(value = "/ssTask/SlotAvailable", method = RequestMethod.GET, produces = {"application/JSON"})
     // Map getUsercountList(@PathVariable String vehicle_no)
-    public List<Map> getSlotAvailNew(@RequestParam long serv_loc_id,@RequestParam String serviceDate) {
-        return taskRepository.getSlotAvailDatewise(serv_loc_id,serviceDate);
+    public List<Map> getSlotAvailNew(@RequestParam long serv_loc_id, @RequestParam String serviceDate) {
+        return taskRepository.getSlotAvailDatewise(serv_loc_id, serviceDate);
 
     }
-    
-    
+
     @RequestMapping(value = "/ssTask/SlotAvailable/{serv_loc_id}", method = RequestMethod.GET, produces = {"application/JSON"})
     // Map getUsercountList(@PathVariable String vehicle_no)
     public List<Map> getSlotAvail(@PathVariable long serv_loc_id) {
         return taskRepository.getSlotAvail(serv_loc_id);
 
     }
-    
-    
-      @RequestMapping(value = "/ssTask/UserSummLoginwise/{assignee_id}", method = RequestMethod.GET, produces = {"application/JSON"})
+
+    @RequestMapping(value = "/ssTask/UserSummLoginwise/{assignee_id}", method = RequestMethod.GET, produces = {"application/JSON"})
     // Map getUsercountList(@PathVariable String vehicle_no)
     public List<Map> getUserSummLoginwise(@PathVariable String assignee_id) {
         return taskRepository.getUserSummLoginwise(assignee_id);
@@ -428,6 +433,103 @@ public class TaskCreationController {
     public Map getTotalSMSSendExeWise(@PathVariable String apptAttended) {
 
         return taskRepository.getTotalSMSSendExeWise(apptAttended);
+    }
+
+    @org.springframework.transaction.annotation.Transactional(rollbackFor = Exception.class)
+    @PostMapping("/uploadTaskManuallyBJ")
+    public SaiResponse BJuploadTask(@RequestParam("file") MultipartFile file, @RequestParam Integer emplId) throws Exception {
+        SaiResponse apiResponse;
+        try {
+            //  apiResponse = priceListService.bjSprPOUpload(file,location,invcNo,supplierNo,suppSite,userName,invcDt1,priceListName);
+            //   apiResponse = omPostImpl.vehiclePriceUpload(file, emplId);
+
+            java.util.Date currentDate = Calendar.getInstance().getTime();
+
+            InputStream initialStream = new ByteArrayInputStream(file.getBytes());
+            Reader reader = new InputStreamReader(initialStream);
+            CSVParser parser = new CSVParser(reader, CSVFormat.INFORMIX_UNLOAD_CSV.withFirstRecordAsHeader().withIgnoreHeaderCase().withAllowDuplicateHeaderNames());
+            List<CSVRecord> records = parser.getRecords();
+
+            String task_type = null;
+            String task_status = null;
+            Date call_du_dt = null;
+            String cust_no = null;
+            String cust_name;
+            String cust_add = null;
+
+            String contact_no = null;
+            String email_id = null;
+            String vehicle_no = null;
+            Integer loc_id = null;
+            Integer org_id = null;
+            String reference_no = null;
+
+            String Serv_type = null;
+            Date serv_date = null;
+            String assignee_id = null;
+            String cust_type = null;
+
+            if (records.isEmpty()) {
+                for (CSVRecord record1 : records) {
+                    task_type = record1.get(0);
+                    task_status = record1.get(1);
+                     call_du_dt = new SimpleDateFormat("dd-MM-yyyy").parse(record1.get(2));
+                    //  booking.setBookingDate(payDt);
+                   // call_du_dt = record1.get(2);//Need to confirm with minal mam
+                    cust_no = (record1.get(3));
+                    cust_name = (record1.get(4));
+                    cust_add = (record1.get(5));
+
+                    contact_no = record1.get(6);
+                    email_id = record1.get(7);
+                    vehicle_no = record1.get(8);
+                    loc_id = (Integer.parseInt(record1.get(9)));
+                    org_id = (Integer.parseInt(record1.get(10)));
+                    reference_no = (record1.get(11));
+
+                    Serv_type = record1.get(12);
+                 //   serv_date = record1.get(13);
+                     serv_date = new SimpleDateFormat("dd-MM-yyyy").parse(record1.get(13));
+                   
+                    assignee_id = record1.get(14);
+                    cust_type = record1.get(15);
+
+                    SsTaskDetails newTask = new SsTaskDetails();
+                    newTask.setTaskType(task_type);
+                    newTask.setTaskStatus(task_status);
+                    newTask.setApptmtId(0);
+                    newTask.setCallDuDt(call_du_dt);
+
+                    ///find from customer_master and assign
+                    newTask.setCustId(0);///Need to assign max customer Id and create customer if not avail
+
+                    newTask.setCustAdd(cust_add);
+                    newTask.setContactPerson(cust_name);
+                    newTask.setContactNo1(contact_no);
+                    newTask.setContactNo2(contact_no);
+                    newTask.setEmailAdd(email_id);
+                    newTask.setVehicleNo(vehicle_no);
+                    newTask.setSalesExecName(emplId.toString());
+                    newTask.setLocId(loc_id);
+                    newTask.setOrgId(org_id);
+                    newTask.setReferenceNo(reference_no);
+                    newTask.setNextServcDt(serv_date);
+                    newTask.setNextServcType(Serv_type);
+                    newTask.setAssigneeId(assignee_id);
+                    newTask.setCustType(cust_type);
+                    taskRepository.save(newTask);
+
+                }
+            }
+
+            apiResponse = new SaiResponse(200, "Price Details updated Successfully", null);
+
+        } catch (Exception e) {
+            apiResponse = new SaiResponse(400, "Error In File Upload", e.getMessage());
+            e.printStackTrace();
+        }
+        return apiResponse;
+
     }
 
 }
