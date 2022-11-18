@@ -62,7 +62,7 @@ public interface SsInsTaskDetailsDao extends CrudRepository<SsInsTaskDetails, In
 
     @Modifying(clearAutomatically = true)
     @Transactional
-    @Query("UPDATE SsInsTaskDetails instask SET instask.assignId = ?1 WHERE instask.taskId BETWEEN ?2 AND ?3 AND locId=?4")
+    @Query("UPDATE SsInsTaskDetails instask SET instask.assignId = ?1 WHERE instask.taskId BETWEEN ?2 AND ?3 AND  instask.locId=?4 and  instask.assignId is null")
     int updateAssignIdwithLoc(String assigneeId, int start, int end, int locId);
 
     @Modifying(clearAutomatically = true)

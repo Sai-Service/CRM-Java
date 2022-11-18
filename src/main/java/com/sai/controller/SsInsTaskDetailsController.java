@@ -101,7 +101,7 @@ public class SsInsTaskDetailsController implements Serializable {
         if (user.getRole().equals("USER")) {
             return (List<Map>) insTaskDetailsDao.getTaskData(new Integer(locId), user.getTicketNo(), frmDt1);
         } else {
-            return (List<Map>) insTaskDetailsDao.getTaskDataLocWise(new Integer(locId), currentDate);
+            return (List<Map>) insTaskDetailsDao.getTaskDataLocWise(new Integer(locId), frmDt1);
         }
 
     }
@@ -381,7 +381,7 @@ public class SsInsTaskDetailsController implements Serializable {
             for (cmnStString map1 : userDetail) {
 
                 for (int i = 0; i < perUsertaskcount; i++) {
-                    insTaskDetailsDao.UpdateAssigneeTaskIdwise((String) map1.getTicketNo(), ((SsInsTaskDetails) taskList.get(i)).getTaskId());
+                    insTaskDetailsDao.UpdateAssigneeTaskIdwise((String) map1.getTicketNo(), ((SsInsTaskDetails) taskList.get(assignTaskCnt)).getTaskId());
                     System.out.println("i Value" + i);//locId ,ticketNo,username,dept
 
                     assignTaskCnt++;
@@ -413,28 +413,45 @@ public class SsInsTaskDetailsController implements Serializable {
 
     }
 
-    @RequestMapping(value = "/update/assingee", method = RequestMethod.GET, produces = {"application/JSON"})
-    public SaiResponse assignInsTaskToUsersManually(@RequestParam Map<String, Object> map) {
+    //http://localhost:8081/ins/update/assingee?fromTask=162&toTask=164&assigneeId=Insurance2&locId=2101
+ @RequestMapping(value = "/update/assingee", method = RequestMethod.GET, produces = {"application/JSON"})
+    public SaiResponse assignInsTaskToUsersManually(@RequestParam Integer fromTask,@RequestParam Integer toTask,@RequestParam String assigneeId,@RequestParam Integer locId) {
         try {
-            Integer fromTask = null;
-            Integer toTask = null;
-            String assigneeId = null;
-            Integer locId = null;
-
-            for (String searchKey : map.keySet()) {
-                if (searchKey.equals("fromTask")) {
-                fromTask = Integer.parseInt((String) map.get("fromTask"));
-                    toTask = Integer.parseInt((String) map.get("toTask"));
-                    assigneeId = (String) map.get("assigneeId");
-                    locId = Integer.parseInt((String) map.get("locId"));
-                }
-            }
+            
             insTaskDetailsDao.updateAssignIdwithLoc(assigneeId, fromTask, toTask, locId);
-//insTaskDetailsDao.updateAssignIdwithLoc(ua.getAssigneeId() ,new Long(ua.getFromTaskId()).intValue(), new Long(ua.getToTaskId()).intValue(), ua.getLocId());
+
         } catch (Exception e) {
             e.printStackTrace();
             return new SaiResponse(400, "Error while updating Assignee ", null);
         }
         return new SaiResponse(200, "Assignee updated successfully", null);
     }
+    
+    
+//    @RequestMapping(value = "/update/assingee", method = RequestMethod.GET, produces = {"application/JSON"})
+//    public SaiResponse assignInsTaskToUsersManually(@RequestParam Map<String, Object> map) {
+//        try {
+//            Integer fromTask = null;
+//            Integer toTask = null;
+//            String assigneeId = null;
+//            Integer locId = null;
+//
+//            for (String searchKey : map.keySet()) {
+//                if (searchKey.equals("fromTask")) {
+//                fromTask = Integer.parseInt((String) map.get("fromTask"));
+//                    toTask = Integer.parseInt((String) map.get("toTask"));
+//                    assigneeId = (String) map.get("assigneeId");
+//                    locId = Integer.parseInt((String) map.get("locId"));
+//                }
+//            }
+//            insTaskDetailsDao.updateAssignIdwithLoc(assigneeId, fromTask, toTask, locId);
+////insTaskDetailsDao.updateAssignIdwithLoc(ua.getAssigneeId() ,new Long(ua.getFromTaskId()).intValue(), new Long(ua.getToTaskId()).intValue(), ua.getLocId());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new SaiResponse(400, "Error while updating Assignee ", null);
+//        }
+//        return new SaiResponse(200, "Assignee updated successfully", null);
+//    }
+//    
+    
 }
