@@ -60,4 +60,6 @@ import org.springframework.data.repository.CrudRepository;
  //public SsCustomer findByVehicleNo(String vehicleNo);
       
     public void deleteByCustId(Integer id);
+
+    public Optional<SsCustomer> findByCustAcctNo(String cust_no);
 }

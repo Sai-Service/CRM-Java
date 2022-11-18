@@ -11,6 +11,7 @@ import com.sai.SaiResponse;
 import com.sai.dao.SSAdministratorDataDao;
 import com.sai.dao.SSAppoinmentDetailsDao;
 import com.sai.dao.SSTaskCreationDao;
+import com.sai.dao.SsCustomerDao;
 import com.sai.dao.SsInsTaskHistoryDao;
 import com.sai.dao.SsSlotAvailableDao;
 import com.sai.dto.SsTaskDetailsRequest;
@@ -18,6 +19,7 @@ import com.sai.dao.UserLoginDao;
 import com.sai.dto.LstServLoc;
 import com.sai.dto.ReScheduleTaskRequest;
 import com.sai.model.SSAppoinmentDetails;
+import com.sai.model.SsCustomer;
 import com.sai.model.SsSlotAvailable;
 import com.sai.model.SsTaskDetails;
 import com.sai.model.UserLogin;
@@ -30,6 +32,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.transaction.Transactional;
@@ -59,6 +62,9 @@ public class TaskCreationController {
 
     @Autowired
     private SSTaskCreationDao taskRepository;
+
+    @Autowired
+    private SsCustomerDao customerRepo;
 
     @Autowired
     private SSAdministratorDataDao adminRepository;
@@ -473,9 +479,9 @@ public class TaskCreationController {
                 for (CSVRecord record1 : records) {
                     task_type = record1.get(0);
                     task_status = record1.get(1);
-                     call_du_dt = new SimpleDateFormat("dd-MM-yyyy").parse(record1.get(2));
+                    call_du_dt = new SimpleDateFormat("dd-MM-yyyy").parse(record1.get(2));
                     //  booking.setBookingDate(payDt);
-                   // call_du_dt = record1.get(2);//Need to confirm with minal mam
+                    // call_du_dt = record1.get(2);//Need to confirm with minal mam
                     cust_no = (record1.get(3));
                     cust_name = (record1.get(4));
                     cust_add = (record1.get(5));
@@ -488,11 +494,18 @@ public class TaskCreationController {
                     reference_no = (record1.get(11));
 
                     Serv_type = record1.get(12);
-                 //   serv_date = record1.get(13);
-                     serv_date = new SimpleDateFormat("dd-MM-yyyy").parse(record1.get(13));
-                   
+                    //   serv_date = record1.get(13);
+                    serv_date = new SimpleDateFormat("dd-MM-yyyy").parse(record1.get(13));
+
                     assignee_id = record1.get(14);
                     cust_type = record1.get(15);
+                    Optional<SsCustomer> optionalCustomer = customerRepo.findByCustAcctNo(cust_no);
+                    SsCustomer Customer = optionalCustomer.isPresent() ? optionalCustomer.get() : null;
+                    
+                    if (Customer ==null)
+                    {
+                       throw new Exception("Customer is not available...please create customer ");
+                    }
 
                     SsTaskDetails newTask = new SsTaskDetails();
                     newTask.setTaskType(task_type);

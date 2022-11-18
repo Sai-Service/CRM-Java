@@ -5,6 +5,7 @@
  */
 package com.sai.dao;
 
+import com.sai.model.SSUserDispSummary;
 import com.sai.model.SsCustomer;
 import com.sai.model.UserLogin;
 import com.sai.model.insurance.SsInsTaskDetails;
@@ -21,56 +22,57 @@ import org.springframework.data.repository.query.Param;
  *
  * @author Swaroopcomp
  */
-public interface SsInsTaskDetailsDao extends CrudRepository<SsInsTaskDetails, Integer>{
+public interface SsInsTaskDetailsDao extends CrudRepository<SsInsTaskDetails, Integer> {
 
     public SsInsTaskDetails findByTaskId(Integer id);
-    
-    
-    public SsInsTaskDetails findByTaskIdAndLocId(Integer id,Integer locId);
+
+    public SsInsTaskDetails findByTaskIdAndLocId(Integer id, Integer locId);
 
     public List<SsInsTaskDetails> findByLocIdAndAssignIdAndCallDueDt(Integer locId, String User, Date curdate);
-    
-   public List<SsInsTaskDetails> findByLocIdAndCallDueDt(Integer locId, Date curdate);
 
-   //   public List<Object> findByLocIdAndCallDueDt(Integer locId, Date curdate);
+    public List<SsInsTaskDetails> findByLocIdAndCallDueDt(Integer locId, Date curdate);
 
+    //   public List<Object> findByLocIdAndCallDueDt(Integer locId, Date curdate);
+    @Query(value = "select distinct std.taskId,sc.cust_Name,sc.custAcctNo ,std.vehicleNo,std.eventName,std.callDueDt,std.insEndDate,std.eventStatus,std.custStatus \n"
+            + "from test.Ss_Ins_Task_Details std,ss_customer sc where sc.cust_id=std.custId and std.locId=?1 \n"
+            + "and std.assignId=?2 and std.callDueDt=?3", nativeQuery = true)
+    public List<Map> getTaskData(Integer locId, String User, Date curdate);
     
+      @Query(value = "select distinct std.taskId,sc.cust_Name,sc.custAcctNo ,std.vehicleNo,std.eventName,std.callDueDt,std.insEndDate,std.eventStatus,std.custStatus \n"
+            + "from test.Ss_Ins_Task_Details std,ss_customer sc where sc.cust_id=std.custId and std.locId=?1 \n"
+            + "and  std.callDueDt=?2", nativeQuery = true)
+    public List<Map> getTaskDataLocWise(Integer locId,Date curdate);
+
     public SsInsTaskDetails findByVehicleNo(String vehicleNo);
 
     //SELECT TICKET_NO FROM test.user_login where ROLE='USER' AND TYPE = 'INSURANCE' AND REPORTING_TO =?1 and LOC_ID=?2;
-           @Query(value="SELECT TICKET_NO ,LOC_ID FROM test.user_login where ROLE='USER' AND TYPE = 'INSURANCE' AND REPORTING_TO =?1 ", nativeQuery = true)
+    @Query(value = "SELECT TICKET_NO ,LOC_ID FROM test.user_login where ROLE='USER' AND TYPE = 'INSURANCE' AND REPORTING_TO =?1 ", nativeQuery = true)
     public List<Map> getUserList(String loginName);
-    
 
-    @Query(value="select count(ul1.login_name)  as usercount from test.user_login ul,test.user_login ul1, test.ss_loc_access sla \n" +
-    "where ul.login_name=sla.user_name AND sla.loc_access=UL1.loc_id and ul1.role='USER' AND sla.valid='Y'\n" +
-    "and ul.login_name=?1",nativeQuery=true)
+    @Query(value = "select count(ul1.login_name)  as usercount from test.user_login ul,test.user_login ul1, test.ss_loc_access sla \n"
+            + "where ul.login_name=sla.user_name AND sla.loc_access=UL1.loc_id and ul1.role='USER' AND sla.valid='Y'\n"
+            + "and ul.login_name=?1", nativeQuery = true)
     public Object getUsercount(String login_name);
-    
+
 //        @Query("select distinct std.taskId as taskId  from SsTaskDetails std where std.callDuDt=CURRENT_DATE and std.locId=?1 order by std.taskId")
 //    List<Object> getTaskId(long locId);
-    
     //public int countByLoginName(String loginName);
     // @Query("UPDATE SsInsTaskDetails instask SET instask.assignId = ?1 WHERE insTask.taskId BETWEEN ?2 AND ?3")
-    
     List<SsInsTaskDetails> findByTaskIdBetween(int start, int end);
-    
+
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query("UPDATE SsInsTaskDetails instask SET instask.assignId = ?1 WHERE instask.taskId BETWEEN ?2 AND ?3 AND locId=?4")
-    int updateAssignIdwithLoc(String assigneeId, int start, int  end, int locId );
-    
+    int updateAssignIdwithLoc(String assigneeId, int start, int end, int locId);
+
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query("UPDATE SsInsTaskDetails instask SET instask.assignId = ?1 WHERE instask.taskId BETWEEN ?2 AND ?3 ")
-    int updateAssignId(String assigneeId, int start, int  end );
-    
-      @Modifying
-   @Transactional
-   @Query(value="update ss_ins_task_details set assignId=?1 WHERE taskId=?2 and eventStatus!='CLOSED'",nativeQuery=true)
-    public void UpdateAssigneeTaskIdwise(String assignee ,long taskId );  
-   
+    int updateAssignId(String assigneeId, int start, int end);
 
-  
-    
+    @Modifying
+    @Transactional
+    @Query(value = "update ss_ins_task_details set assignId=?1 WHERE taskId=?2 and eventStatus!='CLOSED'", nativeQuery = true)
+    public void UpdateAssigneeTaskIdwise(String assignee, long taskId);
+
 }

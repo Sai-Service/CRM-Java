@@ -78,6 +78,31 @@ public class SsInsTaskDetailsController implements Serializable {
         }
 
     }
+    
+    
+       @GetMapping("/taskNew")
+    public List<Map> getInsTasksNew(@RequestParam String inputDate) throws Exception {
+        String username = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        UserLogin user = userRepository.findByUsername(username);
+        Calendar calendar = Calendar.getInstance();
+        java.util.Date currentDate = calendar.getTime();
+         Date frmDt1 = new SimpleDateFormat("yyyy-MM-dd").parse(inputDate);
+
+        //   return (List<SsInsTaskDetails>) insTaskDetailsDao.findAll();
+        int locId = new Long(user.getLocId()).intValue();
+        if (user.getRole().equals("USER")) {
+            return (List<Map>) insTaskDetailsDao.getTaskData(new Integer(locId), user.getTicketNo(), frmDt1);
+        } else {
+            return (List<Map>) insTaskDetailsDao.getTaskDataLocWise(new Integer(locId), currentDate);
+        }
+
+    }
 
     @GetMapping("/taskDateWise")
     public List<SsInsTaskDetails> getInsTasksDateWise(@RequestParam String fromDate) throws Exception {
