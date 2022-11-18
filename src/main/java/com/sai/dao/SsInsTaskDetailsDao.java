@@ -33,15 +33,21 @@ public interface SsInsTaskDetailsDao extends CrudRepository<SsInsTaskDetails, In
     public List<SsInsTaskDetails> findByLocIdAndCallDueDt(Integer locId, Date curdate);
 
     //   public List<Object> findByLocIdAndCallDueDt(Integer locId, Date curdate);
-    @Query(value = "select distinct std.taskId,sc.cust_Name,sc.custAcctNo ,std.vehicleNo,std.eventName,std.callDueDt,std.insEndDate,std.eventStatus,std.custStatus \n"
+    @Query(value = "select distinct std.taskId,sc.cust_Name,sc.custAcctNo ,std.vehicleNo,std.eventName,std.callDueDt,\n"
+            + "std.insEndDate,std.eventStatus,std.custStatus,std.custid,std.printRenewal, std.apptYN,\n"
+            + "std.remark,std.disposition,std.apptAddress,std.assignId,std.createdBy,std.lstUpdBy,std.insType,\n"
+            + "std.contactYN,std.apptDate \n"
             + "from test.Ss_Ins_Task_Details std,ss_customer sc where sc.cust_id=std.custId and std.locId=?1 \n"
             + "and std.assignId=?2 and std.callDueDt=?3", nativeQuery = true)
     public List<Map> getTaskData(Integer locId, String User, Date curdate);
-    
-      @Query(value = "select distinct std.taskId,sc.cust_Name,sc.custAcctNo ,std.vehicleNo,std.eventName,std.callDueDt,std.insEndDate,std.eventStatus,std.custStatus \n"
+
+    @Query(value = "select distinct std.taskId,sc.cust_Name,sc.custAcctNo ,std.vehicleNo,std.eventName,std.callDueDt,\n"
+            + "std.insEndDate,std.eventStatus,std.custStatus,std.custid,std.printRenewal, std.apptYN,\n"
+            + "std.remark,std.disposition,std.apptAddress,std.assignId,std.createdBy,std.lstUpdBy,std.insType,\n"
+            + "std.contactYN,std.apptDate \n"
             + "from test.Ss_Ins_Task_Details std,ss_customer sc where sc.cust_id=std.custId and std.locId=?1 \n"
             + "and  std.callDueDt=?2", nativeQuery = true)
-    public List<Map> getTaskDataLocWise(Integer locId,Date curdate);
+    public List<Map> getTaskDataLocWise(Integer locId, Date curdate);
 
     public SsInsTaskDetails findByVehicleNo(String vehicleNo);
 

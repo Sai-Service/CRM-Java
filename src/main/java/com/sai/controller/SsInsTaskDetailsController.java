@@ -414,7 +414,7 @@ public class SsInsTaskDetailsController implements Serializable {
     }
 
     //http://localhost:8081/ins/update/assingee?fromTask=162&toTask=164&assigneeId=Insurance2&locId=2101
- @RequestMapping(value = "/update/assingee", method = RequestMethod.GET, produces = {"application/JSON"})
+ @RequestMapping(value = "/update/assingee", method = RequestMethod.PUT, produces = {"application/JSON"})
     public SaiResponse assignInsTaskToUsersManually(@RequestParam Integer fromTask,@RequestParam Integer toTask,@RequestParam String assigneeId,@RequestParam Integer locId) {
         try {
             
