@@ -1,5 +1,6 @@
 package com.sai.dao;
 
+import com.sai.dto.cmnStString;
 import com.sai.model.UserLogin;
 import java.util.List;
 import java.util.Map;
@@ -25,8 +26,8 @@ public interface UserLoginDao extends CrudRepository<UserLogin, Long> {
                      @Query("SELECT NEW com.sai.model.UserLogin(ticketNo ,locId) FROM UserLogin where role='USER'  AND type = 'INSURANCE' AND reportTo =?1 ")
     public List<UserLogin> findByReportedTo(String loginName);
     
-    @Query("SELECT NEW com.sai.model.UserLogin(locId ,ticketNo,username,dept)  FROM UserLogin where role='USER'  AND type = 'INSURANCE' AND reportTo =?1 and locId=?2 ")
-    public List<UserLogin> totalLogins(String loginName,Integer locId);//Integer locId, String ticketNo, String username, String dept
+    @Query("SELECT NEW com.sai.dto.cmnStString(ticketNo,username)  FROM UserLogin where role='USER'  AND type = 'INSURANCE' AND reportTo =?1 and locId=?2 ")
+    public List<cmnStString> totalLogins(String loginName,Integer locId);//Integer locId, String ticketNo, String username, String dept
 }
 
    

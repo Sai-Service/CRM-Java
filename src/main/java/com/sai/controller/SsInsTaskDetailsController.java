@@ -6,11 +6,13 @@
 package com.sai.controller;
 
 import com.sai.SaiResponse;
+import com.sai.dto.cmnStString;
 import com.sai.dao.SsCustomerDao;
 import com.sai.dao.SsInsTaskDetailsDao;
 import com.sai.dao.SsInsTaskHistoryDao;
 import com.sai.dao.UserLoginDao;
 import com.sai.dto.SSInsTaskContactYN;
+import com.sai.dto.cmnStString;
 import com.sai.model.UpdateAssignee;
 import com.sai.model.UserLogin;
 import java.io.Serializable;
@@ -346,11 +348,11 @@ public class SsInsTaskDetailsController implements Serializable {
 
     /////////////New Method to autoassign all by jyoti t 15-11-2022
     @RequestMapping(value = "/LocAccessLoginwise", method = RequestMethod.GET, produces = {"application/JSON"})
-    public List<UserLogin> updateTaskAssignee(@RequestParam String login_name, @RequestParam Integer locId) throws Exception {
-        List<UserLogin> userDetail = null;
+    public List<cmnStString> updateTaskAssignee(@RequestParam String login_name, @RequestParam Integer locId) throws Exception {
+        List<cmnStString> userDetail = null;
         try {
             //  userDetail = taskGenImpl.getUserList(login_name, locId);
-            userDetail = userRepository.totalLogins(login_name, locId);
+           userDetail = userRepository.totalLogins(login_name, locId);
 
             List<UpdateAssignee> toAssignee = new ArrayList<>();
 
@@ -376,7 +378,7 @@ public class SsInsTaskDetailsController implements Serializable {
 
             List<SsInsTaskDetails> orgList = taskList;
 
-            for (UserLogin map1 : userDetail) {
+            for (cmnStString map1 : userDetail) {
 
                 for (int i = 0; i < perUsertaskcount; i++) {
                     insTaskDetailsDao.UpdateAssigneeTaskIdwise((String) map1.getTicketNo(), ((SsInsTaskDetails) taskList.get(i)).getTaskId());
@@ -390,7 +392,7 @@ public class SsInsTaskDetailsController implements Serializable {
             int assignPendingTaskCnt = assignTaskCnt;
 
             while (assignPendingTaskCnt < taskList.size()) {
-                for (UserLogin map1 : userDetail) {
+                for (cmnStString map1 : userDetail) {
 
                     if (assignPendingTaskCnt >= taskList.size()) {
                         break;
@@ -421,7 +423,7 @@ public class SsInsTaskDetailsController implements Serializable {
 
             for (String searchKey : map.keySet()) {
                 if (searchKey.equals("fromTask")) {
-                    fromTask = Integer.parseInt((String) map.get("fromTask"));
+                fromTask = Integer.parseInt((String) map.get("fromTask"));
                     toTask = Integer.parseInt((String) map.get("toTask"));
                     assigneeId = (String) map.get("assigneeId");
                     locId = Integer.parseInt((String) map.get("locId"));
