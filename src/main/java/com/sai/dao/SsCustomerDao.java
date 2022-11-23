@@ -62,4 +62,6 @@ import org.springframework.data.repository.CrudRepository;
     public void deleteByCustId(Integer id);
 
     public Optional<SsCustomer> findByCustAcctNo(String cust_no);
+
+    public Optional<SsCustomer> findByCustAcctNo(Integer cust_no);
 }

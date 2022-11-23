@@ -135,6 +135,7 @@ public class SsInsuranceDetails implements Serializable {
     @Column(name = "year")
     private Integer year;
 
+
 //    @JoinColumn(name = "vehicleno", referencedColumnName = "vehicleNo")
 //    @ManyToOne
 //    private SsVehicleMaster vehicleno;

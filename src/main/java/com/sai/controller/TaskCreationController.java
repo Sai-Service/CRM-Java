@@ -12,6 +12,7 @@ import com.sai.dao.SSAdministratorDataDao;
 import com.sai.dao.SSAppoinmentDetailsDao;
 import com.sai.dao.SSTaskCreationDao;
 import com.sai.dao.SsCustomerDao;
+import com.sai.dao.SsExecutiveDetailsDao;
 import com.sai.dao.SsInsTaskHistoryDao;
 import com.sai.dao.SsSlotAvailableDao;
 import com.sai.dto.SsTaskDetailsRequest;
@@ -20,6 +21,7 @@ import com.sai.dto.LstServLoc;
 import com.sai.dto.ReScheduleTaskRequest;
 import com.sai.model.SSAppoinmentDetails;
 import com.sai.model.SsCustomer;
+import com.sai.model.SsExecutiveDetails;
 import com.sai.model.SsSlotAvailable;
 import com.sai.model.SsTaskDetails;
 import com.sai.model.UserLogin;
@@ -28,6 +30,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -80,6 +83,9 @@ public class TaskCreationController {
 
     @Autowired
     private SsInsTaskHistoryDao insTaskHist;
+
+    @Autowired
+    private SsExecutiveDetailsDao ExecRepository;
 
     ////UPDATE THE TASK STATUS AS CLOSED AND ADMIN STATUS CLOSED////////////
     @RequestMapping(value = "/UpdateTaskStatus", method = RequestMethod.PUT, produces = {"application/JSON"})
@@ -459,12 +465,12 @@ public class TaskCreationController {
             String task_type = null;
             String task_status = null;
             Date call_du_dt = null;
-            String cust_no = null;
-            String cust_name;
-            String cust_add = null;
-
-            String contact_no = null;
-            String email_id = null;
+            Integer cust_no = null;
+//            String cust_name;
+//            String cust_add = null;
+//
+//            String contact_no = null;
+//            String email_id = null;
             String vehicle_no = null;
             Integer loc_id = null;
             Integer org_id = null;
@@ -475,67 +481,87 @@ public class TaskCreationController {
             String assignee_id = null;
             String cust_type = null;
 
-            if (records.isEmpty()) {
-                for (CSVRecord record1 : records) {
-                    task_type = record1.get(0);
-                    task_status = record1.get(1);
-                    call_du_dt = new SimpleDateFormat("dd-MM-yyyy").parse(record1.get(2));
-                    //  booking.setBookingDate(payDt);
-                    // call_du_dt = record1.get(2);//Need to confirm with minal mam
-                    cust_no = (record1.get(3));
-                    cust_name = (record1.get(4));
-                    cust_add = (record1.get(5));
+            List<Integer> newCust = new ArrayList();
+            //  if (records.isEmpty()) {
+            for (CSVRecord record1 : records) {
+                task_type = record1.get(0);
+                task_status = record1.get(1);
+                call_du_dt = new SimpleDateFormat("dd-MM-yyyy").parse(record1.get(2));
+                //  booking.setBookingDate(payDt);
+                // call_du_dt = record1.get(2);//Need to confirm with minal mam
+                cust_no = (Integer.parseInt(record1.get(3)));
+//                cust_name = (record1.get(4));
+//                cust_add = (record1.get(5));
+//
+//                contact_no = record1.get(6);
+//                email_id = record1.get(7);
+                vehicle_no = record1.get(4);
+                loc_id = (Integer.parseInt(record1.get(5)));
+                org_id = (Integer.parseInt(record1.get(6)));
+                reference_no = (record1.get(7));
 
-                    contact_no = record1.get(6);
-                    email_id = record1.get(7);
-                    vehicle_no = record1.get(8);
-                    loc_id = (Integer.parseInt(record1.get(9)));
-                    org_id = (Integer.parseInt(record1.get(10)));
-                    reference_no = (record1.get(11));
+                Serv_type = record1.get(8);
+                //   serv_date = record1.get(13);
+                serv_date = new SimpleDateFormat("dd-MM-yyyy").parse(record1.get(9));
 
-                    Serv_type = record1.get(12);
-                    //   serv_date = record1.get(13);
-                    serv_date = new SimpleDateFormat("dd-MM-yyyy").parse(record1.get(13));
+                assignee_id = record1.get(10);
+                cust_type = record1.get(11);
+                Optional<SsCustomer> optionalCustomer = customerRepo.findByCustAcctNo(cust_no);
+                SsCustomer Customer = optionalCustomer.isPresent() ? optionalCustomer.get() : null;
 
-                    assignee_id = record1.get(14);
-                    cust_type = record1.get(15);
-                    Optional<SsCustomer> optionalCustomer = customerRepo.findByCustAcctNo(cust_no);
-                    SsCustomer Customer = optionalCustomer.isPresent() ? optionalCustomer.get() : null;
-                    
-                    if (Customer ==null)
-                    {
-                       throw new Exception("Customer is not available...please create customer ");
-                    }
-
-                    SsTaskDetails newTask = new SsTaskDetails();
-                    newTask.setTaskType(task_type);
-                    newTask.setTaskStatus(task_status);
-                    newTask.setApptmtId(0);
-                    newTask.setCallDuDt(call_du_dt);
-
-                    ///find from customer_master and assign
-                    newTask.setCustId(0);///Need to assign max customer Id and create customer if not avail
-
-                    newTask.setCustAdd(cust_add);
-                    newTask.setContactPerson(cust_name);
-                    newTask.setContactNo1(contact_no);
-                    newTask.setContactNo2(contact_no);
-                    newTask.setEmailAdd(email_id);
-                    newTask.setVehicleNo(vehicle_no);
-                    newTask.setSalesExecName(emplId.toString());
-                    newTask.setLocId(loc_id);
-                    newTask.setOrgId(org_id);
-                    newTask.setReferenceNo(reference_no);
-                    newTask.setNextServcDt(serv_date);
-                    newTask.setNextServcType(Serv_type);
-                    newTask.setAssigneeId(assignee_id);
-                    newTask.setCustType(cust_type);
-                    taskRepository.save(newTask);
-
+                if (Customer == null) {
+                    newCust.add(cust_no);
+                    break;
+                    //throw new Exception("Customer is not available...please create customer ");
                 }
-            }
 
-            apiResponse = new SaiResponse(200, "Price Details updated Successfully", null);
+                SsTaskDetails newTask = new SsTaskDetails();
+                newTask.setTaskType(task_type);
+                newTask.setTaskStatus(task_status);
+                newTask.setApptmtId(0);
+                newTask.setCallDuDt(call_du_dt);
+
+                ///find from customer_master and assign
+                newTask.setCustId(Customer.getCustId());///Need to assign max customer Id and create customer if not avail
+
+                newTask.setCustAdd(Customer.getAddress1() + "," + Customer.getAddress2() + "," + Customer.getAddress3() + "," + Customer.getCity() + "," + Customer.getPincode() + "," + Customer.getStateName());
+                newTask.setContactPerson(Customer.getCustName());
+                newTask.setCustName(Customer.getCustName());
+                newTask.setContactNo1(Customer.getContactNo1().toString());
+                if (Customer.getContactNo2() == null) {
+                } else {
+                    newTask.setContactNo2(Customer.getContactNo2().toString());
+                }
+                newTask.setEmailAdd(Customer.getEmailId());
+                newTask.setVehicleNo(vehicle_no);
+                newTask.setSalesExecName(assignee_id);
+                newTask.setLocId(loc_id);
+                newTask.setOrgId(org_id);
+                newTask.setReferenceNo(reference_no);
+                newTask.setNextServcDt(serv_date);
+                newTask.setNextServcType(Serv_type);
+                newTask.setAttribute1(Serv_type);
+                newTask.setAssigneeId(assignee_id);
+                Optional<SsExecutiveDetails> optionalSsExecutive = ExecRepository.findByTicketNo(assignee_id);
+                SsExecutiveDetails ssExecutive = optionalSsExecutive.isPresent() ? optionalSsExecutive.get() : null;
+
+                if (ssExecutive == null) {
+                    throw new Exception("Executive is not available...please enter proper ticket No ");
+                } else {
+
+                    newTask.setAssignee(ssExecutive.getEmpName());
+                }
+                newTask.setCustType(cust_type);
+                newTask.setCreatedBy(emplId);
+                newTask.setCreationDate(currentDate);
+                newTask.setLastUpdatedBy(emplId);
+                newTask.setLastUpdateDate(currentDate);
+                taskRepository.save(newTask);
+
+            }
+            // }
+
+            apiResponse = new SaiResponse(200, "Tasks Uploaded Successfully", newCust);
 
         } catch (Exception e) {
             apiResponse = new SaiResponse(400, "Error In File Upload", e.getMessage());

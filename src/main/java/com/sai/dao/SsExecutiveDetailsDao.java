@@ -9,6 +9,7 @@ import com.sai.model.ExecutiveName;
 import com.sai.model.SsExecutiveDetails;
 import com.sai.model.SsLocation;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 /**
@@ -23,5 +24,7 @@ import org.springframework.data.repository.CrudRepository;
     public List<SsExecutiveDetails> findExeByLocId(long loc_id, String deptCode);
     
     public List<SsExecutiveDetails> findByLocIdAndDeptCode(long locId, String deptCode);
+
+    public Optional<SsExecutiveDetails> findByTicketNo(String assignee_id);
    
 }
