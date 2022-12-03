@@ -349,11 +349,11 @@ public class TaskCreationController {
         return taskRepository.getEWMessage(vehicleNo);
     }
 
-    @RequestMapping(value = "/ssTask/MCPReminderMessage/{vehicleNo}", method = RequestMethod.GET, produces = {"application/JSON"})
-    // Map getUsercountList(@PathVariable String vehicle_no)
-    Map getMCPMessage(@PathVariable String vehicleNo) {
-        return taskRepository.getMCPMessage(vehicleNo);
-    }
+//    @RequestMapping(value = "/ssTask/MCPReminderMessage/{vehicleNo}", method = RequestMethod.GET, produces = {"application/JSON"})
+//    // Map getUsercountList(@PathVariable String vehicle_no)
+//    Map getMCPMessage(@PathVariable String vehicleNo) {
+//        return taskRepository.getMCPMessage(vehicleNo);
+//    }
 
     @RequestMapping(value = "/ssTask/totalApptExewise/{loc_id}", method = RequestMethod.GET, produces = {"application/JSON"})
     // Map getUsercountList(@PathVariable String vehicle_no)
@@ -571,4 +571,21 @@ public class TaskCreationController {
 
     }
 
+    
+     @RequestMapping(value = "/ssTask/MCPReminderMessageNew/{vehicleNo}", method = RequestMethod.GET, produces = {"application/JSON"}) 
+       SaiResponse getMCPMessageNew(@PathVariable String vehicleNo) throws Exception {
+               SaiResponse apiResponse;
+        try {
+       String data= taskRepository.getMCPMessage(vehicleNo);
+           
+       System.out.println("Data++++"+ data);
+            apiResponse = new SaiResponse(200, "Found Succssfully", data);
+
+        } catch (Exception e) {
+            apiResponse = new SaiResponse(400, "Not Foune", e.getMessage());
+            e.printStackTrace();
+        }
+        return apiResponse;
+
+    }
 }
