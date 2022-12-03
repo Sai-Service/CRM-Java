@@ -35,7 +35,7 @@ public class SalesTaskDetailsController {
 
     @GetMapping("/SalesTaskDetails/{locId}")
     public List<SalesTaskDetails> getByLocId(@PathVariable Integer locId)  throws Exception  {
-        List<SalesTaskDetails> locDet = ssTaskDetRepo.findByLocIdAndTaskStatus(locId, "NEW");
+        List<SalesTaskDetails> locDet = ssTaskDetRepo.getByLocIDandTask(locId, "NEW");
         //  SalesTaskDetails locDet1 = locDet.isPresent() ? locDet.get() : null;
         return locDet;
     }

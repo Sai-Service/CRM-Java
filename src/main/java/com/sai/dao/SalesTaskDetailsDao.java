@@ -29,6 +29,11 @@ public interface SalesTaskDetailsDao extends CrudRepository<SalesTaskDetails, Lo
 
     public List<SalesTaskDetails> findByLocIdAndTaskStatus(Integer locId, String aNEW);
     
+     @Query("select distinct std from SalesTaskDetails std where std.locId=?1 and std.taskStatus=?2 and std.convertSOYN in ('ENTERED','BOOKED','N') order by std.taskId")
+    List<SalesTaskDetails> getByLocIDandTask(Integer locId,String aNEW);
+    
+    
+    
      @Query("select distinct std.taskId as taskId  from SalesTaskDetails std where std.locId=?1 and taskAssigneeId is null  order by std.taskId")
     List<Object> getTaskProforma(Integer locId);
     
@@ -48,6 +53,11 @@ public interface SalesTaskDetailsDao extends CrudRepository<SalesTaskDetails, Lo
     public List<SalesTaskDetails> findByTaskAssigneeId(String taskAssigneeId);
 
     public List<SalesTaskDetails> findByTaskAssigneeIdAndTaskStatus(String taskAssigneeId, String aNEW);
+    
+         @Query("select distinct std from SalesTaskDetails std where std.locId=?1 and std.taskStatus=?2 and std.convertSOYN in ('ENTERED','BOOKED','N') order by std.taskId")
+    List<SalesTaskDetails> getByAssigneeStatus(Integer locId,String aNEW);
+    
+    
    
   //    public List<SalesTaskDetails> findByTaskAssigneeIdAndTaskStatus(String taskAssigneeId, String aNEW);
       
