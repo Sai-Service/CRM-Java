@@ -579,8 +579,13 @@ public class TaskCreationController {
        String data= taskRepository.getMCPMessage(vehicleNo);
            
        System.out.println("Data++++"+ data);
+       if(data!=null){
             apiResponse = new SaiResponse(200, "Found Succssfully", data);
-
+       }
+       else
+       {
+         apiResponse = new SaiResponse(400, " Data Not Found ", data);
+       }
         } catch (Exception e) {
             apiResponse = new SaiResponse(400, "Not Foune", e.getMessage());
             e.printStackTrace();
