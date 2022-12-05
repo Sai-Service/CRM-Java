@@ -63,7 +63,7 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
     //////TO DISPLAY MARQUEE VALUE FOR UNCONTACTED CUSTOMER ON HOME PAGE ADMIN//////////////////////         
     @Query("select  count(std.taskId) as uncontacted from SsTaskDetails std where callDuDt=CURRENT_DATE and contacted='N' and std.locId=?1 order by std.taskId")
     // MassAssignData getMassAssCount(long locId); 
-    Map getUnContactedCust(long locId);
+    Map getUnContactedCust(int locId);
 
     //////TO DISPLAY MARQUEE VALUE FOR UNCONTACTED CUSTOMER ON HOME PAGE//////////////////////         
     @Query("select  NEW com.sai.model.SsTaskDetails(std.taskType,  std.taskStatus,  std.callDuDt,  std.custId,   std.custAdd,  std.contactPerson, std.contactNo1,  std.contactNo2,  std.emailAdd,  std.vehicleNo,  std.reason,  std.remarks,  std.taskReason,  std.lastServcDt,  std.lastServcType,  std.lastServcLoc,  std.lastServcKm, std.nextServcDt,  std.nextServcType\n"
@@ -127,7 +127,7 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
     public void TaskStatusUpdate(Long TASK_ID);
 
     //////TO DISPLAY ALL THE Message for EW and MCP End//////////////////////         
-    @Query(value = " select concat(\"Customer EW Ending after 15 Days...Ew Date is : \" ,EWDate) Reminder from\n test.ss_vehicle_master where  vehicleNo=?1 and ewEnDate like (curdate()  + interval 15 day ) ", nativeQuery = true)
+    @Query(value = " select concat(\"Customer EW Ending after 15 Days...Ew End Date is : \" ,ewEnDate) Reminder from\n test.ss_vehicle_master where  vehicleNo=?1 and ewEnDate like (curdate()  + interval 15 day ) ", nativeQuery = true)
     // MassAssignData getMassAssCount(long locId); 
     Map getEWMessage(String vehicleNo);
 

@@ -26,6 +26,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -151,6 +152,12 @@ public class SsExecutiveDetailsController {
       @GetMapping("/ssExecutiveDetailses/ExeByLocIdDept/{locId}")//////////////
       public List<SsExecutiveDetails> findByLocIdAndDeptCode(@PathVariable long locId) {
             List<SsExecutiveDetails> exeLocId = ExecRepository.findByLocIdAndDeptCode(locId,"INS");
+         return exeLocId;
+      }
+
+                 @GetMapping("/ssExecutiveDetailses/ExeByLocIdStatus")//////////////
+      public List<SsExecutiveDetails> ExeByLocIdStatus(@RequestParam long locid,@RequestParam String dept) {
+        List<SsExecutiveDetails> exeLocId = ExecRepository.findByLocIdAndDeptCodeAndStatus(locid,dept,"ACTIVE");
          return exeLocId;
       }
 

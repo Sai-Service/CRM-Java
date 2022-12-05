@@ -26,5 +26,7 @@ import org.springframework.data.repository.CrudRepository;
     public List<SsExecutiveDetails> findByLocIdAndDeptCode(long locId, String deptCode);
 
     public Optional<SsExecutiveDetails> findByTicketNo(String assignee_id);
+
+    public List<SsExecutiveDetails> findByLocIdAndDeptCodeAndStatus(long locid, String dept, String active);
    
 }

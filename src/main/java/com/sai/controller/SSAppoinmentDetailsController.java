@@ -441,7 +441,7 @@ public class SSAppoinmentDetailsController {
     }
 
     ///////////////////TO DISPLAY MARQUEE VALUE FOR appoinemtn taken executive ON HOME PAGE///////////
-    @RequestMapping(value = "/ssAppoinment/getAppoinmentPickupExecwise/{locId}", method = RequestMethod.GET, produces = {"application/JSON"})
+    @RequestMapping(value = "/ssAppoinment/getAppoinmentPickupExecwise/{apptAttended}", method = RequestMethod.GET, produces = {"application/JSON"})
     public Map getAppoinmentPickupExecwise(@PathVariable String apptAttended) {
 
         return appoinmentRepository.getAppoinmentPickupExecwise(apptAttended);
