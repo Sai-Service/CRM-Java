@@ -100,7 +100,7 @@ public class ExistingCustAppoinmentRequest {
     @JsonProperty("servcLoc")
     private LstServLoc servcLoc;
     private String pickupMms;
-    private Date pickupTime;
+    private String pickupTime;
 
     public String getExename() {
         return exename;
@@ -118,11 +118,11 @@ public class ExistingCustAppoinmentRequest {
         this.pickupMms = pickupMms;
     }
 
-    public Date getPickupTime() {
+    public String getPickupTime() {
         return pickupTime;
     }
 
-    public void setPickupTime(Date pickupTime) {
+    public void setPickupTime(String pickupTime) {
         this.pickupTime = pickupTime;
     }
 

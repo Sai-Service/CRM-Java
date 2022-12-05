@@ -72,7 +72,7 @@ public class NewCustAppt {
     private String apptAttLoc;
     private String exename;
     private  String pickupMms;
-    private Date pickupTime;
+    private String pickupTime;
     
 @JsonProperty("lstServLoc")
 private LstServLoc lstServLoc;
@@ -509,11 +509,11 @@ private LstServLoc lstServLoc;
         this.pickupMms = pickupMms;
     }
 
-    public Date getPickupTime() {
+    public String getPickupTime() {
         return pickupTime;
     }
 
-    public void setPickupTime(Date pickupTime) {
+    public void setPickupTime(String pickupTime) {
         this.pickupTime = pickupTime;
     }
 

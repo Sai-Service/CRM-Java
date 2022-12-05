@@ -47,7 +47,7 @@ public class SSAppoinmentDetails implements Serializable {
     private String pickupMms;
     @Column(name = "PICKUP_TIME")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date pickupTime;
+    private String pickupTime;
     
     @javax.persistence.Id
     @GeneratedValue
@@ -246,11 +246,11 @@ public class SSAppoinmentDetails implements Serializable {
         this.pickupMms = pickupMms;
     }
 
-    public Date getPickupTime() {
+    public String getPickupTime() {
         return pickupTime;
     }
 
-    public void setPickupTime(Date pickupTime) {
+    public void setPickupTime(String pickupTime) {
         this.pickupTime = pickupTime;
     }
 

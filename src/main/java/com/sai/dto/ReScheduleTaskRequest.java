@@ -27,7 +27,7 @@ private LstServLoc servLoc;
 private String exename;
 
     private String pickupMms;
-    private Date pickupTime;
+    private String pickupTime;
 
     public String getPickupMms() {
         return pickupMms;
@@ -37,11 +37,11 @@ private String exename;
         this.pickupMms = pickupMms;
     }
 
-    public Date getPickupTime() {
+    public String getPickupTime() {
         return pickupTime;
     }
 
-    public void setPickupTime(Date pickupTime) {
+    public void setPickupTime(String pickupTime) {
         this.pickupTime = pickupTime;
     }
 
