@@ -1,0 +1,1540 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CrmInsuRep" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9613a13c-4d76-48c4-b0c7-bf641279ba6e">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CRM_PROJECT_LOCAL.xml"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="CrmInsRepDs" uuid="2bf5e36d-44ab-46b5-b25f-1c63eb3e4069">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CRM_PROJECT_LOCAL.xml"/>
+		<parameter name="fromDate" class="java.util.Date"/>
+		<parameter name="toDate" class="java.util.Date"/>
+		<parameter name="ouId" class="java.lang.Integer"/>
+		<parameter name="locId" class="java.lang.Integer"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT  sid.id Id, sid.custId CustId, sid.miNo MiNo,  sid.insCompName InsCompName,  sid.policyNo PolicyNo,  
+sid.year PolicyYear,  sid.insType InsType, sid.idvAmt IDVAmt, sid.prmAmt PremiumAmt, sid.claimAmt ClaimAmt,  
+sid.remark Remark,sid.financeCompName FinCompName,  sid.policyType PolicyType, sid.exShowPrice ExShowPrice, 
+sid.endorsementTaken EndorsementTaken,  sid.policyRenewType PolicyRenewType , sid.PolicySubType, 
+sid.dealerName DealerName, sid.currentNCB CurrentNCB, sid.driverCover DriverCover,  sid.LegalLibNoPer,  
+sid.DriverCoverPremium,sid.TypeOfCustomer,sid.PaymentMode,sid.AccountNo,sid.BankBranch,sid.BankName,sid.Status,
+sid.OrgId,sid.LocId,sid.VehicleNo,sid.InsStDate,sid.InsPeriod,sid.InsEndDt,sid.ClaimCount,sid.RemittanceDate,
+sid.PaymentAmt,sid.PaymentDate, sid.InactiveDate,hou.company_code,sl.loc_name,sl.loc_desc, hou.ORGANIZATION_NAME
+FROM crm.ss_insurance_details sid,ss_customer sc,hr_operating_units hou ,ss_location sl 
+where sid.insEndDt between $P{fromDate} and $P{toDate} 
+and sid.custId=sc.CUST_ID 
+and sid.orgId= $P{ouId}
+and sid.locid= $P{locId}
+and sid.locId=sl.loc_id 
+and hou.org_id=sid.orgId]]>
+		</queryString>
+		<field name="Id" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="Id"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="CustId" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="CustId"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="MiNo" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="MiNo"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="InsCompName" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="InsCompName"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="PolicyNo" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="PolicyNo"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="PolicyYear" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="PolicyYear"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="InsType" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="InsType"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="IDVAmt" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="IDVAmt"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="PremiumAmt" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="PremiumAmt"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="ClaimAmt" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="ClaimAmt"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="Remark" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="Remark"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="FinCompName" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="FinCompName"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="PolicyType" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="PolicyType"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="ExShowPrice" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="ExShowPrice"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="EndorsementTaken" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="EndorsementTaken"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="PolicyRenewType" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="PolicyRenewType"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="PolicySubType" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="PolicySubType"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="DealerName" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="DealerName"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="CurrentNCB" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="CurrentNCB"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="DriverCover" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="DriverCover"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="LegalLibNoPer" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="LegalLibNoPer"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="DriverCoverPremium" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="DriverCoverPremium"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="TypeOfCustomer" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="TypeOfCustomer"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="PaymentMode" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="PaymentMode"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="AccountNo" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="AccountNo"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="BankBranch" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="BankBranch"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="BankName" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="BankName"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="Status" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="Status"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="OrgId" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="OrgId"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="LocId" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="LocId"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="VehicleNo" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="VehicleNo"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="InsStDate" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.label" value="InsStDate"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="InsPeriod" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="InsPeriod"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="InsEndDt" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.label" value="InsEndDt"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="ClaimCount" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="ClaimCount"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="RemittanceDate" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.label" value="RemittanceDate"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="PaymentAmt" class="java.lang.Float">
+			<property name="com.jaspersoft.studio.field.label" value="PaymentAmt"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="PaymentDate" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.label" value="PaymentDate"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="InactiveDate" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.label" value="InactiveDate"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+		</field>
+		<field name="company_code" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="company_code"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="hr_operating_units"/>
+		</field>
+		<field name="loc_name" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="loc_name"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_location"/>
+		</field>
+		<field name="loc_desc" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="loc_desc"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_location"/>
+		</field>
+		<field name="ORGANIZATION_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="ORGANIZATION_NAME"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="hr_operating_units"/>
+		</field>
+	</subDataset>
+	<parameter name="fromDate" class="java.util.Date"/>
+	<parameter name="toDate" class="java.util.Date"/>
+	<parameter name="ouId" class="java.lang.Integer"/>
+	<parameter name="locId" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT  sid.id Id, sid.custId CustId, sid.miNo MiNo,  sid.insCompName InsCompName,  sid.policyNo PolicyNo,  
+sid.year PolicyYear,  sid.insType InsType, sid.idvAmt IDVAmt, sid.prmAmt PremiumAmt, sid.claimAmt ClaimAmt,  
+sid.remark Remark,sid.financeCompName FinCompName,  sid.policyType PolicyType, sid.exShowPrice ExShowPrice, 
+sid.endorsementTaken EndorsementTaken,  sid.policyRenewType PolicyRenewType , sid.PolicySubType, 
+sid.dealerName DealerName, sid.currentNCB CurrentNCB, sid.driverCover DriverCover,  sid.LegalLibNoPer,  
+sid.DriverCoverPremium,sid.TypeOfCustomer,sid.PaymentMode,sid.AccountNo,sid.BankBranch,sid.BankName,sid.Status,
+sid.OrgId,sid.LocId,sid.VehicleNo,sid.InsStDate,sid.InsPeriod,sid.InsEndDt,sid.ClaimCount,sid.RemittanceDate,
+sid.PaymentAmt,sid.PaymentDate, sid.InactiveDate,hou.company_code,sl.loc_name,sl.loc_desc, hou.ORGANIZATION_NAME
+FROM crm.ss_insurance_details sid,ss_customer sc,hr_operating_units hou ,ss_location sl 
+where sid.insEndDt between $P{fromDate} and $P{toDate} 
+and sid.custId=sc.CUST_ID 
+and sid.orgId= $P{ouId}
+and sid.locid= $P{locId}
+and sid.locId=sl.loc_id 
+and hou.org_id=sid.orgId]]>
+	</queryString>
+	<field name="Id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="Id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="CustId" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="CustId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="MiNo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MiNo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="InsCompName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="InsCompName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="PolicyNo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PolicyNo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="PolicyYear" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="PolicyYear"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="InsType" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="InsType"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="IDVAmt" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="IDVAmt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="PremiumAmt" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PremiumAmt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="ClaimAmt" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ClaimAmt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="Remark" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Remark"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="FinCompName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="FinCompName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="PolicyType" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PolicyType"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="ExShowPrice" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ExShowPrice"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="EndorsementTaken" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="EndorsementTaken"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="PolicyRenewType" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PolicyRenewType"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="PolicySubType" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PolicySubType"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="DealerName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DealerName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="CurrentNCB" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CurrentNCB"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="DriverCover" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DriverCover"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="LegalLibNoPer" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="LegalLibNoPer"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="DriverCoverPremium" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DriverCoverPremium"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="TypeOfCustomer" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TypeOfCustomer"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="PaymentMode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PaymentMode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="AccountNo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="AccountNo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="BankBranch" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="BankBranch"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="BankName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="BankName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="Status" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Status"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="OrgId" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="OrgId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="LocId" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="LocId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="VehicleNo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="VehicleNo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="InsStDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="InsStDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="InsPeriod" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="InsPeriod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="InsEndDt" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="InsEndDt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="ClaimCount" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ClaimCount"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="RemittanceDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="RemittanceDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="PaymentAmt" class="java.lang.Float">
+		<property name="com.jaspersoft.studio.field.label" value="PaymentAmt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="PaymentDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="PaymentDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="InactiveDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="InactiveDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_insurance_details"/>
+	</field>
+	<field name="company_code" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="company_code"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hr_operating_units"/>
+	</field>
+	<field name="loc_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="loc_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_location"/>
+	</field>
+	<field name="loc_desc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="loc_desc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_location"/>
+	</field>
+	<field name="ORGANIZATION_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ORGANIZATION_NAME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hr_operating_units"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="382" splitType="Stretch">
+			<componentElement>
+				<reportElement x="0" y="114" width="800" height="186" uuid="81245a04-4acd-4469-92c7-f35a7d25ba57">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="CrmInsRepDs" uuid="e5212c32-b1bb-4dba-9ea0-0a0d7bed7e6e">
+						<datasetParameter name="fromDate">
+							<datasetParameterExpression><![CDATA[$P{fromDate}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="toDate">
+							<datasetParameterExpression><![CDATA[$P{toDate}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ouId">
+							<datasetParameterExpression><![CDATA[$P{ouId}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="locId">
+							<datasetParameterExpression><![CDATA[$P{locId}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="23" uuid="afea9528-cc4f-4232-ace0-f99baeab732a">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="120" uuid="16f0ec7a-f57e-4c74-bfbb-e5a429c2af4c">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[Id]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="23" height="30" uuid="013d8e17-3fae-45f4-ad16-d8f22ed94343">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Id}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="a1792af4-843f-467d-8604-4004a37c9e18">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="120" uuid="276d205b-c985-4697-8ce7-0e8647222090">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[CustId]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="23" height="30" uuid="a117c047-3732-457e-9eee-51b491d73fba">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CustId}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="ce4458e8-91d1-49ca-be99-31146efbefa7">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="120" uuid="fc8b5422-6f01-4a0d-b370-e25e92c92016">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[MiNo]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="23" height="30" uuid="7f81b661-08d2-4609-b5ef-7cce8c92153a">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{MiNo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="ac8e653f-6e36-494c-b5f9-418acfd7a01c">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="120" uuid="3fecfc55-492f-4c31-9480-996dd5a39aa5">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[InsCompName]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="23" height="30" uuid="a96ae173-9013-4828-bba5-2f4fd147a771">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{InsCompName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="4f17e838-157b-44b1-bc02-dbaa99907ddf">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="120" uuid="1dfeb201-aefb-469c-913a-ea7448422b61">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[PolicyNo]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="23" height="30" uuid="f291799e-0e5d-4b67-9aa5-73eff08e13a8">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PolicyNo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="79c07c6e-715c-4aae-bd15-16ad7c671785">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="120" uuid="21fe2794-f5f7-4150-8b75-0e532e0cc1ce">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[PolicyYear]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="23" height="30" uuid="738db6a3-f095-4fcc-9867-6685f0c5acac">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PolicyYear}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="3ec12df7-1868-406c-ba76-1f8f599889c0">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="120" uuid="5615d8d8-c91b-4d31-9678-2766da07e9fa">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[InsType]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="23" height="30" uuid="ab9e9024-6648-4938-8d68-890f28b3cede">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{InsType}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="0df60ee0-8086-4a18-8c69-f6af10c10130">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column8"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="120" uuid="89ae442a-978d-4671-8f25-b1117bf3fe52">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[IDVAmt]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="23" height="30" uuid="519da0e4-45fd-4357-9ff8-e2341ec551fa">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{IDVAmt}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="57614e44-3d16-43e6-ac9b-31365863a2c3">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column9"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="120" uuid="4703ae36-6303-4ad2-a3fa-75408ef9aa5a">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[PremiumAmt]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="23" height="30" uuid="db53e3ee-65d7-4b7d-af23-bfa133b79a3b">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PremiumAmt}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="ed1bed23-8a3b-4814-9fcf-f7a982458646">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column10"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="120" uuid="f57d0622-d717-4adc-b68a-b4f23c596437">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[ClaimAmt]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="23" height="30" uuid="778ad03d-3502-4ee9-8e42-d595b0d876a9">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ClaimAmt}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="67462b33-8697-4fdd-a90d-24c41f285d40">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column11"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="120" uuid="98b64462-4976-4198-9e8a-6f33286c4ac5">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[Remark]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="23" height="30" uuid="4859baed-3948-4e23-b3af-a7d51e7d750f">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Remark}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="92f51476-870e-43be-bd6d-a37a2586aaf0">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column12"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="120" uuid="48f9a6e6-bc84-4666-8006-bd59b0970317">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[FinCompName]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="23" height="30" uuid="5bca0866-a5f7-4e45-b7dc-268788dfcbbe">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{FinCompName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="3677580b-a7e8-4c0c-98d4-8edb1d914722">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column13"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="120" uuid="b6e5e151-46d8-44f8-97e9-83fa46927276">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[PolicyType]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="23" height="30" uuid="daf2b148-6f07-41d8-b42f-fe2efd2815c2">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PolicyType}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="d7618cca-1d45-43fc-9a1d-a566ba8c536e">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column14"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="120" uuid="4654c1fe-c2c4-480b-bf8c-4eefc8f4826b">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[ExShowPrice]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="23" height="30" uuid="e01e9ee8-5ea8-4f24-a2db-7a502bf05d8e">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ExShowPrice}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="812bc4f7-b630-43ab-ad5a-9aa4476dbd71">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column15"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="120" uuid="97c73875-4222-4fea-a011-52610b1c4795">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[EndorsementTaken]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="23" height="30" uuid="d6f1d534-d793-46d1-9513-599938525632">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{EndorsementTaken}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="3f8f8226-5d6c-4615-bacd-db1cef5f4785">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column16"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="120" uuid="c136b969-3d22-49bc-b308-144119b1974a">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[PolicyRenewType]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="23" height="30" uuid="a4055fff-4511-4a88-9b4a-d1ba6e45864a">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PolicyRenewType}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="0d77ce67-7d58-4958-a58d-cd01bc6f5020">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column17"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="120" uuid="d765d684-2962-43e3-a21c-1c0082464d0a">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[PolicySubType]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="23" height="30" uuid="bd994df5-b87b-4eae-83b4-4591d2adaba2">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PolicySubType}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="8f9a76fe-bd4c-48b7-bb55-f9d727e75a7d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column18"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="23" height="120" uuid="3266c524-38d7-49e0-9d47-90ea90180128">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[DealerName]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="23" height="30" uuid="46a66e91-5950-40ba-9c41-436d655489e3">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DealerName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="19" uuid="0fe2362e-ac4d-416d-916e-f1364f46582d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column19"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="19" height="120" uuid="7a708a2c-0683-411c-a6f2-8464f6aa76b6">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[CurrentNCB]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="19" height="30" uuid="9c6bf71e-ae4d-41b6-8ecd-442c259832cf">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CurrentNCB}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="19" uuid="5879fb56-b59e-4021-a9c6-c31fb66a6bbe">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column20"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="19" height="120" uuid="418370e8-4591-43db-b29e-a31fc98617c0">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[DriverCover]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="19" height="30" uuid="0d9ecbe3-c02e-4289-be75-333842e71aa7">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DriverCover}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="19" uuid="4d5a7dd1-63cc-47cd-ae5e-d4de8f01cee0">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column21"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="19" height="120" uuid="d4b3640e-ea03-4041-bd57-d642ab9597c0">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[LegalLibNoPer]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="19" height="30" uuid="393246e9-cf63-44b9-bbcf-ddc0d68eae6d">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{LegalLibNoPer}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="19" uuid="467431f9-0862-4d38-869b-1ee80b523a70">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column22"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="19" height="120" uuid="af6dc239-2d0e-480e-9373-3345d6d2012b">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[DriverCoverPremium]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="19" height="30" uuid="7f4cc531-93c1-43a0-9441-15e86bf7cd4c">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DriverCoverPremium}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="19" uuid="888f5c03-5787-4c46-8797-a09c5d0dd1c6">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column23"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="19" height="120" uuid="2cf94a36-5bd4-47df-b9bf-bb70161c4323">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[TypeOfCustomer]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="19" height="30" uuid="669e39ca-c7ae-4f31-8893-cae7c0bf222b">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{TypeOfCustomer}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="19" uuid="a0769f93-8776-445e-bee2-4ce336612fde">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column24"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="19" height="120" uuid="02b5ac6b-cc23-48b7-860e-f7266d724a8b">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[PaymentMode]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="19" height="30" uuid="d07ad037-561e-4e9a-aa27-22f0610fb49d">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PaymentMode}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="19" uuid="137d0106-0d4b-452f-b515-c5fd12ca9b5b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column25"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="19" height="120" uuid="6a4755df-f5e8-4547-84d1-c55819147c9e">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[AccountNo]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="19" height="30" uuid="32244e8a-4582-4bbc-a422-1766e9592ca8">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{AccountNo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="19" uuid="5a88437f-1621-4735-b76a-923206ea7220">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column26"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="19" height="120" uuid="9245afa4-eac5-4617-8095-e4b3bb729941">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[BankBranch]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="19" height="30" uuid="6435e557-4211-46a8-a9df-8b1c0e5e5d8f">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{BankBranch}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="18" uuid="f4ae491b-4b5b-429d-9e5b-1ea1c33765e7">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column27"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="18" height="120" uuid="1fea0392-f283-40cb-b522-c96bed833305">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[BankName]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="18" height="30" uuid="c9351b4b-a608-49ec-9aa0-be342a9a1d2e">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{BankName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="18" uuid="a8511eff-fa16-4a68-9485-be9983224cfd">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column28"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="18" height="120" uuid="19344539-8fa6-499e-97c3-1dcc20e9dc24">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[Status]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="18" height="30" uuid="dc85df04-bcd6-415d-9b39-d2ee08bf1e3e">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Status}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="18" uuid="e8d51f80-ef34-4f30-8cd5-94f5a5e12836">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column29"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="18" height="120" uuid="55d36e26-8129-4070-96c5-6cbf00733319">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[OrgId]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="18" height="30" uuid="2c303534-0eaa-4ee0-9b80-b0bf607ea94c">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{OrgId}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="18" uuid="dfc844c1-63f1-4c38-96b5-f928f76c4746">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column30"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="18" height="120" uuid="65f2d870-f1e4-4713-9bee-0344d7a05a44">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[LocId]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="18" height="30" uuid="13c9a4fa-1690-4c73-82ca-32d98f258f65">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{LocId}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="18" uuid="e9823a43-dfd0-49ae-ae18-07e905c29ef4">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column31"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="18" height="120" uuid="07c89065-da14-4051-b666-a78b658c7cd3">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[VehicleNo]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="18" height="30" uuid="4c9e4ad6-31c0-482d-964b-6f963fe3d90f">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{VehicleNo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="18" uuid="11f61ce1-9435-4625-a082-a802abbc6dbf">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column32"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="18" height="120" uuid="cb68ad53-75ee-49e8-a709-b55b53619ebc">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[InsStDate]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="18" height="30" uuid="7f41e398-055c-41e1-8786-755bbdeeddec">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{InsStDate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="18" uuid="28bd3771-aa5f-411a-9bb5-856e2d90cf8c">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column33"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="18" height="120" uuid="28d517bf-6425-4b3c-bfd9-9c6555708843">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[InsPeriod]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="18" height="30" uuid="95eb13b0-be8c-4143-a286-ee9fcb72a4f5">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{InsPeriod}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="18" uuid="175a39f5-be3c-4dcd-8650-41867f9448d3">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column34"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="18" height="120" uuid="67b43ede-9b86-4f49-b197-f04b33537ac2">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[InsEndDt]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" pattern="dd/MM/YYYY" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="18" height="30" uuid="5e2aaf51-340a-4ee8-801d-74fd673441fc">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{InsEndDt}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="18" uuid="4f307efb-2ab0-4d61-a8d3-c8a37a5ea1ac">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column35"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="18" height="120" uuid="a208a9d6-dab0-420f-88ea-9a2cf5456abf">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[ClaimCount]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="18" height="30" uuid="bd91111e-4909-4ed8-b0d7-05b187beb7d0">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ClaimCount}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="18" uuid="3b640def-8624-4ede-8498-1ea297e3b361">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column36"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="18" height="120" uuid="47f1b283-efd4-4ed6-ab27-a2515a5db3e2">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[RemittanceDate]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="18" height="30" uuid="d415c7a2-566e-4eb5-a7f5-85cb7b216ebb">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{RemittanceDate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="18" uuid="2af2cf95-60f8-49d1-8237-5663e2fa02b3">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column37"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="18" height="120" uuid="bf48e987-8cdd-46c1-8c36-d8bedc4682b7">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[PaymentAmt]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="18" height="30" uuid="b0578fbe-6036-48fa-944b-cc171134951c">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PaymentAmt}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="18" uuid="f6be928e-3b5e-4b94-bd5d-154dab3bf87a">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column38"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="18" height="120" uuid="2f4d1d4f-ebe1-43d8-a244-e1690bc6c407">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[PaymentDate]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" pattern="dd/MM/YYYY" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="18" height="30" uuid="401b65f3-88af-44a9-8d0d-11e67089eae7">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PaymentDate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="18" uuid="6677ca1e-d8ec-4803-939b-5a15ac9e7da6">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column39"/>
+						<jr:tableHeader style="Table_TH" height="120" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="18" height="120" uuid="e55793d5-da10-4f8f-ab02-1da338a02a99">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[InactiveDate]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" pattern="dd/MM/YYYY" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="18" height="30" uuid="738a1ffa-d3d4-4ccb-90be-29b69dbcdbbc">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{InactiveDate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<textField>
+				<reportElement x="0" y="89" width="800" height="21" uuid="e089737f-5d25-4ed3-bb87-a95f29d0906b">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CRM Insurance Details Report From Date "  + DATEFORMAT(  $P{fromDate} , "dd-MMM-YYYY") + " To  "  + DATEFORMAT(  $P{toDate} , "dd-MMM-YYYY")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="20" width="800" height="30" uuid="1284a7a9-bb5c-4d63-a64e-0eff7843915b">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{company_code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="50" width="800" height="15" uuid="5971b3ec-2c58-4a7f-ae6b-0cee7a743d19">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA["OU Name : " + $F{ORGANIZATION_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="70" width="800" height="15" uuid="e755584d-d71f-4410-b76b-8791ab4a2493">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA["Location : " + $F{loc_name} + " - " + $F{loc_desc}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</summary>
+</jasperReport>

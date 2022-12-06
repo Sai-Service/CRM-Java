@@ -37,14 +37,11 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.PropertyTemplate;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-
 /**
  *
  * @author Swaroopcomp
  */
 public class ExcelGenerator {
-    
-     
 
     public static ByteArrayInputStream generateTaskReport(List<SsTaskDetails> tasks) throws IOException {
         String[] COLUMNs = {"Task Id", "Task Type", "Task Status", "Apptmt Id", "Call Du Dt", "Cust Name", "Cust Add", "Contact Person", "Cust Type", "Contact No", "Vehicle No", "Contacted", "Reason", "Remarks", "Creation Date ", "Created By", "Last Update Date ", "Last Updated By", "Last Update Login", "Org Id1", "Email Add", "Contact No2", "Cust Id", "Chasis No", "Dealer Code", "Model", "Engine No", "Date Of Purchase", "Amc", "Task Reason", "Sales Exec Name", "Item Id", "Last Servc Dt", "Last Servc Type", "Last Servc Loc", "Last Servc Km", "Servc Grp", "Next Servc Dt", "Next Servc Type"};
@@ -120,27 +117,27 @@ public class ExcelGenerator {
                 cellDueDate.setCellValue(task.getCallDuDt());
                 cellDueDate.setCellStyle(dateCellStyle);
 
-      //          row.createCell(5).setCellValue(task.getCustName());
+                //          row.createCell(5).setCellValue(task.getCustName());
                 row.createCell(5).setCellValue("");
                 Cell cellAddress = row.createCell(6);
                 cellAddress.setCellValue(task.getCustAdd());
                 cellAddress.setCellStyle(cs);
 
                 row.createCell(7).setCellValue(task.getContactPerson());
-            //    row.createCell(8).setCellValue(task.getCustType());
-             row.createCell(8).setCellValue("");
+                //    row.createCell(8).setCellValue(task.getCustType());
+                row.createCell(8).setCellValue("");
                 row.createCell(9).setCellValue(task.getContactNo1());
                 row.createCell(10).setCellValue(task.getVehicleNo());
                 row.createCell(11).setCellValue(task.getContacted());
                 row.createCell(12).setCellValue(task.getReason());
                 row.createCell(13).setCellValue(task.getRemarks());
-                if (task.getCreationDate()!= null) {
+                if (task.getCreationDate() != null) {
                     row.createCell(14).setCellValue(simpleDateFormat.format(task.getCreationDate()));
                 } else {
                     row.createCell(14).setCellValue("NULL");
                 }
                 row.createCell(15).setCellValue(task.getCreatedBy());
-                if (task.getLastUpdateDate()!= null) {
+                if (task.getLastUpdateDate() != null) {
                     row.createCell(16).setCellValue(simpleDateFormat.format(task.getLastUpdateDate()));
                 } else {
                     row.createCell(16).setCellValue("NULL");
@@ -372,9 +369,11 @@ public class ExcelGenerator {
                 row.createCell(6).setCellValue(appt.getApptTimeSlot());
                 row.createCell(7).setCellValue(appt.getApptStatus());
                 row.createCell(8).setCellValue(appt.getPickUp());
-                row.createCell(9).setCellValue(appt.getAmount());
+                if (appt.getAmount() != null) {
+                    row.createCell(9).setCellValue(appt.getAmount());
+                }
                 row.createCell(10).setCellValue(appt.getPickAdd());
-               row.createCell(11).setCellValue(appt.getRemark());
+                row.createCell(11).setCellValue(appt.getRemark());
                 row.createCell(12).setCellValue(appt.getLastDesposition());
                 row.createCell(13).setCellValue(appt.getApptAttended());
             }
@@ -387,7 +386,7 @@ public class ExcelGenerator {
     }
 
     /////////////////////////PENDING APPOINMENTS CURRENT DATE////
-     public static ByteArrayInputStream generatPendingAppCurDateReport(List<PendingApptCurDate> pendingappt) throws Exception {
+    public static ByteArrayInputStream generatPendingAppCurDateReport(List<PendingApptCurDate> pendingappt) throws Exception {
         String[] COLUMNs = {"Appointment_Id", "Vehicle_No", "Service_Type", "Service_Loc", "Service_Group", "Appointment_Date", "Time_Slot", "Appointment_Status", "Pickup", "Amount", "Pick_Address", "Remark", "LastDesposition", "Appt_Atteneded"};
         try (
                 Workbook workbook = new XSSFWorkbook();
@@ -410,7 +409,7 @@ public class ExcelGenerator {
 
             Row row2 = sheet.createRow(2);
             Cell cell2 = row2.createCell(1);
-       //     cell2.setCellValue("From Date : " +  + "      -      To Date: " + toDate);
+            //     cell2.setCellValue("From Date : " +  + "      -      To Date: " + toDate);
             cell2.setCellStyle(headerCellStyle1);
 
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, COLUMNs.length));
@@ -480,14 +479,12 @@ public class ExcelGenerator {
         }
     }
 
-    
-    
     public static ByteArrayInputStream generatetEventWiseReport(List<SsTaskReport> events) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-   public static ByteArrayInputStream generatetExceptionReport(List<Map> sgatepassSumm, List<SSGatepassAll> gatePassList) throws Exception{
-       
+    public static ByteArrayInputStream generatetExceptionReport(List<Map> sgatepassSumm, List<SSGatepassAll> gatePassList) throws Exception {
+
         String[] COLUMNs = {"Sr No.", "Organization Id", "Location Id", "Task Not Generated", "Task Generated"};
         try (
                 Workbook workbook = new XSSFWorkbook();
@@ -518,19 +515,18 @@ public class ExcelGenerator {
             Cell r3c1 = row3.createCell(0);
             r3c1.setCellValue("Summary Exception Report -Gatepass and Task Generation");
             r3c1.setCellStyle(headerCellStyle1);
-            
+
             sheet1.addMergedRegion(new CellRangeAddress(3, 3, 0, COLUMNs.length));
 
             Row row4 = sheet1.createRow(4);
-            
-        
+
             Row row5 = sheet1.createRow(5);
             Cell r5c1 = row5.createCell(0);
-            r5c1.setCellValue("Report Run Date : "  +  Calendar.getInstance().getTime());
+            r5c1.setCellValue("Report Run Date : " + Calendar.getInstance().getTime());
             r5c1.setCellStyle(headerCellStyle1);
-sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
+            sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
             Row row6 = sheet1.createRow(6);
- 
+
             //------------------------------------------------------------------------------
             Font headerFont = workbook.createFont();
             headerFont.setBold(true);
@@ -555,31 +551,31 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
                 cell.setCellValue(COLUMNs[col]);
                 cell.setCellStyle(headerCellStyle);
             }
-            
+
             int rowIdx = 8;
             int srNo = 1;
-            
+
             for (Map map1 : sgatepassSumm) {
                 Row row = sheet1.createRow(rowIdx++);
                 row.setRowStyle(rowCellStyle);
                 row.createCell(0).setCellValue(srNo++);
-                row.createCell(1).setCellValue((Integer)map1.get("org_id"));
-                row.createCell(2).setCellValue((Integer)map1.get("loc_id"));
-                row.createCell(3).setCellValue(((BigInteger)map1.get("TaskNotGen")).longValue());
-                row.createCell(4).setCellValue(((BigInteger)map1.get("TaskGen")).longValue());
+                row.createCell(1).setCellValue((Integer) map1.get("org_id"));
+                row.createCell(2).setCellValue((Integer) map1.get("loc_id"));
+                row.createCell(3).setCellValue(((BigInteger) map1.get("TaskNotGen")).longValue());
+                row.createCell(4).setCellValue(((BigInteger) map1.get("TaskGen")).longValue());
 
             }
             for (int col = 0; col < COLUMNs.length; col++) {
                 sheet1.autoSizeColumn(col);
             }
-             PropertyTemplate pt = new PropertyTemplate();  
-                pt.drawBorders(new CellRangeAddress(7, 8+sgatepassSumm.size()-1, 0, COLUMNs.length-1),  
-                      BorderStyle.MEDIUM, BorderExtent.OUTSIDE); 
-             pt.drawBorders(new CellRangeAddress(7, 8+sgatepassSumm.size()-1, 0, COLUMNs.length-1),  BorderStyle.THIN, BorderExtent.INSIDE);  
-              pt.applyBorders(sheet1);
+            PropertyTemplate pt = new PropertyTemplate();
+            pt.drawBorders(new CellRangeAddress(7, 8 + sgatepassSumm.size() - 1, 0, COLUMNs.length - 1),
+                    BorderStyle.MEDIUM, BorderExtent.OUTSIDE);
+            pt.drawBorders(new CellRangeAddress(7, 8 + sgatepassSumm.size() - 1, 0, COLUMNs.length - 1), BorderStyle.THIN, BorderExtent.INSIDE);
+            pt.applyBorders(sheet1);
 
             //////////////////////////////////////////////////////////////////////////////////////Sheet -2 ..report
-             String[] s2COLUMNs = {"ID", "Gatepasss ID", "Delivery Date", "Customer Name", "Customer ID", "Contact No", "Vehicle No", "Org ID", "Location Id", "Location Name", "Reference No", "Service Type", "Last KM", "Model", "Chassis", "Engine", "Department"};
+            String[] s2COLUMNs = {"ID", "Gatepasss ID", "Delivery Date", "Customer Name", "Customer ID", "Contact No", "Vehicle No", "Org ID", "Location Id", "Location Name", "Reference No", "Service Type", "Last KM", "Model", "Chassis", "Engine", "Department"};
             Row s2r1 = sheet2.createRow(1);
             Cell s2r1c1 = s2r1.createCell(0);
             s2r1c1.setCellValue("Sai Service Private Limited");
@@ -587,27 +583,26 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
             sheet2.addMergedRegion(new CellRangeAddress(1, 1, 0, s2COLUMNs.length));
 
             Row s2r2 = sheet2.createRow(2);
-            
+
             Row s2r3 = sheet2.createRow(3);
             Cell s2r3c1 = s2r3.createCell(0);
             s2r3c1.setCellValue("Detail Exception Report -Gatepass and Task Generation");
             s2r3c1.setCellStyle(headerCellStyle1);
-             sheet2.addMergedRegion(new CellRangeAddress(3, 3, 0, s2COLUMNs.length));
+            sheet2.addMergedRegion(new CellRangeAddress(3, 3, 0, s2COLUMNs.length));
 
             Row s2r4 = sheet2.createRow(4);
 
             Row s2r5 = sheet2.createRow(5);
             Cell s2r5c1 = s2r5.createCell(0);
-            s2r5c1.setCellValue("Report Run Date:-" +  Calendar.getInstance().getTime());
+            s2r5c1.setCellValue("Report Run Date:-" + Calendar.getInstance().getTime());
             s2r5c1.setCellStyle(headerCellStyle1);
-             sheet2.addMergedRegion(new CellRangeAddress(5, 5, 0,s2COLUMNs.length));
-             
+            sheet2.addMergedRegion(new CellRangeAddress(5, 5, 0, s2COLUMNs.length));
+
             Row s2r6 = sheet2.createRow(6);
             // Row for Header
             Row s2headerRow = sheet2.createRow(7);
 
             // Header
-           
             for (int col = 0; col < s2COLUMNs.length; col++) {
                 Cell cell = s2headerRow.createCell(col);
                 cell.setCellValue(s2COLUMNs[col]);
@@ -616,7 +611,7 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
 
             rowIdx = 8;
             srNo = 1;
-           
+
             for (SSGatepassAll gatePass : gatePassList) {
                 Row s2Row = sheet2.createRow(rowIdx++);
                 s2Row.setRowStyle(rowCellStyle);
@@ -641,11 +636,11 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
             for (int col = 0; col < s2COLUMNs.length; col++) {
                 sheet2.autoSizeColumn(col);
             }
-               PropertyTemplate pt2 = new PropertyTemplate();  
-                pt2.drawBorders(new CellRangeAddress(7, 8+gatePassList.size()-1, 0, s2COLUMNs.length-1),  
-                      BorderStyle.MEDIUM, BorderExtent.OUTSIDE); 
-             pt2.drawBorders(new CellRangeAddress(7, 8+gatePassList.size(), 0, s2COLUMNs.length-1),  BorderStyle.THIN, BorderExtent.ALL);  
-              pt2.applyBorders(sheet2);
+            PropertyTemplate pt2 = new PropertyTemplate();
+            pt2.drawBorders(new CellRangeAddress(7, 8 + gatePassList.size() - 1, 0, s2COLUMNs.length - 1),
+                    BorderStyle.MEDIUM, BorderExtent.OUTSIDE);
+            pt2.drawBorders(new CellRangeAddress(7, 8 + gatePassList.size(), 0, s2COLUMNs.length - 1), BorderStyle.THIN, BorderExtent.ALL);
+            pt2.applyBorders(sheet2);
 
             workbook.write(out);
             return new ByteArrayInputStream(out.toByteArray());
@@ -688,7 +683,7 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
             Row row4 = sheet1.createRow(4);
             Row row5 = sheet1.createRow(5);
             Cell r5c1 = row2.createCell(1);
-            r5c1.setCellValue("Report Run Date"  +  Calendar.getInstance().getTime());
+            r5c1.setCellValue("Report Run Date" + Calendar.getInstance().getTime());
             r5c1.setCellStyle(headerCellStyle1);
 
             Row row6 = sheet1.createRow(6);
@@ -725,7 +720,7 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
 
             int rowIdx = 8;
             int srNo = 0;
-            for (int i=0;i<5; i++) {
+            for (int i = 0; i < 5; i++) {
                 Row row = sheet1.createRow(rowIdx++);
                 row.setRowStyle(rowCellStyle);
                 row.createCell(0).setCellValue(srNo++);
@@ -738,13 +733,12 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
             for (int col = 0; col < COLUMNs.length; col++) {
                 sheet1.autoSizeColumn(col);
             }
-             
 
             workbook.write(out);
             return new ByteArrayInputStream(out.toByteArray());
         }
     }
-    
+
     public static void main(String args[]) {
         try {
             ExcelGenerator.generateSimpleReport();
@@ -753,9 +747,9 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
             ex.printStackTrace();
         }
     }
-  
+
     //////////////////////////////ADMIN REPORT///////////////////////////////////////////////
-     public static ByteArrayInputStream genHomePageClickApptReport(List<SSAppoinmentDetails> appts) throws Exception {
+    public static ByteArrayInputStream genHomePageClickApptReport(List<SSAppoinmentDetails> appts) throws Exception {
         String[] COLUMNs = {"Appointment_Id", "Vehicle_No", "Service_Type", "Service_Loc", "Service_Group", "Appointment_Date", "Time_Slot", "Appointment_Status", "Pickup", "Amount", "Pick_Address", "Remark", "LastDesposition", "Appt_Atteneded"};
         try (
                 Workbook workbook = new XSSFWorkbook();
@@ -778,7 +772,7 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
 
             Row row2 = sheet.createRow(2);
             Cell cell2 = row2.createCell(1);
-            cell2.setCellValue("Report Run Date" +  Calendar.getInstance().getTime());
+            cell2.setCellValue("Report Run Date" + Calendar.getInstance().getTime());
             cell2.setCellStyle(headerCellStyle1);
 
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, COLUMNs.length));
@@ -841,9 +835,9 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
             return new ByteArrayInputStream(out.toByteArray());
         }
     }
-     
+
 //////////////////////////////EXECUTIVE REPORT///////////////////////////////////////////////
-     public static ByteArrayInputStream genHomePageClickApptExewiseReport(List<SSAppoinmentDetails> appts) throws Exception {
+    public static ByteArrayInputStream genHomePageClickApptExewiseReport(List<SSAppoinmentDetails> appts) throws Exception {
         String[] COLUMNs = {"Appointment_Id", "Vehicle_No", "Service_Type", "Service_Loc", "Service_Group", "Appointment_Date", "Time_Slot", "Appointment_Status", "Pickup", "Amount", "Pick_Address", "Remark", "LastDesposition", "Appt_Atteneded"};
         try (
                 Workbook workbook = new XSSFWorkbook();
@@ -866,7 +860,7 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
 
             Row row2 = sheet.createRow(2);
             Cell cell2 = row2.createCell(1);
-            cell2.setCellValue("Report Run Date" +  Calendar.getInstance().getTime());
+            cell2.setCellValue("Report Run Date" + Calendar.getInstance().getTime());
             cell2.setCellStyle(headerCellStyle1);
 
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, COLUMNs.length));
@@ -929,12 +923,9 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
             return new ByteArrayInputStream(out.toByteArray());
         }
     }
-        
-     
-
 
 //////////////////////////////////ADMIN HOME PAGE////////////////////////////////////////////
-      public static ByteArrayInputStream genHomePageClickPickUpReport(List<SSAppoinmentDetails> appts) throws Exception {
+    public static ByteArrayInputStream genHomePageClickPickUpReport(List<SSAppoinmentDetails> appts) throws Exception {
         String[] COLUMNs = {"Appointment_Id", "Vehicle_No", "Service_Type", "Service_Loc", "Service_Group", "Appointment_Date", "Time_Slot", "Appointment_Status", "Pickup", "Amount", "Pick_Address", "Remark", "LastDesposition", "Appt_Atteneded"};
         try (
                 Workbook workbook = new XSSFWorkbook();
@@ -957,7 +948,7 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
 
             Row row2 = sheet.createRow(2);
             Cell cell2 = row2.createCell(1);
-            cell2.setCellValue("Report Run Date" +  Calendar.getInstance().getTime());
+            cell2.setCellValue("Report Run Date" + Calendar.getInstance().getTime());
             cell2.setCellStyle(headerCellStyle1);
 
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, COLUMNs.length));
@@ -1021,8 +1012,8 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
         }
     }
 
-       //////////////////////////////////EXECUTIVE HOME PAGE////////////////////////////////////////////
-      public static ByteArrayInputStream genHomePageClickPickUpExeWiseReport(List<SSAppoinmentDetails> appts) throws Exception {
+    //////////////////////////////////EXECUTIVE HOME PAGE////////////////////////////////////////////
+    public static ByteArrayInputStream genHomePageClickPickUpExeWiseReport(List<SSAppoinmentDetails> appts) throws Exception {
         String[] COLUMNs = {"Appointment_Id", "Vehicle_No", "Service_Type", "Service_Loc", "Service_Group", "Appointment_Date", "Time_Slot", "Appointment_Status", "Pickup", "Amount", "Pick_Address", "Remark", "LastDesposition", "Appt_Atteneded"};
         try (
                 Workbook workbook = new XSSFWorkbook();
@@ -1045,7 +1036,7 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
 
             Row row2 = sheet.createRow(2);
             Cell cell2 = row2.createCell(1);
-            cell2.setCellValue("Report Run Date" +  Calendar.getInstance().getTime());
+            cell2.setCellValue("Report Run Date" + Calendar.getInstance().getTime());
             cell2.setCellStyle(headerCellStyle1);
 
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, COLUMNs.length));
@@ -1109,9 +1100,9 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
         }
     }
 
-      //////////////////////ADMIN HOME PAGE////////////////////////////////////
-   public static ByteArrayInputStream genGetUnContactedCustDetails(List<SsTaskDetails> ssTask) throws Exception {
-        String[] COLUMNs = {"Task Type",  "Task Status",  "call Due Date",  "customer Id",  "Customer Name",  "Customer Address", "Contact Person",  "Customer Type", "contactNo1",  "contactNo2",  "Email Id",  "Vehicle No",  "Chassis No", "Engine No", "Model",  "Purchase Date", "Dealer Code", "Reason",  "Remarks",  "Task Reason",  "LastServ Date", "LastServ Type", "LastServ Loc", "Last Km", "NextServ Date", "NextServ Type"};
+    //////////////////////ADMIN HOME PAGE////////////////////////////////////
+    public static ByteArrayInputStream genGetUnContactedCustDetails(List<SsTaskDetails> ssTask) throws Exception {
+        String[] COLUMNs = {"Task Type", "Task Status", "call Due Date", "customer Id", "Customer Name", "Customer Address", "Contact Person", "Customer Type", "contactNo1", "contactNo2", "Email Id", "Vehicle No", "Chassis No", "Engine No", "Model", "Purchase Date", "Dealer Code", "Reason", "Remarks", "Task Reason", "LastServ Date", "LastServ Type", "LastServ Loc", "Last Km", "NextServ Date", "NextServ Type"};
         try (
                 Workbook workbook = new XSSFWorkbook();
                 ByteArrayOutputStream out = new ByteArrayOutputStream();) {
@@ -1133,7 +1124,7 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
 
             Row row2 = sheet.createRow(2);
             Cell cell2 = row2.createCell(1);
-            cell2.setCellValue("Report Run Date" +  Calendar.getInstance().getTime());
+            cell2.setCellValue("Report Run Date" + Calendar.getInstance().getTime());
             cell2.setCellStyle(headerCellStyle1);
 
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, COLUMNs.length));
@@ -1174,8 +1165,8 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
                 row.setRowStyle(rowCellStyle);
                 row.createCell(0).setCellValue(task.getTaskType());
                 row.createCell(1).setCellValue(task.getTaskStatus());
-                 Cell apptDate = row.createCell(2);
-                 apptDate.setCellStyle(dateCellStyle);
+                Cell apptDate = row.createCell(2);
+                apptDate.setCellStyle(dateCellStyle);
                 apptDate.setCellValue(task.getCallDuDt());
                 row.createCell(3).setCellValue(task.getCustId());
                 row.createCell(4).setCellValue("");//task.getCustName());
@@ -1188,12 +1179,12 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
                 row.createCell(11).setCellValue(task.getVehicleNo());
                 row.createCell(12).setCellValue("");//task.getChassisNo());
                 row.createCell(13).setCellValue("");//task.getEngineNo());
-                
+
                 row.createCell(14).setCellValue("");//task.getModel());
                 Cell apptDate1 = row.createCell(15);
                 apptDate1.setCellStyle(dateCellStyle);
                 apptDate1.setCellValue("");//task.getDtOfPurchase());
-                
+
                 row.createCell(16).setCellValue("");//task.getDealerCode());
                 row.createCell(17).setCellValue(task.getReason());
                 row.createCell(18).setCellValue(task.getRemarks());
@@ -1201,7 +1192,7 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
                 Cell apptDate2 = row.createCell(20);
                 apptDate2.setCellStyle(dateCellStyle);
                 apptDate2.setCellValue(task.getLastServcDt());
-                
+
                 row.createCell(21).setCellValue(task.getLastServcType());
                 row.createCell(22).setCellValue(task.getLastServcLoc());
                 row.createCell(23).setCellValue(task.getLastServcKm());
@@ -1218,10 +1209,10 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
             return new ByteArrayInputStream(out.toByteArray());
         }
     }
-   
-         //////////////////////EXECUTIVE HOME PAGE////////////////////////////////////
-   public static ByteArrayInputStream genGetUnContactedCustExeWiseDetails(List<SsTaskDetails> ssTask) throws Exception {
-        String[] COLUMNs = {"Task Type",  "Task Status",  "call Due Date",  "customer Id",  "Customer Name",  "Customer Address", "Contact Person",  "Customer Type", "contactNo1",  "contactNo2",  "Email Id",  "Vehicle No",  "Chassis No", "Engine No", "Model",  "Purchase Date", "Dealer Code", "Reason",  "Remarks",  "Task Reason",  "LastServ Date", "LastServ Type", "LastServ Loc", "Last Km", "NextServ Date", "NextServ Type"};
+
+    //////////////////////EXECUTIVE HOME PAGE////////////////////////////////////
+    public static ByteArrayInputStream genGetUnContactedCustExeWiseDetails(List<SsTaskDetails> ssTask) throws Exception {
+        String[] COLUMNs = {"Task Type", "Task Status", "call Due Date", "customer Id", "Customer Name", "Customer Address", "Contact Person", "Customer Type", "contactNo1", "contactNo2", "Email Id", "Vehicle No", "Chassis No", "Engine No", "Model", "Purchase Date", "Dealer Code", "Reason", "Remarks", "Task Reason", "LastServ Date", "LastServ Type", "LastServ Loc", "Last Km", "NextServ Date", "NextServ Type"};
         try (
                 Workbook workbook = new XSSFWorkbook();
                 ByteArrayOutputStream out = new ByteArrayOutputStream();) {
@@ -1243,7 +1234,7 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
 
             Row row2 = sheet.createRow(2);
             Cell cell2 = row2.createCell(1);
-            cell2.setCellValue("Report Run Date" +  Calendar.getInstance().getTime());
+            cell2.setCellValue("Report Run Date" + Calendar.getInstance().getTime());
             cell2.setCellStyle(headerCellStyle1);
 
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, COLUMNs.length));
@@ -1284,8 +1275,8 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
                 row.setRowStyle(rowCellStyle);
                 row.createCell(0).setCellValue(task.getTaskType());
                 row.createCell(1).setCellValue(task.getTaskStatus());
-                 Cell apptDate = row.createCell(2);
-                 apptDate.setCellStyle(dateCellStyle);
+                Cell apptDate = row.createCell(2);
+                apptDate.setCellStyle(dateCellStyle);
                 apptDate.setCellValue(task.getCallDuDt());
                 row.createCell(3).setCellValue(task.getCustId());
                 row.createCell(4).setCellValue("");//task.getCustName());
@@ -1298,12 +1289,12 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
                 row.createCell(11).setCellValue(task.getVehicleNo());
                 row.createCell(12).setCellValue("");//task.getChassisNo());
                 row.createCell(13).setCellValue("");//task.getEngineNo());
-                
+
                 row.createCell(14).setCellValue("");//task.getModel());
                 Cell apptDate1 = row.createCell(15);
                 apptDate1.setCellStyle(dateCellStyle);
                 apptDate1.setCellValue("");//task.getDtOfPurchase());
-                
+
                 row.createCell(16).setCellValue("");//task.getDealerCode());
                 row.createCell(17).setCellValue(task.getReason());
                 row.createCell(18).setCellValue(task.getRemarks());
@@ -1311,7 +1302,7 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
                 Cell apptDate2 = row.createCell(20);
                 apptDate2.setCellStyle(dateCellStyle);
                 apptDate2.setCellValue(task.getLastServcDt());
-                
+
                 row.createCell(21).setCellValue(task.getLastServcType());
                 row.createCell(22).setCellValue(task.getLastServcLoc());
                 row.createCell(23).setCellValue(task.getLastServcKm());
@@ -1329,10 +1320,9 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
         }
     }
 
-   
-     ////////////////////////////ADMIN HOME PAGE REPORT/////////////////////////////////////////
-     public static ByteArrayInputStream genGetContactedCustDetails(List<SsTaskDetails> ssTask) throws Exception {
-        String[] COLUMNs = {"Task Type",  "Task Status",  "call Due Date",  "customer Id",  "Customer Name",  "Customer Address", "Contact Person",  "Customer Type", "contactNo1",  "contactNo2",  "Email Id",  "Vehicle No",  "Chassis No", "Engine No", "Model",  "Purchase Date", "Dealer Code", "Reason",  "Remarks",  "Task Reason",  "LastServ Date", "LastServ Type", "LastServ Loc", "Last Km", "NextServ Date", "NextServ Type"};
+    ////////////////////////////ADMIN HOME PAGE REPORT/////////////////////////////////////////
+    public static ByteArrayInputStream genGetContactedCustDetails(List<SsTaskDetails> ssTask) throws Exception {
+        String[] COLUMNs = {"Task Type", "Task Status", "call Due Date", "customer Id", "Customer Name", "Customer Address", "Contact Person", "Customer Type", "contactNo1", "contactNo2", "Email Id", "Vehicle No", "Chassis No", "Engine No", "Model", "Purchase Date", "Dealer Code", "Reason", "Remarks", "Task Reason", "LastServ Date", "LastServ Type", "LastServ Loc", "Last Km", "NextServ Date", "NextServ Type"};
         try (
                 Workbook workbook = new XSSFWorkbook();
                 ByteArrayOutputStream out = new ByteArrayOutputStream();) {
@@ -1354,7 +1344,7 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
 
             Row row2 = sheet.createRow(2);
             Cell cell2 = row2.createCell(1);
-            cell2.setCellValue("Report Run Date" +  Calendar.getInstance().getTime());
+            cell2.setCellValue("Report Run Date" + Calendar.getInstance().getTime());
             cell2.setCellStyle(headerCellStyle1);
 
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, COLUMNs.length));
@@ -1395,8 +1385,8 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
                 row.setRowStyle(rowCellStyle);
                 row.createCell(0).setCellValue(task.getTaskType());
                 row.createCell(1).setCellValue(task.getTaskStatus());
-                 Cell apptDate = row.createCell(2);
-                 apptDate.setCellStyle(dateCellStyle);
+                Cell apptDate = row.createCell(2);
+                apptDate.setCellStyle(dateCellStyle);
                 apptDate.setCellValue(task.getCallDuDt());
                 row.createCell(3).setCellValue(task.getCustId());
                 row.createCell(4).setCellValue("");//task.getCustName());
@@ -1409,12 +1399,12 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
                 row.createCell(11).setCellValue(task.getVehicleNo());
                 row.createCell(12).setCellValue("");//task.getChassisNo());
                 row.createCell(13).setCellValue("");//task.getEngineNo());
-                
+
                 row.createCell(14).setCellValue("");//task.getModel());
                 Cell apptDate1 = row.createCell(15);
                 apptDate1.setCellStyle(dateCellStyle);
                 apptDate1.setCellValue("");//task.getDtOfPurchase());
-                
+
                 row.createCell(16).setCellValue("");//task.getDealerCode());
                 row.createCell(17).setCellValue(task.getReason());
                 row.createCell(18).setCellValue(task.getRemarks());
@@ -1422,7 +1412,7 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
                 Cell apptDate2 = row.createCell(20);
                 apptDate2.setCellStyle(dateCellStyle);
                 apptDate2.setCellValue(task.getLastServcDt());
-                
+
                 row.createCell(21).setCellValue(task.getLastServcType());
                 row.createCell(22).setCellValue(task.getLastServcLoc());
                 row.createCell(23).setCellValue(task.getLastServcKm());
@@ -1439,10 +1429,10 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
             return new ByteArrayInputStream(out.toByteArray());
         }
     }
-     
-     ////////////////////////////EXECUTIVE HOME PAGE REPORT/////////////////////////////////////////
-     public static ByteArrayInputStream genGetContactedCustExeWiseDetails(List<SsTaskDetails> ssTask) throws Exception {
-        String[] COLUMNs = {"Task Type",  "Task Status",  "call Due Date",  "customer Id",  "Customer Name",  "Customer Address", "Contact Person",  "Customer Type", "contactNo1",  "contactNo2",  "Email Id",  "Vehicle No",  "Chassis No", "Engine No", "Model",  "Purchase Date", "Dealer Code", "Reason",  "Remarks",  "Task Reason",  "LastServ Date", "LastServ Type", "LastServ Loc", "Last Km", "NextServ Date", "NextServ Type"};
+
+    ////////////////////////////EXECUTIVE HOME PAGE REPORT/////////////////////////////////////////
+    public static ByteArrayInputStream genGetContactedCustExeWiseDetails(List<SsTaskDetails> ssTask) throws Exception {
+        String[] COLUMNs = {"Task Type", "Task Status", "call Due Date", "customer Id", "Customer Name", "Customer Address", "Contact Person", "Customer Type", "contactNo1", "contactNo2", "Email Id", "Vehicle No", "Chassis No", "Engine No", "Model", "Purchase Date", "Dealer Code", "Reason", "Remarks", "Task Reason", "LastServ Date", "LastServ Type", "LastServ Loc", "Last Km", "NextServ Date", "NextServ Type"};
         try (
                 Workbook workbook = new XSSFWorkbook();
                 ByteArrayOutputStream out = new ByteArrayOutputStream();) {
@@ -1464,7 +1454,7 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
 
             Row row2 = sheet.createRow(2);
             Cell cell2 = row2.createCell(1);
-            cell2.setCellValue("Report Run Date" +  Calendar.getInstance().getTime());
+            cell2.setCellValue("Report Run Date" + Calendar.getInstance().getTime());
             cell2.setCellStyle(headerCellStyle1);
 
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, COLUMNs.length));
@@ -1505,8 +1495,8 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
                 row.setRowStyle(rowCellStyle);
                 row.createCell(0).setCellValue(task.getTaskType());
                 row.createCell(1).setCellValue(task.getTaskStatus());
-                 Cell apptDate = row.createCell(2);
-                 apptDate.setCellStyle(dateCellStyle);
+                Cell apptDate = row.createCell(2);
+                apptDate.setCellStyle(dateCellStyle);
                 apptDate.setCellValue(task.getCallDuDt());
                 row.createCell(3).setCellValue(task.getCustId());
                 row.createCell(4).setCellValue("");//task.getCustName());
@@ -1519,12 +1509,12 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
                 row.createCell(11).setCellValue(task.getVehicleNo());
                 row.createCell(12).setCellValue("");//task.getChassisNo());
                 row.createCell(13).setCellValue("");//task.getEngineNo());
-                
+
                 row.createCell(14).setCellValue("");//task.getModel());
                 Cell apptDate1 = row.createCell(15);
                 apptDate1.setCellStyle(dateCellStyle);
                 apptDate1.setCellValue("");//task.getDtOfPurchase());
-                
+
                 row.createCell(16).setCellValue("");//task.getDealerCode());
                 row.createCell(17).setCellValue(task.getReason());
                 row.createCell(18).setCellValue(task.getRemarks());
@@ -1532,7 +1522,7 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
                 Cell apptDate2 = row.createCell(20);
                 apptDate2.setCellStyle(dateCellStyle);
                 apptDate2.setCellValue(task.getLastServcDt());
-                
+
                 row.createCell(21).setCellValue(task.getLastServcType());
                 row.createCell(22).setCellValue(task.getLastServcLoc());
                 row.createCell(23).setCellValue(task.getLastServcKm());
@@ -1549,11 +1539,9 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
             return new ByteArrayInputStream(out.toByteArray());
         }
     }
-    
-     
-     
-     ////////////////////////ADMIN PAGE//////////////////////////////////////////
-     public static ByteArrayInputStream genGetTotalSMSSendDetails(List<SSAppoinmentDetails> appts) throws Exception {
+
+    ////////////////////////ADMIN PAGE//////////////////////////////////////////
+    public static ByteArrayInputStream genGetTotalSMSSendDetails(List<SSAppoinmentDetails> appts) throws Exception {
         String[] COLUMNs = {"Appointment_Id", "Vehicle_No", "Service_Type", "Service_Loc", "Service_Group", "Appointment_Date", "Time_Slot", "Appointment_Status", "Pickup", "Amount", "Pick_Address", "Remark", "LastDesposition", "Appt_Atteneded"};
         try (
                 Workbook workbook = new XSSFWorkbook();
@@ -1576,7 +1564,7 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
 
             Row row2 = sheet.createRow(2);
             Cell cell2 = row2.createCell(1);
-            cell2.setCellValue("Report Run Date" +  Calendar.getInstance().getTime());
+            cell2.setCellValue("Report Run Date" + Calendar.getInstance().getTime());
             cell2.setCellStyle(headerCellStyle1);
 
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, COLUMNs.length));
@@ -1640,8 +1628,8 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
         }
     }
 
-     ////////////////////////EXECUTIVE PAGE//////////////////////////////////////////
-     public static ByteArrayInputStream genGetTotalSMSSendExewiseDetails(List<SSAppoinmentDetails> appts) throws Exception {
+    ////////////////////////EXECUTIVE PAGE//////////////////////////////////////////
+    public static ByteArrayInputStream genGetTotalSMSSendExewiseDetails(List<SSAppoinmentDetails> appts) throws Exception {
         String[] COLUMNs = {"Appointment_Id", "Vehicle_No", "Service_Type", "Service_Loc", "Service_Group", "Appointment_Date", "Time_Slot", "Appointment_Status", "Pickup", "Amount", "Pick_Address", "Remark", "LastDesposition", "Appt_Atteneded"};
         try (
                 Workbook workbook = new XSSFWorkbook();
@@ -1664,7 +1652,7 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
 
             Row row2 = sheet.createRow(2);
             Cell cell2 = row2.createCell(1);
-            cell2.setCellValue("Report Run Date" +  Calendar.getInstance().getTime());
+            cell2.setCellValue("Report Run Date" + Calendar.getInstance().getTime());
             cell2.setCellStyle(headerCellStyle1);
 
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, COLUMNs.length));
@@ -1728,6 +1716,4 @@ sheet1.addMergedRegion(new CellRangeAddress(5, 5, 0, COLUMNs.length));
         }
     }
 
-     
 }
-

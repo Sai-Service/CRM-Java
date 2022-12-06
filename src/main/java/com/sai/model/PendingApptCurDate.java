@@ -26,7 +26,7 @@ public class PendingApptCurDate {
     private String apptStatus;
     private String pickupMms;
     private String pickUp;
-    private Date pickupTime;
+    private String pickupTime;
     private int amount;
     private String pickAdd;  
     private String remark;
@@ -36,7 +36,7 @@ public class PendingApptCurDate {
     private String contactNo1;
     private String contactNo2;
 
-    public PendingApptCurDate(long appmntId, String vehNo, String contactPerson, String servType, String servLoc, String servGroup, Date apptDate, String apptTimeSlot, String apptStatus, String pickupMms, String pickUp, Date pickupTime, int amount, String pickAdd, String remark, String lastDesposition, String apptAttended, String advName, String contactNo1, String contactNo2) {
+    public PendingApptCurDate(long appmntId, String vehNo, String contactPerson, String servType, String servLoc, String servGroup, Date apptDate, String apptTimeSlot, String apptStatus, String pickupMms, String pickUp, String pickupTime, int amount, String pickAdd, String remark, String lastDesposition, String apptAttended, String advName, String contactNo1, String contactNo2) {
         this.appmntId = appmntId;
         this.vehicleNo = vehNo;
         this.contactPerson = contactPerson;
@@ -147,11 +147,11 @@ public class PendingApptCurDate {
         this.pickUp = pickUp;
     }
 
-    public Date getPickupTime() {
+    public String getPickupTime() {
         return pickupTime;
     }
 
-    public void setPickupTime(Date pickupTime) {
+    public void setPickupTime(String pickupTime) {
         this.pickupTime = pickupTime;
     }
 

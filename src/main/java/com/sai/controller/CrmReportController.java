@@ -9,6 +9,7 @@ import com.sai.dao.SSAppoinmentDetailsDao;
 import com.sai.dao.SSGatepassAllDao;
 import com.sai.dao.SSTaskCreationDao;
 import com.sai.dto.SsTaskReport;
+import com.sai.impl.CrmReportsImpl;
 import com.sai.model.PendingApptCurDate;
 import com.sai.model.SSAppoinmentDetails;
 import com.sai.model.SSGatepassAll;
@@ -18,9 +19,14 @@ import com.sai.report.ExcelGenerator;
 import com.sai.service.SSTaskCreationService;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +52,12 @@ public class CrmReportController {
     
      @Autowired
     private  SSAppoinmentDetailsDao apptdetails;
+     
+      @Autowired
+    private CrmReportsImpl crmRepService;
+      
+      @Value("${ReportFiles.path}")
+    private String filesPath;
 
     @GetMapping(value = "/download/SS_Task_Detail_Report.xlsx")
     public ResponseEntity<InputStreamResource> excelTaskReport() throws IOException {
@@ -95,20 +107,15 @@ public class CrmReportController {
     }
     
      @GetMapping(value = "/download/SS_Task_Reason_Report.xlsx")
-    public ResponseEntity<InputStreamResource> excelTaskReasonReport(@RequestParam Map<String, String> map) throws IOException {
+    public ResponseEntity<InputStreamResource> excelTaskReasonReport(@RequestParam String fromDate,@RequestParam String toDate ,@RequestParam Integer orgId,@RequestParam Integer locId,@RequestParam String reasonCode) throws IOException {
         ByteArrayInputStream in = null;
         HttpHeaders headers = new HttpHeaders();
         try {
-            String fromDate = null;
-            String toDate = null;
-            for (String searchKey : map.keySet()) {
-                if (searchKey.equals("fromDate") ) {
-                    fromDate = map.get("fromDate");
-                    toDate = map.get("toDate");
-                }
-            }
+       //     String fromDate = null;
+        //    String toDate = null;
+              
             List<SsTaskReport> ssTaskReports = null;
-            ssTaskReports = service.findReasonWiseReport(map);
+            ssTaskReports = service.findReasonWiseReport(fromDate,toDate,orgId,locId,reasonCode);
          
             in = ExcelGenerator.generateTaskReportWithAssignee(ssTaskReports, fromDate, toDate);
             headers.add("Content-Disposition", "attachment; filename=SS_Task_Reason_Report.xlsx");
@@ -124,20 +131,19 @@ public class CrmReportController {
     }
 
 @GetMapping(value = "/download/Appointment_Report.xlsx")
-    public ResponseEntity<InputStreamResource> excelAppointmentReport(@RequestParam Map<String, String> map) throws Exception {
+    public ResponseEntity<InputStreamResource> excelAppointmentReport(@RequestParam String fromDate,@RequestParam String toDate,@RequestParam Integer orgId,@RequestParam Integer locId) throws Exception {
         ByteArrayInputStream in = null;
         HttpHeaders headers = new HttpHeaders();
         try {
-            String fromDate = null;
-            String toDate = null;
-            for (String searchKey : map.keySet()) {
-                if (searchKey.equals("fromDate") ) {
-                    fromDate = map.get("fromDate");
-                    toDate = map.get("toDate");
-                }
-            }
+           
+//            for (String searchKey : map.keySet()) {
+//                if (searchKey.equals("fromDate") ) {
+//                    fromDate = map.get("fromDate");
+//                    toDate = map.get("toDate");
+//                }
+//            }
             List<SSAppoinmentDetails> appts = null;
-            appts = service.findAppointmentReport(map);
+            appts = service.findAppointmentReport(fromDate,toDate,orgId,locId);
          
             in = ExcelGenerator.generateAppointmentReport(appts, fromDate, toDate);
             headers.add("Content-Disposition", "attachment; filename=Appointment_Report.xlsx");
@@ -458,5 +464,40 @@ public class CrmReportController {
                 .headers(headers)
                 .body(new InputStreamResource(in));
     }
+    
+     @GetMapping("/CrmTaskDetails")
+    public ResponseEntity<InputStreamResource> CrmTasDtlsRep(@RequestParam Date fromDate, @RequestParam Date toDate, @RequestParam Integer ouId,
+            @RequestParam Integer locId) throws Exception {
+        try {
+            Map<String, Object> parameter = new HashMap<>();
+            String fileName = null;
+            fileName = filesPath + "CrmTaskDtls" + ouId + ".xls";
+            parameter.put("fromDate", fromDate);
+            parameter.put("toDate", toDate);
+            parameter.put("ouId", ouId);
+            parameter.put("locId", locId);
+            ByteArrayInputStream in;
+            try {
+                in = crmRepService.getCrmDtls(parameter, fileName);
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Content-Disposition", "attachment; filename=/download/" + fileName);
+                return ResponseEntity
+                        .ok()
+                        .headers(headers)
+                        .body(new InputStreamResource(in));
+            } catch (Exception ex) {
+                Logger.getLogger(this.getClass()
+                        .getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(CrmReportController.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            throw ex;
+        }
+
+        return null;
+    }
+    
     
 }

@@ -5,6 +5,7 @@
  */
 package com.sai.impl;
 
+import static com.lowagie.text.xml.simpleparser.EntitiesToUnicode.map;
 import com.sai.dto.EventReport;
 import com.sai.dto.SsTaskReport;
 import com.sai.model.SSAppoinmentDetails;
@@ -41,7 +42,7 @@ public class SSTaskCreationServiceImpl implements SSTaskCreationService {
     public List<SsTaskReport> findTaskByConditions(Map<String, String> map) {
         String baseQuery1 = "Select std.taskId,std.callDuDt, std.custId, std.CustName,std.CustAdd,std.contactPerson,std.custType,std.contactNo1,std.contactNo2,"
                 + "std.emailAdd,std.vehicleNo,std.chassisNo,std.engineNo,std.Model,std.contacted, std.reason,std.remarks,std.taskReason,std.lstServDt,std.lstServType,std.lstServLoc,std.lstKm,std.nxtServDt,std.nxtServType,"
-                + "std.attribute1 as callForService,sad.assignee, sad.assigneeId from SsTaskDetails std , SsAdministratorData sad  where  std.taskId=sad.taskId and  std.callDuDt BETWEEN ?1 and ?2 and std.orgId=?3 ";
+                + "std.attribute1 as callForService,std.assignee, std.assigneeId from SsTaskDetails std  where  std.taskId=sad.taskId and  std.callDuDt BETWEEN ?1 and ?2 and std.orgId=?3 ";
 
         String locIdQuery = " and std.locId =?";
         String dtcustTypeQuery = "  and std.custType=?";
@@ -129,93 +130,92 @@ public class SSTaskCreationServiceImpl implements SSTaskCreationService {
             return taskList;
         }
     
-    @Override
-    public List<SsTaskReport> findReasonWiseReport(Map<String, String> map) {
-        String baseQuery1 = "Select std.taskId,std.callDuDt, std.custId, std.CustName,std.CustAdd,std.contactPerson,std.custType,std.contactNo1,std.contactNo2,"
-                + "std.emailAdd,std.vehicleNo,std.chassisNo,std.engineNo,std.Model,std.contacted, std.reason,std.remarks,std.taskReason,std.lstServDt,std.lstServType,std.lstServLoc,std.lstKm,std.nxtServDt,std.nxtServType,"
-                + "std.attribute1 as callForService,sad.assignee, sad.assigneeId from SsTaskDetails std , SsAdministratorData sad  where  std.taskId=sad.taskId and  std.callDuDt BETWEEN ?1 and ?2 and std.orgId=?3 ";
+   //  @Override
+    public List<SsTaskReport> findReasonWiseReport(String fromDate,String toDate ,Integer orgId,Integer locId,String reasonCode) {
+        String baseQuery1 = "Select std.taskId,std.callDuDt, std.custId, std.custName,std.custAdd,std.contactPerson,std.custType,std.contactNo1,std.contactNo2,"
+                + "std.emailAdd,std.vehicleNo,svm.chassis,svm.engine,svm.model,std.contacted, std.reason,std.remarks,std.taskReason,std.lastServcDt,std.lastServcType,std.lastServcLoc,std.lastServcKm,std.nextServcDt,std.nextServcType,"
+                + "std.attribute1 as callForService,std.assignee, std.assigneeId from SsTaskDetails std ,SsVehicleMaster svm  where std.custId=svm.custId and std.vehicleNo=svm.vehicleNo and std.callDuDt BETWEEN ?1 and ?2 and std.orgId=?3 ";
 
         String locIdQuery = " and std.locId =?";
         String taskReasonQuery = "  and std.taskReason=?";
         int i = 4;
         Map<Integer, Object> paramsMap = new HashMap<Integer, Object>();
-        if (map.containsKey("locId")) {
-            if (map.get("locId").trim().length() > 0 ) {
+       
+            if (locId!=null) {
                 baseQuery1 = baseQuery1 + locIdQuery + i;
-                paramsMap.put(i, Long.parseLong(map.get("locId")));
+                paramsMap.put(i, locId);
                 i++;
             }
-        }
-
-        if (map.containsKey("reasonCode")) {
-            if (map.get("reasonCode").trim().length() > 0 ) {
+            if (reasonCode!=null) {
                 baseQuery1 = baseQuery1 + taskReasonQuery + i;
-                 paramsMap.put(i,map.get("reasonCode"));
+                paramsMap.put(i,reasonCode);
                 i++;
             }
-        }
-           Query query1 = entityManager.createQuery(baseQuery1);
-            List<SsTaskReport> taskList = new ArrayList<SsTaskReport>();
-            try {
-
-                if (map.containsKey("fromDate")) {
-                    query1.setParameter(1, new SimpleDateFormat("yyyy-MM-dd").parse(map.get("fromDate")), TemporalType.DATE);
-                    query1.setParameter(2, new SimpleDateFormat("yyyy-MM-dd").parse(map.get("toDate")), TemporalType.DATE);
-                    query1.setParameter(3, Long.parseLong(map.get("orgId")));
-                }
-                int x =4;
-                for(int j=0; j<paramsMap.size() ;j++){
-                    query1.setParameter(x,paramsMap.get(x));
-                     x++;
-                }
-                List<Object[]> list = query1.getResultList();
-
-                for (Object[] obj : list) {
-                    SsTaskReport sst = new SsTaskReport((Integer) obj[0], (Date) obj[1], (Integer) obj[2], (String) obj[3], (String) obj[4], (String) obj[5], (String) obj[6], (String) obj[7], (String) obj[8], (String) obj[9], (String) obj[10], (String) obj[11], (String) obj[12], (String) obj[13], (String) obj[14], (String) obj[15], (String) obj[16], (String) obj[17], (Date) obj[18], (String) obj[19], (String) obj[20], (Integer) obj[21], (Date) obj[22], (String) obj[23], (String) obj[24], (String) obj[25], (String) obj[26]);
-                    taskList.add(sst);
-                }
-                System.out.println("======Result size======" + taskList.size());
-            } catch (ParseException ex) {
-                System.out.println("======error======");
-                Logger.getLogger(SSTaskCreationServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+   
+        
+        Query query1 = entityManager.createQuery(baseQuery1);
+       
+        List<SsTaskReport> taskList = new ArrayList<SsTaskReport>();
+        try {
+           
+                query1.setParameter(1, new SimpleDateFormat("yyyy-MM-dd").parse(fromDate));
+                query1.setParameter(2, new SimpleDateFormat("yyyy-MM-dd").parse(toDate));
+                query1.setParameter(3, orgId);
+           
+            int x = 4;
+            for (int j = 0; j < paramsMap.size(); j++) {
+                query1.setParameter(x, paramsMap.get(x));
+                x++;
             }
+                System.out.println(baseQuery1);
+            List<Object[]> list = query1.getResultList();
 
-            return taskList;
+            for (Object[] obj : list) {
+                SsTaskReport sst = new SsTaskReport((Integer) obj[0], (Date) obj[1], (Integer) obj[2], (String) obj[3], (String) obj[4], (String) obj[5], (String) obj[6], (String) obj[7], (String) obj[8], (String) obj[9], (String) obj[10], (String) obj[11], (String) obj[12], (String) obj[13], (String) obj[14], (String) obj[15], (String) obj[16], (String) obj[17], (Date) obj[18], (String) obj[19], (String) obj[20], (Integer) obj[21], (Date) obj[22], (String) obj[23], (String) obj[24], (String) obj[25], (String) obj[26]);
+                taskList.add(sst);
+            }
+            System.out.println("======Result size======" + taskList.size());
+        } catch (ParseException ex) {
+            System.out.println("======error======");
+            Logger.getLogger(SSTaskCreationServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    @Override
-    public List<SSAppoinmentDetails> findAppointmentReport(Map<String, String> map) {
+        return taskList;
+    }
+
+    public List<SSAppoinmentDetails> findAppointmentReport(String fromDate,String toDate,Integer orgId,Integer locId) {
         String baseQuery1 = "select appmntId,vehicleNo,servType,servLoc,servGroup,apptDate,apptTimeSlot,apptStatus,pickUp,amount,pickAdd,remark,lastDesposition,apptAttended"
                 + " from SSAppoinmentDetails Where apptDate BETWEEN ?1 and ?2 and orgId=?3 ";
 
-        String locIdQuery = " and locId =?";
-        if (map.containsKey("locId")) {
-            if (map.get("locId").trim().length() > 0 ) {
+        String locIdQuery = " and locationId =?";
+        if (locId != null) {
+          
                 baseQuery1 = baseQuery1 + locIdQuery + 4;
-            }
+   
         }
          Query query1 = entityManager.createQuery(baseQuery1);
             List<SSAppoinmentDetails> appointments = new ArrayList<SSAppoinmentDetails>();
             try {
 
-                if (map.containsKey("fromDate")) {
-                    query1.setParameter(1, new SimpleDateFormat("yyyy-MM-dd").parse(map.get("fromDate")), TemporalType.DATE);
-                    query1.setParameter(2, new SimpleDateFormat("yyyy-MM-dd").parse(map.get("toDate")), TemporalType.DATE);
-                    query1.setParameter(3, Long.parseLong(map.get("orgId")));
-                }
-                 if (map.containsKey("locId")) {
-                     query1.setParameter(4, Long.parseLong(map.get("locId")));
+                  Date objDate = new Date();
+             
+                    query1.setParameter(1, new SimpleDateFormat("yyyy-MM-dd").parse(fromDate));
+                    query1.setParameter(2, new SimpleDateFormat("yyyy-MM-dd").parse(toDate));
+                    query1.setParameter(3, orgId);
+                
+                 if (locId!=null) {
+                     query1.setParameter(4, locId);
                  }
                
                 List<Object[]> list = query1.getResultList();
 
                 for (Object[] obj : list) {
-                    SSAppoinmentDetails appt = new SSAppoinmentDetails((Integer) obj[0], (String) obj[1],  (String)obj[2], (String) obj[3], (String) obj[4], (Date) obj[5], (String) obj[6], (String) obj[7], (String) obj[8], (Integer) obj[9], (String) obj[10], (String) obj[11], (String) obj[12], (String) obj[13]);
+                    SSAppoinmentDetails appt = new SSAppoinmentDetails((long) obj[0], (String) obj[1],  (String)obj[2], (String) obj[3], (String) obj[4], (Date) obj[5], (String) obj[6], (String) obj[7], (String) obj[8], (Integer) obj[9], (String) obj[10], (String) obj[11], (String) obj[12], (String) obj[13]);
 //                SSAppoinmentDetails(Integer appmntId, String vehNo, String servType, String servLoc, String servGroup, Date apptDate, String apptTimeSlt, String apptStatus, String pickUp, Integer amount, String pickAdd, String remark, String lastDesposition, String apptAttended ){
                     appointments.add(appt);
                 }
                 System.out.println("======Result size======" + appointments.size());
-            } catch (ParseException ex) {
+            } catch (Exception ex) {
                 System.out.println("======error======");
                 Logger.getLogger(SSTaskCreationServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }

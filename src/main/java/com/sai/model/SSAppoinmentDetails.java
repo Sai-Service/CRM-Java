@@ -46,8 +46,7 @@ public class SSAppoinmentDetails implements Serializable {
     @Column(name = "PICKUP_MMS")
     private String pickupMms;
     @Column(name = "PICKUP_TIME")
-    @Temporal(TemporalType.TIMESTAMP)
-    private String pickupTime;
+     private String pickupTime;
     
     @javax.persistence.Id
     @GeneratedValue

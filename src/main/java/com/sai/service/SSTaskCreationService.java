@@ -5,11 +5,10 @@
  */
 package com.sai.service;
 
-import com.sai.dto.EventReport;
 import com.sai.dto.SsTaskReport;
 import com.sai.model.SSAppoinmentDetails;
-import com.sai.model.SSGatepassAll;
 import com.sai.model.insurance.SsInsuranceDetails;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -21,9 +20,9 @@ public interface SSTaskCreationService {
 
     public List<SsTaskReport> findTaskByConditions(Map<String, String> map);
 
-    public List<SsTaskReport> findReasonWiseReport(Map<String, String> map);
+    public List<SsTaskReport> findReasonWiseReport(String fromDate,String toDate ,Integer orgId,Integer locId,String reasonCode);
 
-    public List<SSAppoinmentDetails> findAppointmentReport(Map<String, String> map);
+    public List<SSAppoinmentDetails> findAppointmentReport(String fromDate,String toDate,Integer orgId,Integer locId);
 
   //  public List<EventReport> findEventWiseReport(Map<String, String> map
     
