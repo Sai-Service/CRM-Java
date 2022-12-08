@@ -146,7 +146,7 @@ public class SSTaskCreationServiceImpl implements SSTaskCreationService {
                 paramsMap.put(i, locId);
                 i++;
             }
-            if (reasonCode!=null) {
+            if (!reasonCode.equalsIgnoreCase("")) {
                 baseQuery1 = baseQuery1 + taskReasonQuery + i;
                 paramsMap.put(i,reasonCode);
                 i++;
@@ -171,7 +171,8 @@ public class SSTaskCreationServiceImpl implements SSTaskCreationService {
             List<Object[]> list = query1.getResultList();
 
             for (Object[] obj : list) {
-                SsTaskReport sst = new SsTaskReport((Integer) obj[0], (Date) obj[1], (Integer) obj[2], (String) obj[3], (String) obj[4], (String) obj[5], (String) obj[6], (String) obj[7], (String) obj[8], (String) obj[9], (String) obj[10], (String) obj[11], (String) obj[12], (String) obj[13], (String) obj[14], (String) obj[15], (String) obj[16], (String) obj[17], (Date) obj[18], (String) obj[19], (String) obj[20], (Integer) obj[21], (Date) obj[22], (String) obj[23], (String) obj[24], (String) obj[25], (String) obj[26]);
+                SsTaskReport sst = new SsTaskReport((long) obj[0], (Date) obj[1], (long) obj[2], (String) obj[3], (String) obj[4], (String) obj[5], (String) obj[6], (String) obj[7], (String) obj[8], (String) obj[9], (String) obj[10], (String) obj[11], (String) obj[12], (String) obj[13], (String) obj[14], (String) obj[15], (String) obj[16], (String) obj[17], (Date) obj[18], (String) obj[19], (String) obj[20], (Integer) obj[21], (Date) obj[22], (String) obj[23], (String) obj[24], (String) obj[25], (String) obj[26]);
+            //                                      (long taskId, Date callDuDt, long custId, String custName, String custAdd, String contactPerson, String custType, String contactNo1, String contactNo2, String emailAdd, String vehicleNo, String chassisNo, String engineNo, String model, String contacted, String reason, String remarks, String taskReason, Date lstServDt, String lstServType, String lstServLoc, long lstKm, Date nxtServDt, String nxtServType, String callForService, String assignee, String assigneeId)
                 taskList.add(sst);
             }
             System.out.println("======Result size======" + taskList.size());

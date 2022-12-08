@@ -146,12 +146,12 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
     List<Map> getUserSummLoginwise(String assignee_id);
 
     //To display admin summary--NEW UPDATE ON 11-JUL-2020
-    @Query(value = "SELECT std.task_id as taskid,std.cust_id as custid,std.cust_name,\n"
-            + "std.contact_no1 as contactno1,std.vehicle_no as vehicleno,std.last_servc_dt as lstservdt,std.last_servc_type as lstservtype,last_servc_loc as lstservloc,\n"
-            + "std.next_servc_Dt as nxtservdt,std.next_servc_type as nxtservtype,std.assignee,std.assignee_id as assigneeid\n"
-            + "from test.ss_task_details std\n"
-            + "where std.task_status!='CLOSED' AND std.call_du_dt =curdate() and  std.loc_id=?1  order by std.next_servc_type", nativeQuery = true)
-    List<Map> getMainAdminSummary(Integer loc_id);
+//    @Query(value = "SELECT std.task_id as taskid,std.cust_id as custid,std.cust_name,\n"
+//            + "std.contact_no1 as contactno1,std.vehicle_no as vehicleno,std.last_servc_dt as lstservdt,std.last_servc_type as lstservtype,last_servc_loc as lstservloc,\n"
+//            + "std.next_servc_Dt as nxtservdt,std.next_servc_type as nxtservtype,std.assignee,std.assignee_id as assigneeid\n"
+//            + "from test.ss_task_details std\n"
+//            + "where std.task_status!='CLOSED' AND std.call_du_dt =curdate() and  std.loc_id=?1  order by std.next_servc_type", nativeQuery = true)
+//    List<Map> getMainAdminSummary(Integer loc_id);
 
     ////////TO DISPLAY yesterday HIGHEST APPOINMENT TAKEN///////
     @Query(value = "select a.* from (select  std.assignee_id as assignee_id1 ,std.assignee as assignee1,count(appt.APPMNT_ID) total1\n"
@@ -188,5 +188,14 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
       @Query(value = " select concat(\"Customer MCP Ending after 15 Days...MCP Start Date is : \" ,ifnull(mcpStDate,'-')) Reminder from\n crm.ss_vehicle_master where  vehicleNo=?1 and mcpEnDate like (curdate()  + interval 15 day ) ", nativeQuery = true)
     String getMCPMessage(String vehicleNo);
 //
+    
+     //To display admin summary--NEW UPDATE ON 11-JUL-2020
+    @Query(value = "SELECT std.task_id as taskid,std.cust_id as custid,std.cust_name,\n"
+            + "std.contact_no1 as contactno1,std.vehicle_no as vehicleno,std.last_servc_dt as lstservdt,std.last_servc_type as lstservtype,last_servc_loc as lstservloc,\n"
+            + "std.next_servc_Dt as nxtservdt,std.next_servc_type as nxtservtype,std.assignee,std.assignee_id as assigneeid\n"
+            + "from crm.ss_task_details std\n"
+            + "where std.task_status!='CLOSED' and  std.loc_id=?1   AND std.call_du_dt =?2 order by std.next_servc_type", nativeQuery = true)
+    List<Map> getMainAdminSummary(Integer loc_id,Date inputDate);
+
 
 }

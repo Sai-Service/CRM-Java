@@ -29,7 +29,7 @@ public class SsTaskReport {
     private Date lstServDt;
     private String lstServType;
     private String lstServLoc;
-    private long lstKm;
+    private Integer lstKm;
     private Date nxtServDt;
     private String nxtServType;
     private String callForService;
@@ -40,7 +40,7 @@ public class SsTaskReport {
 //              + "std.emailAdd,std.vehicleNo,std.chassisNo,std.engineNo,std.Model,std.contacted, std.reason,std.remarks,std.taskReason,std.lstServDt,std.lstServType,std.lstServLoc,std.lstKm,std.nxtServDt,std.nxtServType,"
 //              + "std.attribute1 as callForService,sad.assignee, sad.assigneeId) 
 
-    public SsTaskReport(long taskId, Date callDuDt, long custId, String custName, String custAdd, String contactPerson, String custType, String contactNo1, String contactNo2, String emailAdd, String vehicleNo, String chassisNo, String engineNo, String model, String contacted, String reason, String remarks, String taskReason, Date lstServDt, String lstServType, String lstServLoc, long lstKm, Date nxtServDt, String nxtServType, String callForService, String assignee, String assigneeId) {
+    public SsTaskReport(long taskId, Date callDuDt, long custId, String custName, String custAdd, String contactPerson, String custType, String contactNo1, String contactNo2, String emailAdd, String vehicleNo, String chassisNo, String engineNo, String model, String contacted, String reason, String remarks, String taskReason, Date lstServDt, String lstServType, String lstServLoc, Integer lstKm, Date nxtServDt, String nxtServType, String callForService, String assignee, String assigneeId) {
         this.taskId = taskId;
         this.callDuDt = callDuDt;
         this.custId = custId;
@@ -238,11 +238,11 @@ public class SsTaskReport {
         this.lstServLoc = lstServLoc;
     }
 
-    public long getLstKm() {
+    public Integer getLstKm() {
         return lstKm;
     }
 
-    public void setLstKm(long lstKm) {
+    public void setLstKm(Integer lstKm) {
         this.lstKm = lstKm;
     }
 

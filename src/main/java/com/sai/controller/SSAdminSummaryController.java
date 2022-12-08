@@ -17,6 +17,9 @@ import com.sai.model.SsTaskDetails;
 import com.sai.model.SsVehicleMaster;
 import com.sai.report.ReportService;
 import java.io.ByteArrayInputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -134,10 +137,20 @@ public class SSAdminSummaryController {
     }
 
     ////////////TO DISLAY DATA ON ADMIN SUMMARY---new changed by jyoti t on 11-jul-2020
+//    @RequestMapping(value = "/ssAdminSummary/locId/{loc_id}", method = RequestMethod.GET, produces = {"application/JSON"})
+//    // Map getUsercountList(@PathVariable String vehicle_no)
+//    public List<Map> getMainAdminSummary(@PathVariable Integer loc_id) {
+//        return TaskRepository.getMainAdminSummary(loc_id);
+//    }
+
+       ////////////TO DISLAY DATA ON ADMIN SUMMARY---new changed by jyoti t on 11-jul-2020
     @RequestMapping(value = "/ssAdminSummary/locId/{loc_id}", method = RequestMethod.GET, produces = {"application/JSON"})
     // Map getUsercountList(@PathVariable String vehicle_no)
-    public List<Map> getMainAdminSummary(@PathVariable Integer loc_id) {
-        return TaskRepository.getMainAdminSummary(loc_id);
+    public List<Map> getMainAdminSummary(@PathVariable Integer loc_id,@RequestParam String inputDate) throws ParseException {
+          java.util.Date currentDate = Calendar.getInstance().getTime();
+        //  String strDate = new SimpleDateFormat("yyyy-MM-dd").format(inputDate);
+             Date frmDt1 = new SimpleDateFormat("yyyy-MM-dd").parse(inputDate);
+        return TaskRepository.getMainAdminSummary(loc_id,frmDt1);
     }
 
     //////////////all SUMMARY Min DATA///////

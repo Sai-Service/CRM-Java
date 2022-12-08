@@ -41,7 +41,7 @@
 			<![CDATA[SELECT * FROM sales_task_details 
 where locId= ifnull($P{locId},locId)
  and orgId= $P{ouId} 
- and   prfOrdereddate between $P{fromDate} and $P{toDate}]]>
+ and   callDuDt between $P{fromDate} and $P{toDate}]]>
 		</queryString>
 		<field name="taskId" class="java.lang.Integer">
 			<property name="com.jaspersoft.studio.field.label" value="taskId"/>
@@ -167,7 +167,7 @@ where locId= ifnull($P{locId},locId)
 			<property name="com.jaspersoft.studio.field.label" value="convertSOYN"/>
 			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
 		</field>
-		<field name="convertSONo" class="java.lang.Long">
+		<field name="convertSONo" class="java.lang.String">
 			<property name="com.jaspersoft.studio.field.label" value="convertSONo"/>
 			<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
 		</field>
@@ -196,7 +196,7 @@ where locId= ifnull($P{locId},locId)
 		<![CDATA[SELECT * FROM sales_task_details 
 where locId= ifnull($P{locId},locId)
  and orgId= $P{ouId} 
- and   prfOrdereddate between $P{fromDate} and $P{toDate}]]>
+ and   callDuDt between $P{fromDate} and $P{toDate}]]>
 	</queryString>
 	<field name="taskId" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="taskId"/>
@@ -322,7 +322,7 @@ where locId= ifnull($P{locId},locId)
 		<property name="com.jaspersoft.studio.field.label" value="convertSOYN"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
 	</field>
-	<field name="convertSONo" class="java.lang.Long">
+	<field name="convertSONo" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="convertSONo"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sales_task_details"/>
 	</field>

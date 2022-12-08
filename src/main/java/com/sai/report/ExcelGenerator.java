@@ -276,7 +276,9 @@ public class ExcelGenerator {
                     cellLstDate.setCellStyle(dateCellStyle);
                     row.createCell(19).setCellValue(task.getLstServType());
                     row.createCell(20).setCellValue(task.getLstServLoc());
+                    if(task.getLstKm()!=null){
                     row.createCell(21).setCellValue(task.getLstKm());
+                    }
                     //        row.createCell(22).setCellValue(task.getNxtServDt());
                     Cell cellNxtDate = row.createCell(22);
                     cellNxtDate.setCellValue(task.getNxtServDt());
