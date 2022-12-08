@@ -193,7 +193,7 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
     @Query(value = "SELECT std.task_id as taskid,std.cust_id as custid,std.cust_name,\n"
             + "std.contact_no1 as contactno1,std.vehicle_no as vehicleno,std.last_servc_dt as lstservdt,std.last_servc_type as lstservtype,last_servc_loc as lstservloc,\n"
             + "std.next_servc_Dt as nxtservdt,std.next_servc_type as nxtservtype,std.assignee,std.assignee_id as assigneeid\n"
-            + "from crm.ss_task_details std\n"
+            + "from test.ss_task_details std\n"
             + "where std.task_status!='CLOSED' and  std.loc_id=?1   AND std.call_du_dt =?2 order by std.next_servc_type", nativeQuery = true)
     List<Map> getMainAdminSummary(Integer loc_id,Date inputDate);
 
