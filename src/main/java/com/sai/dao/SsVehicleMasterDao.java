@@ -26,7 +26,7 @@ public interface SsVehicleMasterDao extends CrudRepository<SsVehicleMaster, Long
             + ",ss.location,ss.pincode,ss.city, ss.state_name,ss.contact_no1,ss.contact_no2,ss.email_id,\n"
             + "sv.vehicleNo,sv.chassis as chassis_no,sv.engine as engine_no,sv.model,sv.dealerCode as dealer_code,sv.dtOfPurchase as dt_of_purchase\n"
             + ",td.last_servc_dt,td.last_servc_type ,td.last_servc_loc,td.last_servc_km ,td.call_du_dt \n"
-            + "FROM test.ss_task_details td,test.ss_customer ss, test.ss_vehicle_master sv WHERE td.cust_id=ss.cust_id and td.vehicle_no=sv.vehicleNo and\n"
+            + "FROM test.ss_task_details td,test.ss_cust_new ss, test.ss_vehicle_master sv WHERE td.cust_id=ss.cust_id and td.vehicle_no=sv.vehicleNo and\n"
             + "td.vehicle_no=?1 and td.call_du_dt=(SELECT MAX(call_du_dt) from test.ss_task_details td where td.vehicle_no=?1 )", nativeQuery = true)
     Map getVehNoExCustomer(String vehicle_no); //Working Fine
 

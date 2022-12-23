@@ -245,7 +245,7 @@ String baseQuery1 ="select distinct se.sub_category subCategory,\n" +
 "\n" +
 "(SGA.DELIVERY_DATE  + interval SE.DAYS_AFTER_DELIVERY day) service_due_dt ,SGA.DELIVERY_DATE\n" +
 "\n" +
-"from test.ss_gatepass_all sga ,ss_customer sc,test.ss_event se where\n" +
+"from test.ss_gatepass_all sga ,ss_cust_new sc,test.ss_event se where\n" +
 "\n" +
 "sga.cust_id=sc.CUST_ID and se.service_type not in ('FS','PS') AND\n" +
 "\n" +

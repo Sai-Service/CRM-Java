@@ -33,7 +33,7 @@ import org.springframework.data.repository.CrudRepository;
 //           + ",ss.location,ss.pincode,ss.city, ss.state_name,ss.contact_no1,ss.contact_no2,ss.email_id,\n" +
 //    "ss.vehicle_no,ss.chassis_no,ss.engine_no,ss.model,ss.dealer_code,ss.dt_of_purchase\n" +
 //    ",td.last_servc_dt,td.last_servc_type ,td.last_servc_loc,td.last_servc_km,td.amc ,td.call_du_dt,td.delv_dt \n" +
-//    "FROM test.ss_task_details td,test.ss_customer ss WHERE td.cust_id=ss.cust_id and td.vehicle_no=ss.vehicle_no and\n" +
+//    "FROM test.ss_task_details td,test.ss_cust_new ss WHERE td.cust_id=ss.cust_id and td.vehicle_no=ss.vehicle_no and\n" +
 //    "ss.vehicle_no=?1 and td.call_du_dt=(SELECT MAX(call_du_dt) from test.ss_task_details where vehicle_no=?1 )", nativeQuery = true)
 //   Map getVehNoExCustomer(String vehicle_no); //Working Fine
 // //    public  Map getVehNoExCustomer(String vehicle_no); //Working Fine
@@ -41,7 +41,7 @@ import org.springframework.data.repository.CrudRepository;
 //   /////////////get Customer ModelWiseSearch//////////////////////
 //       @Query(value="SELECT ss.cust_id as custId ,ss.cust_name as custName,ss.cust_type as custType,ss.address1, ss.address2 ,ss.address3,ss.location,ss.pincode,\n" +
 //        " ss.city, ss.STATE_NAME stateName,ss.country country, ss.contact_no1 as contactNo1,ss.contact_no2 as contactNo2,ss.email_id emailId,ss.created_by createdBy,ss.creation_date creationDt,\n" +
-//        " ss.last_updated_by as lastUpdatedBy,ss.last_updation_date as lstUpDate,ss.vehicle_no as vehicleNo,ss.chassis_no as chassisNo,ss.engine_no as engineNo,ss.model,ss.dealer_code,ss.dt_of_purchase as dealerCd FROM test.ss_customer ss "
+//        " ss.last_updated_by as lastUpdatedBy,ss.last_updation_date as lstUpDate,ss.vehicle_no as vehicleNo,ss.chassis_no as chassisNo,ss.engine_no as engineNo,ss.model,ss.dealer_code,ss.dt_of_purchase as dealerCd FROM test.ss_cust_new ss "
 //      + "where ss.model=?1", nativeQuery = true)
 //    // Map getVehicleNo(String vehicle_no); //Working Fine
 //      public List<Map> getCustModelWiseSearch(String Model); 

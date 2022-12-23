@@ -18,8 +18,10 @@ import org.springframework.data.repository.CrudRepository;
    //  @Query("select custId,custName from SSGatepassAll")
     // public List<Object> getGatepassNames();
         
-        SSGatepassAll findByGatepassId(Long gatepassId);
+        SSGatepassAll findByGatepassIdAndCustId(Long gatepassId,long custId);
      
+        SSGatepassAll findByGatepassId(Long gatepassId);
+                
    @Query("select NEW com.sai.model.SSGatepassAll(id,gatepassId,deliveryDate,custName,custId,contactNo,VehNo,orgId,locId,servLoc,refNo,servType,lastKM,model,chassisNo,engineNo,deptCode)"
                 + " from SSGatepassAll Where deliveryDate=curdate() and taskId is null ")
     public List<SSGatepassAll> findGatepassExceptionReport();

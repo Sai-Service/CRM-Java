@@ -46,7 +46,7 @@ sid.dealerName DealerName, sid.currentNCB CurrentNCB, sid.driverCover DriverCove
 sid.DriverCoverPremium,sid.TypeOfCustomer,sid.PaymentMode,sid.AccountNo,sid.BankBranch,sid.BankName,sid.Status,
 sid.OrgId,sid.LocId,sid.VehicleNo,sid.InsStDate,sid.InsPeriod,sid.InsEndDt,sid.ClaimCount,sid.RemittanceDate,
 sid.PaymentAmt,sid.PaymentDate, sid.InactiveDate,hou.company_code,sl.loc_name,sl.loc_desc, hou.ORGANIZATION_NAME
-FROM crm.ss_insurance_details sid,ss_customer sc,hr_operating_units hou ,ss_location sl 
+FROM test.ss_insurance_details sid,ss_cust_new sc,hr_operating_units hou ,ss_location sl 
 where sid.insEndDt between $P{fromDate} and $P{toDate} 
 and sid.custId=sc.CUST_ID 
 and sid.orgId= $P{ouId}
@@ -240,7 +240,7 @@ sid.dealerName DealerName, sid.currentNCB CurrentNCB, sid.driverCover DriverCove
 sid.DriverCoverPremium,sid.TypeOfCustomer,sid.PaymentMode,sid.AccountNo,sid.BankBranch,sid.BankName,sid.Status,
 sid.OrgId,sid.LocId,sid.VehicleNo,sid.InsStDate,sid.InsPeriod,sid.InsEndDt,sid.ClaimCount,sid.RemittanceDate,
 sid.PaymentAmt,sid.PaymentDate, sid.InactiveDate,hou.company_code,sl.loc_name,sl.loc_desc, hou.ORGANIZATION_NAME
-FROM crm.ss_insurance_details sid,ss_customer sc,hr_operating_units hou ,ss_location sl 
+FROM test.ss_insurance_details sid,ss_cust_new sc,hr_operating_units hou ,ss_location sl 
 where sid.insEndDt between $P{fromDate} and $P{toDate} 
 and sid.custId=sc.CUST_ID 
 and sid.orgId= $P{ouId}

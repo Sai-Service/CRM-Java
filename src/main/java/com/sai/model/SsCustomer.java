@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(name = "ss_customer")
+@Table(name = "ss_cust_new")
 
 public class SsCustomer implements Serializable {
 

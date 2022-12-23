@@ -75,6 +75,7 @@ public class UserController {
                 user.setCreationDt(currentDate);
                 user.setLastUpdatedBy(userId);
                 user.setLstUpDate(currentDate);
+                user.setReportTo(user.getReportTo());
 
                 userRepository.save(user);
             } catch (Exception ex) {

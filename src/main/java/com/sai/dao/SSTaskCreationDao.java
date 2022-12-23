@@ -185,7 +185,7 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
         @Query(value = " select std.task_Id as taskId from test.ss_task_details std WHERE std.loc_id=?1 and std.NEXT_SERVC_TYPE=?2 and std.task_status=?3 and std.call_du_dt=?4 ", nativeQuery = true)
     public List<Map> getTaskIdNew(Integer locId, String serType, String aNEW,Date callDuDt);
 
-      @Query(value = " select concat(\"Customer MCP Ending after 15 Days...MCP Start Date is : \" ,ifnull(mcpStDate,'-')) Reminder from\n crm.ss_vehicle_master where  vehicleNo=?1 and mcpEnDate like (curdate()  + interval 15 day ) ", nativeQuery = true)
+      @Query(value = " select concat(\"Customer MCP Ending after 15 Days...MCP Start Date is : \" ,ifnull(mcpStDate,'-')) Reminder from\n test.ss_vehicle_master where  vehicleNo=?1 and mcpEnDate like (curdate()  + interval 15 day ) ", nativeQuery = true)
     String getMCPMessage(String vehicleNo);
 //
     
