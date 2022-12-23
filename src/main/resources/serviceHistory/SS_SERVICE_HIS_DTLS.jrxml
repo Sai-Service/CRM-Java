@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SS_SERVICE_HIS_DTLS" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3bbd4ea3-1369-47a1-91bc-431d71be8709">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CRM-Bajaj.xml"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Dataset1" uuid="add8a76b-286d-45ca-8c75-ba0d5169e556">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CRM-Bajaj.xml"/>
+		<parameter name="jobCardNum" class="java.lang.String">
+			<defaultValueExpression><![CDATA[$P{jobCardNum}]]></defaultValueExpression>
+		</parameter>
+		<queryString language="SQL">
+			<![CDATA[SELECT distinct shHead.jobcardNum,shHead.jobcardDate,shHead.locCode,shHead.locAdd,shHead.state,sl.LOC_DESC,
+shHead.srvAdv,shHead.teamName,shHead.chassisNo,shHead.vin,shHead.engineNo,shHead.colorCode,shHead.colorDesc,
+shHead.regNo,shHead.regDate,shHead.custAccountNo,shHead.custName,shHead.custAdd,shHead.placeOfSupply,
+shHead.mobile1,shHead.trxNumber,shHead.trxDate,shHead.gatepassNo,shHead.gatepassDate,shline.item,shline.description,shline.itemType,shline.qty,
+shline.unitprice,shline.taxableAmt,shline.gstPercentage,shline.taxAmt,shline.totAmt,shline.labBasicAmt,
+shline.matBasicAmt,shline.labDisAmt,shline.matDisAmt,hou.ORGANIZATION_NAME,hou.COMPANY_CODE
+ FROM test.ss_ser_history_header shHead,test.ss_ser_history_lines shline,ss_location sl,test.hr_operating_units hou
+where shHead.jobcardNum=shline.jobcardNum and sl.loc_name=shHead.locCode
+and sl.ORG_ID=hou.ORG_ID and shHead.jobCardNum= $P{jobCardNum} 
+]]>
+		</queryString>
+		<field name="jobcardNum" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="jobcardNum"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="jobcardDate" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.label" value="jobcardDate"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="locCode" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="locCode"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="locAdd" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="locAdd"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="state" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="state"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="LOC_DESC" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="LOC_DESC"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_location"/>
+		</field>
+		<field name="srvAdv" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="srvAdv"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="teamName" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="teamName"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="chassisNo" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="chassisNo"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="vin" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="vin"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="engineNo" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="engineNo"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="colorCode" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="colorCode"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="colorDesc" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="colorDesc"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="regNo" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="regNo"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="regDate" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.label" value="regDate"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="custAccountNo" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="custAccountNo"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="custName" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="custName"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="custAdd" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="custAdd"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="placeOfSupply" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="placeOfSupply"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="mobile1" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="mobile1"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="trxNumber" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="trxNumber"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="trxDate" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.label" value="trxDate"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="gatepassNo" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="gatepassNo"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="gatepassDate" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.label" value="gatepassDate"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+		</field>
+		<field name="item" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="item"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+		</field>
+		<field name="description" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="description"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+		</field>
+		<field name="itemType" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="itemType"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+		</field>
+		<field name="qty" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="qty"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+		</field>
+		<field name="unitprice" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="unitprice"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+		</field>
+		<field name="taxableAmt" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="taxableAmt"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+		</field>
+		<field name="gstPercentage" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="gstPercentage"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+		</field>
+		<field name="taxAmt" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="taxAmt"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+		</field>
+		<field name="totAmt" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="totAmt"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+		</field>
+		<field name="labBasicAmt" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="labBasicAmt"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+		</field>
+		<field name="matBasicAmt" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="matBasicAmt"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+		</field>
+		<field name="labDisAmt" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="labDisAmt"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+		</field>
+		<field name="matDisAmt" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="matDisAmt"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+		</field>
+		<field name="ORGANIZATION_NAME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="ORGANIZATION_NAME"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="hr_operating_units"/>
+		</field>
+		<field name="COMPANY_CODE" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="COMPANY_CODE"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="hr_operating_units"/>
+		</field>
+	</subDataset>
+	<parameter name="jobCardNum" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{jobCardNum}]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT distinct shHead.jobcardNum,shHead.jobcardDate,shHead.locCode,shHead.locAdd,shHead.state,sl.LOC_DESC,
+shHead.srvAdv,shHead.teamName,shHead.chassisNo,shHead.vin,shHead.engineNo,shHead.colorCode,shHead.colorDesc,
+shHead.regNo,shHead.regDate,shHead.custAccountNo,shHead.custName,shHead.custAdd,shHead.placeOfSupply,
+shHead.mobile1,shHead.trxNumber,shHead.trxDate,shHead.gatepassNo,shHead.gatepassDate,shline.item,shline.description,shline.itemType,shline.qty,
+shline.unitprice,shline.taxableAmt,shline.gstPercentage,shline.taxAmt,shline.totAmt,shline.labBasicAmt,
+shline.matBasicAmt,shline.labDisAmt,shline.matDisAmt,hou.ORGANIZATION_NAME,hou.COMPANY_CODE
+ FROM test.ss_ser_history_header shHead,test.ss_ser_history_lines shline,ss_location sl,test.hr_operating_units hou
+where shHead.jobcardNum=shline.jobcardNum and sl.loc_name=shHead.locCode
+and sl.ORG_ID=hou.ORG_ID and shHead.jobCardNum= $P{jobCardNum} 
+]]>
+	</queryString>
+	<field name="jobcardNum" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="jobcardNum"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="jobcardDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="jobcardDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="locCode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="locCode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="locAdd" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="locAdd"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="state" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="state"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="LOC_DESC" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="LOC_DESC"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_location"/>
+	</field>
+	<field name="srvAdv" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="srvAdv"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="teamName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="teamName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="chassisNo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="chassisNo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="vin" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="vin"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="engineNo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="engineNo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="colorCode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="colorCode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="colorDesc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="colorDesc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="regNo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="regNo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="regDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="regDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="custAccountNo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="custAccountNo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="custName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="custName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="custAdd" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="custAdd"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="placeOfSupply" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="placeOfSupply"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="mobile1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="mobile1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="trxNumber" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="trxNumber"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="trxDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="trxDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="gatepassNo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="gatepassNo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="gatepassDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="gatepassDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
+	</field>
+	<field name="item" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="item"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+	</field>
+	<field name="description" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="description"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+	</field>
+	<field name="itemType" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="itemType"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+	</field>
+	<field name="qty" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="qty"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+	</field>
+	<field name="unitprice" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="unitprice"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+	</field>
+	<field name="taxableAmt" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="taxableAmt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+	</field>
+	<field name="gstPercentage" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="gstPercentage"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+	</field>
+	<field name="taxAmt" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="taxAmt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+	</field>
+	<field name="totAmt" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="totAmt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+	</field>
+	<field name="labBasicAmt" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="labBasicAmt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+	</field>
+	<field name="matBasicAmt" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="matBasicAmt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+	</field>
+	<field name="labDisAmt" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="labDisAmt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+	</field>
+	<field name="matDisAmt" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="matDisAmt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
+	</field>
+	<field name="ORGANIZATION_NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ORGANIZATION_NAME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hr_operating_units"/>
+	</field>
+	<field name="COMPANY_CODE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="COMPANY_CODE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hr_operating_units"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="45" splitType="Stretch">
+			<componentElement>
+				<reportElement x="0" y="-5" width="560" height="35" uuid="4e8e222e-7c8d-4fb6-95fc-269949f4f9e2">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+					<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Dataset1" uuid="f3ca7105-4d43-4600-bf0c-966ed4622500">
+						<datasetParameter name="jobCardNum">
+							<datasetParameterExpression><![CDATA[$P{jobCardNum}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="88" uuid="b8ad65d6-d70e-42ef-b71c-a460c4bdd9e1">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="Table_CH" height="15">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="88" height="15" backcolor="#949494" uuid="eb302fb2-5d8b-48d3-ab76-14ba98bd6ff0"/>
+								<textElement textAlignment="Center">
+									<font fontName="SansSerif" size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[ITEM]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="15">
+							<textField>
+								<reportElement x="0" y="0" width="88" height="15" uuid="b57e1fef-91a1-4149-8456-345704f893ca"/>
+								<textElement>
+									<font fontName="SansSerif" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{item}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="183" uuid="44907b1c-b5a1-4d1b-bce2-434fa2e9b04f">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="Table_CH" height="15">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="183" height="15" backcolor="#949494" uuid="e1605b91-b99a-4826-aa77-ada464fad931"/>
+								<textElement textAlignment="Center">
+									<font fontName="SansSerif" size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[DESCRIPTION]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="15">
+							<textField>
+								<reportElement x="0" y="0" width="183" height="15" uuid="87f47a2f-e568-49f4-aa07-9d4a7fe714de"/>
+								<textElement>
+									<font fontName="SansSerif" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="71" uuid="54811ac9-9e5b-45a3-badc-b7305df68a40">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="Table_CH" height="15">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="71" height="15" backcolor="#949494" uuid="dbf0ffaf-bde3-4277-8564-2b868d9b12fc"/>
+								<textElement textAlignment="Center">
+									<font fontName="SansSerif" size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[ITEM TYPE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="15">
+							<textField>
+								<reportElement x="0" y="0" width="71" height="15" uuid="098e3d35-f6e1-4b30-83f9-d91589c65125"/>
+								<textElement>
+									<font fontName="SansSerif" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{itemType}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="59" uuid="52eeaa0b-6a1f-402d-a334-018b6a4abf1d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="Table_CH" height="15">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="59" height="15" backcolor="#949494" uuid="9bd8dd73-e97c-4bb2-80fa-4be65c1732ad"/>
+								<textElement textAlignment="Center">
+									<font fontName="SansSerif" size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[QTY]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="15">
+							<textField>
+								<reportElement x="0" y="0" width="54" height="15" uuid="4988123a-5869-4792-a332-b462023cb578"/>
+								<textElement textAlignment="Right">
+									<font fontName="SansSerif" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{qty}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="77" uuid="72a2a1c6-f753-42cc-bffe-8b48aa70e3fb">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="Table_CH" height="15">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="77" height="15" backcolor="#949494" uuid="f871875d-41dd-4ec8-ba3a-ed82eeef4ea4"/>
+								<textElement textAlignment="Center">
+									<font fontName="SansSerif" size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[UNIT PRICE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="15">
+							<textField>
+								<reportElement x="0" y="0" width="70" height="15" uuid="8b3b3bba-d159-4bc4-8777-596890683e00"/>
+								<textElement textAlignment="Right">
+									<font fontName="SansSerif" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{unitprice}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="82" uuid="14604586-b0da-4fd4-a19a-c7a3e3f63254">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="Table_CH" height="15">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="82" height="15" backcolor="#949494" uuid="c3a49c70-d50b-4722-ae49-d67726666dcd"/>
+								<textElement textAlignment="Center">
+									<font fontName="SansSerif" size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[TAXABLE AMT]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="15">
+							<textField>
+								<reportElement x="0" y="0" width="75" height="15" uuid="1e140c47-6435-45bd-a0d1-7ad3792a4e80"/>
+								<textElement textAlignment="Right">
+									<font fontName="SansSerif" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{taxableAmt}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
