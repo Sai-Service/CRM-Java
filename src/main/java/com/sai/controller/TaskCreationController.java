@@ -29,6 +29,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -376,10 +377,18 @@ public class TaskCreationController {
 
     }
 
-    @RequestMapping(value = "/ssTask/UserSummLoginwise/{assignee_id}", method = RequestMethod.GET, produces = {"application/JSON"})
+//    @RequestMapping(value = "/ssTask/UserSummLoginwise/{assignee_id}", method = RequestMethod.GET, produces = {"application/JSON"})
+//    // Map getUsercountList(@PathVariable String vehicle_no)
+//    public List<Map> getUserSummLoginwise(@PathVariable String assignee_id) {
+//        return taskRepository.getUserSummLoginwise(assignee_id);
+//
+//    }
+    
+       @RequestMapping(value = "/ssTask/UserSummLoginwise/{assignee_id}", method = RequestMethod.GET, produces = {"application/JSON"})
     // Map getUsercountList(@PathVariable String vehicle_no)
-    public List<Map> getUserSummLoginwise(@PathVariable String assignee_id) {
-        return taskRepository.getUserSummLoginwise(assignee_id);
+    public List<Map> getUserSummLoginwise(@PathVariable String assignee_id, @RequestParam String inputDate) throws ParseException {
+        Date frmDt1 = new SimpleDateFormat("yyyy-MM-dd").parse(inputDate);
+        return taskRepository.getUserSummLoginwise(assignee_id, frmDt1);
 
     }
 
