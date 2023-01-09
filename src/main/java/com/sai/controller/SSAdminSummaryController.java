@@ -161,11 +161,11 @@ public class SSAdminSummaryController {
     }
     ////single task id //////from sstaskcreationDao
 
-    @RequestMapping(value = "/ssAdminSummary/ByTaskId/{locId}", method = RequestMethod.GET, produces = {"application/JSON"})
-    public List<Object> getTaskId(@PathVariable Integer locId) {
-        return TaskRepository.getTaskId(locId);
+//    @RequestMapping(value = "/ssAdminSummary/ByTaskId/{locId}", method = RequestMethod.GET, produces = {"application/JSON"})
+//    public List<Object> getTaskId(@PathVariable Integer locId) {
+//        return TaskRepository.getTaskId(locId);
 
-    }
+   // }
 //     ////single admin ID id //////from sstaskcreationDao
 //     @RequestMapping(value ="/ssAdminSummary/adminByTaskId/{taskId}", method = RequestMethod.GET, produces = {"application/JSON"})
 //    public List<Map> getAdminId(@PathVariable Long taskId)

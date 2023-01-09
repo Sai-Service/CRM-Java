@@ -144,12 +144,12 @@ public class LocAccessLoginWiseController {
     ///NEW---08-SEP-2022
     //////////////TO UPDATE THE ASSIGNEE ID AUTOMATICALLY TO ALL THE TASK-///////
     @RequestMapping(value = "/LocAccessLoginwise", method = RequestMethod.GET, produces = {"application/JSON"})
-    public List<Map> updateTaskAssignee(@RequestParam String login_name, @RequestParam Integer locId) throws Exception {
+    public List<Map> updateTaskAssignee(@RequestParam String login_name, @RequestParam Integer locId, @RequestParam String inputDate) throws Exception {
         List<Map> userDetail = null;
         try {
             userDetail = taskGenImpl.getUserList(login_name, locId);
             List<UpdateAssignee> toAssignee = new ArrayList<>();
-
+            Date frmDt1 = new SimpleDateFormat("yyyy-MM-dd").parse(inputDate);
             int perUsertaskcount = 0;
             Integer location = 0;
             int incrementalCnt = 0;
@@ -157,7 +157,7 @@ public class LocAccessLoginWiseController {
             Long fromCount = 0L;
             List<Object> taskList = null;
             int leftTaskCount = 0;
-            taskList = taskCreation.getTaskId(locId);//10//Total Number of Task
+            taskList = taskCreation.getTaskId(frmDt1,locId);//10//Total Number of Task
             Integer userCount = userDetail.size();//Total No. of Users
             int totalTaskCount = taskList.size();
             perUsertaskcount = totalTaskCount / userCount;
