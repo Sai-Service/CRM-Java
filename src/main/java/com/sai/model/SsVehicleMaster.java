@@ -143,10 +143,21 @@ public class SsVehicleMaster implements Serializable {
     private Date lstUpdatedDt;
     @Column(name = "lstUpdatedBy")
     private Integer lstUpdatedBy;
-
+ private Date delvDate;
+ 
     public SsVehicleMaster() {
     }
 
+    public Date getDelvDate() {
+        return delvDate;
+    }
+
+    public void setDelvDate(Date delvDate) {
+        this.delvDate = delvDate;
+    }
+
+    
+    
     public SsVehicleMaster(String vehicleNo) {
         this.vehicleNo = vehicleNo;
     }

@@ -500,4 +500,35 @@ public class CrmReportController {
     }
     
     
+   @GetMapping("/vehHistory/{regNo}")
+    public ResponseEntity<InputStreamResource> gatVehHis(@PathVariable String regNo) throws Exception {
+        try {
+            System.out.println("entered....");
+            String fileName = "vehHistory " + regNo + ".pdf";
+            Map<String, Object> parameter = new HashMap<>();
+            parameter.put("regNo", regNo);
+            ByteArrayInputStream in;
+            try {
+               
+                in = crmRepService.getVehHistPdf(parameter, fileName);
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Content-Disposition", "attachment; filename=/download/" + fileName);
+                return ResponseEntity
+                        .ok()
+                        .headers(headers)
+                        .body(new InputStreamResource(in));
+            } catch (Exception ex) {
+                Logger.getLogger(this.getClass()
+                        .getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(CrmReportController.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            throw ex;
+        }
+        return null;
+    }
+ 
+    
 }

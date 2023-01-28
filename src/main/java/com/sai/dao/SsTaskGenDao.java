@@ -30,78 +30,92 @@ public interface SsTaskGenDao extends CrudRepository<SsTaskDetails, Long> {
             + "(SGA.DELIVERY_DATE + interval SE.days_after_delivery day) SERVICE_DUE_DT,SGA.DELIVERY_DATE,sga.GATEPASS_ID as gatepassId \n"
             + " from test.ss_gatepass_all SGA ,test.ss_event se,test.ss_cust_new sc ,test.ss_vehicle_master svm \n"
             + " WHERE  se.sub_category='FS1'\n"
-            + "AND sga.dept_code='SA' AND  sga.loc_id=se.LOC_ID and sc.cust_id=sga.cust_id and se.type='C' and se.ACTIVE_STATUS='ACTIVE'\n"
+            + "AND sga.dept_code='SA'  AND  sga.loc_id=se.LOC_ID and sc.cust_id=sga.cust_id and se.type='C' and se.ACTIVE_STATUS='ACTIVE'\n"
             + " and sga.service_type='NA'  and svm.vehicleno=sga.veh_no  and sga.task_id='0') A order by a.loc_id", nativeQuery = true)
-    public List<Map> getTasksGeneration1FS();
+    public List<Map> getTasksGeneration1FS();//and SGA.DELIVERY_DATE=curdate()-1 
 //SGA.DELIVERY_DATE= curdate() AND 
+
     @Query(value = "SELECT A.* FROM (select distinct  distinct null task_id,'SERVICE' TASK_TYPE,'NEW' STATUS,null apptmt_id,\n"
-            + "SGA.DELIVERY_DATE + interval se.when_to_action DAY CALL_DUE_DATE, sc.cust_id,sc.cust_name,sga.CUST_ADDRESS1 cust_address1 , sc.cust_name contact_person,\n"
+            + "ifnull(svm.delvDate+ interval se.when_to_action day,svm.dtOfPurchase  + interval se.when_to_action day) CALL_DUE_DATE, sc.cust_id,sc.cust_name,sga.CUST_ADDRESS1 cust_address1 , sc.cust_name contact_person,\n"
             + "sc.cust_type,sc.contact_no1, sc.contact_no2, sc.email_id,sga.veh_no,sga.chassis_no,sga.engine_no, sga.model,\n"
             + "svm.dtOfPurchase Date_of_purchase,svm.Dealercode Dealer_code, 'N' AMC, null sales_exec_name, sga.loc_id,\n"
             + "sga.org_id, sga.REFERENCE_NO,null servc_grp,sga.item_id,null contacted, null reason, null remarks,null task_reason,\n"
             + "SGA.DELIVERY_DATE  last_servc_dt, sga.service_type last_servc_type, SGA.service_loc,sga.last_km ,  \n"
-            + "svm.dtOfPurchase  + interval se.days_after_delivery day next_servc_dt, se.sub_category next_servc_type,\n"
+            + "ifnull(svm.delvDate+ interval se.days_after_delivery day,svm.dtOfPurchase  + interval se.days_after_delivery day)  next_servc_dt, se.sub_category next_servc_type,\n"
             + "curdate() creation_date, '1' created_by,curdate() last_update_date, '1' last_updated_by, 'FS2' attribute1,\n"
-            + "null attribute2,null attribute3,null attribute4, null attribute5 , svm.dtOfPurchase   + interval se.days_after_delivery day SERVICE_DUE_DT, \n"
+            + "null attribute2,null attribute3,null attribute4, null attribute5 ,  ifnull(svm.delvDate+ interval se.days_after_delivery day,svm.dtOfPurchase  + interval se.days_after_delivery day) SERVICE_DUE_DT, \n"
             + "SGA.DELIVERY_DATE,sga.GATEPASS_ID as gatepassId from test.ss_gatepass_all sga  ,   test.ss_event se,   test.ss_vehicle_master svm ,test.ss_cust_new sc\n"
             + "where sga.dept_code='SR' and sga.cust_id=sc.cust_id\n"
-            + "and sga.service_type='FS1'    and sga.task_id ='0' and svm.custId=sc.CUST_ID AND  sga.loc_id=se.LOC_ID     AND se.sub_category!='FS1'   and se.sub_category='FS2' \n"
+            + " and sga.service_type='FS1'    and sga.task_id ='0' and svm.custId=sc.CUST_ID AND  sga.loc_id=se.LOC_ID     AND se.sub_category!='FS1'   and se.sub_category='FS2' \n"
             + "and se.type='C'  and  svm.vehicleno=sga.veh_no  and se.ACTIVE_STATUS='ACTIVE'  ) A order by a.loc_id", nativeQuery = true)
-    public List<Map> getTasksGeneration2FS();//SGA.DELIVERY_DATE= curdate()   and 
+    public List<Map> getTasksGeneration2FS();//SGA.DELIVERY_DATE= curdate()   and and SGA.DELIVERY_DATE=curdate()-1
 
     @Query(value = "SELECT A.* FROM (select distinct  null task_id,'SERVICE' TASK_TYPE,'NEW' STATUS,null apptmt_id,\n"
-            + "SGA.DELIVERY_DATE + interval se.when_to_action DAY CALL_DUE_DATE, sc.cust_id,sc.cust_name,sga.CUST_ADDRESS1 cust_address1 , sc.cust_name contact_person,\n"
+            + "ifnull(svm.delvDate+ interval se.when_to_action day,svm.dtOfPurchase  + interval se.when_to_action day) CALL_DUE_DATE, sc.cust_id,sc.cust_name,sga.CUST_ADDRESS1 cust_address1 , sc.cust_name contact_person,\n"
             + "sc.cust_type,sc.contact_no1, sc.contact_no2, sc.email_id,sga.veh_no,sga.chassis_no,sga.engine_no, sga.model,\n"
             + "svm.dtOfPurchase Date_of_purchase,svm.Dealercode Dealer_code, 'N' AMC, null sales_exec_name, sga.loc_id,\n"
             + "sga.org_id, sga.REFERENCE_NO,null servc_grp,sga.item_id,null contacted, null reason, null remarks,null task_reason,\n"
             + "SGA.DELIVERY_DATE  last_servc_dt, sga.service_type last_servc_type, SGA.service_loc,sga.last_km ,  \n"
-            + "sga.DELIVERY_DATE  + interval se.days_after_delivery day next_servc_dt, se.sub_category next_servc_type,\n"
+            + "ifnull(svm.delvDate+ interval se.days_after_delivery day,svm.dtOfPurchase  + interval se.days_after_delivery day)  next_servc_dt, se.sub_category next_servc_type,\n"
             + "curdate() creation_date, '1' created_by,curdate() last_update_date, '1' last_updated_by, 'FS3' attribute1,\n"
-            + "null attribute2,null attribute3,null attribute4, null attribute5 , sga.DELIVERY_DATE   + interval se.days_after_delivery day SERVICE_DUE_DT, \n"
+            + "null attribute2,null attribute3,null attribute4, null attribute5 , ifnull(svm.delvDate+ interval se.days_after_delivery day,svm.dtOfPurchase  + interval se.days_after_delivery day)  SERVICE_DUE_DT, \n"
             + "SGA.DELIVERY_DATE,sga.GATEPASS_ID as gatepassId from test.ss_gatepass_all sga  ,   test.ss_event se,   test.ss_vehicle_master svm ,test.ss_cust_new sc\n"
             + "where sga.dept_code='SR' and sga.cust_id=sc.cust_id\n"
-            + " AND se.sub_category!='FS1' AND se.sub_category!='FS2' and  \n"
-            + " sga.service_type='FS2' and sga.task_id ='0' and svm.custId=sc.CUST_ID AND  sga.loc_id=se.LOC_ID  \n"
+            + " AND se.sub_category!='FS1' AND se.sub_category!='FS2'   \n"
+            + "  and sga.service_type='FS2' and sga.task_id ='0' and svm.custId=sc.CUST_ID AND  sga.loc_id=se.LOC_ID  \n"
             + " and se.sub_category='FS3' and se.type='C'  and  svm.vehicleno=sga.veh_no  and se.ACTIVE_STATUS='ACTIVE') A order by a.loc_id", nativeQuery = true)
-    public List<Map> getTasksGeneration3FS();
+    public List<Map> getTasksGeneration3FS();//and SGA.DELIVERY_DATE=curdate()-1
 
     @Query(value = "SELECT A.* FROM (select distinct  null task_id,'SERVICE' TASK_TYPE,'NEW' STATUS,null apptmt_id,\n"
-            + "SGA.DELIVERY_DATE + interval se.when_to_action DAY CALL_DUE_DATE, sc.cust_id,sc.cust_name,sga.CUST_ADDRESS1 cust_address1 , sc.cust_name contact_person,\n"
+            + "ifnull(ifnull(svm.delvDate+ interval se.when_to_action day,svm.dtOfPurchase  + interval se.when_to_action day),curdate()) CALL_DUE_DATE, sc.cust_id,sc.cust_name,sga.CUST_ADDRESS1 cust_address1 , sc.cust_name contact_person,\n"
             + "sc.cust_type,sc.contact_no1, sc.contact_no2, sc.email_id,sga.veh_no,sga.chassis_no,sga.engine_no, sga.model,\n"
             + "svm.dtOfPurchase Date_of_purchase,svm.Dealercode Dealer_code, 'N' AMC, null sales_exec_name, sga.loc_id,\n"
             + "sga.org_id, sga.REFERENCE_NO,null servc_grp,sga.item_id,null contacted, null reason, null remarks,null task_reason,\n"
             + "SGA.DELIVERY_DATE  last_servc_dt, sga.service_type last_servc_type, SGA.service_loc,sga.last_km ,  \n"
-            + "sga.DELIVERY_DATE  + interval se.days_after_delivery day next_servc_dt, se.sub_category next_servc_type,\n"
+            + "ifnull(svm.delvDate+ interval se.days_after_delivery day,svm.dtOfPurchase  + interval se.days_after_delivery day) next_servc_dt, se.sub_category next_servc_type,\n"
             + "curdate() creation_date, '1' created_by,curdate() last_update_date, '1' last_updated_by, 'PS' attribute1,\n"
-            + "null attribute2,null attribute3,null attribute4, null attribute5 , sga.DELIVERY_DATE   + interval se.days_after_delivery day SERVICE_DUE_DT, \n"
+            + "null attribute2,null attribute3,null attribute4, null attribute5 , ifnull(svm.delvDate+ interval se.days_after_delivery day,svm.dtOfPurchase  + interval se.days_after_delivery day) SERVICE_DUE_DT, \n"
             + "SGA.DELIVERY_DATE,sga.GATEPASS_ID as gatepassId from test.ss_gatepass_all sga  ,   test.ss_event se,   test.ss_vehicle_master svm ,test.ss_cust_new sc\n"
-            + "where sga.dept_code='SR' and sga.cust_id=sc.cust_id\n"
-            + " AND se.sub_category!='FS1' AND se.sub_category!='FS2'  and se.sub_category!='FS3' and  \n"
-            + "  (sga.service_type='FS3' or  sga.service_type='PS') and se.sub_category='PS'\n"
-            + " and sga.task_id ='0' and svm.custId=sc.CUST_ID AND  sga.loc_id=se.LOC_ID  \n"
-            + " and se.type='C'  and  svm.vehicleno=sga.veh_no  and se.ACTIVE_STATUS='ACTIVE'  ) A order by a.loc_id", nativeQuery = true)
-    public List<Map> getTasksGenerationPaidSR();
+            + " where sga.dept_code='SR' and sga.cust_id=sc.cust_id\n"
+            + " and  (sga.service_type='FS3' or  sga.service_type='PS') and se.sub_category='PS'\n"
+            + " and svm.custId=sc.CUST_ID AND  sga.loc_id=se.LOC_ID   and sga.TASK_ID=0 \n"
+            + " and se.type='C'  and  svm.vehicleno=sga.veh_no  and se.ACTIVE_STATUS='ACTIVE') A order by a.loc_id", nativeQuery = true)
+    public List<Map> getTasksGenerationPaidSR();//and SGA.DELIVERY_DATE=curdate()-1 
 
     @Query(value = "SELECT A.* FROM (select distinct null task_id,'SERVICE' TASK_TYPE,'NEW' STATUS, null apptmt_id, SGA.DELIVERY_DATE + interval se.when_to_action DAY CALL_DUE_DATE,\n"
-            + "sc.cust_id,sc.cust_name,concat(sc.ADDRESS1,\",\", sc.ADDRESS2 , \",\", sc.ADDRESS3, \",\",sc.PINCODE, \",\",sc.CITY,\n"
-            + "\",\", sc.STATE_NAME) cust_address1,sc.cust_name contact_person, sc.cust_type, sc.contact_no1,sc.contact_no2,\n"
-            + "sc.email_id,sga.veh_no,sga.chassis_no, sga.engine_no, sga.model,  svm.dtOfPurchase Date_of_purchase, svm.Dealercode Dealer_code,\n"
-            + "'N' AMC,null sales_exec_name, sga.loc_id,sga.org_id, sga.REFERENCE_NO, null servc_grp,sga.item_id, null contacted,\n"
-            + "null reason,null remarks,null task_reason, SGA.DELIVERY_DATE last_servc_dt, sga.service_type last_servc_type,\n"
-            + "SGA.service_loc, sga.last_km, ifnull((case when sga.service_type='FS3' then (SGA.DELIVERY_DATE  + interval se.days_after_delivery day) \n"
-            + "ELSE (svm.dtOfPurchase   + interval se.days_after_delivery day) end ),\n"
-            + "svm.dtOfPurchase   + interval se.days_after_delivery day) next_servc_dt, se.sub_category next_servc_type,\n"
-            + "curdate() creation_date,'1' created_by, curdate() last_update_date,'1' last_updated_by,\n"
-            + "case  when sga.service_type='FS3' then 'PS' else sga.service_type end attribute1, null attribute2,\n"
-            + " null attribute3, null attribute4,  null attribute5, (case when sga.service_type='FS3' then ifnull(((select\n"
-            + "distinct ATTRIBUTE2 from  test.ss_gatepass_all where veh_no=SGA.veh_no and dept_code='SA') + interval se.days_after_delivery day),\n"
-            + "svm.dtOfPurchase   + interval se.days_after_delivery day) else svm.dtOfPurchase   + interval se.days_after_delivery day \n"
-            + "end ) SERVICE_DUE_DT, SGA.DELIVERY_DATE, sga.GATEPASS_ID as gatepassId  from\n"
-            + " test.ss_gatepass_all SGA,test.ss_event se,test.ss_cust_new sc,ss_vehicle_master svm  \n"
-            + "WHERE sga.loc_id=se.LOC_ID and sc.cust_id=sga.cust_id and svm.vehicleno=sga.veh_no    \n"
-            + "and sga.dept_code='SR' AND se.sub_category!='FS1' AND se.sub_category!='FS2' AND se.sub_category!='FS3' \n"
-            + "and se.sub_category=sga.SERVICE_TYPE  and se.type='C' and se.ACTIVE_STATUS='ACTIVE' and sga.task_id='0') A order by a.loc_id", nativeQuery = true)
+            + "            sc.cust_id,sc.cust_name,sc.cust_name contact_person, sc.cust_type, sc.contact_no1,sc.contact_no2,\n"
+            + "            sc.email_id,sga.veh_no,sga.chassis_no, sga.engine_no, sga.model,  svm.dtOfPurchase Date_of_purchase, svm.Dealercode Dealer_code,\n"
+            + "            'N' AMC,null sales_exec_name, sga.loc_id,sga.org_id, sga.REFERENCE_NO, null servc_grp,sga.item_id, null contacted,\n"
+            + "            null reason,null remarks,null task_reason, SGA.DELIVERY_DATE last_servc_dt, sga.service_type last_servc_type,\n"
+            + "            SGA.service_loc, sga.last_km, SGA.DELIVERY_DATE  + interval se.days_after_delivery day\n"
+            + "            next_servc_dt, se.attribute2 next_servc_type,\n"
+            + "            curdate() creation_date,'1' created_by, curdate() last_update_date,'1' last_updated_by,\n"
+            + "           se.attribute2 attribute1, null attribute2,\n"
+            + "             null attribute3, null attribute4,  null attribute5, SGA.DELIVERY_DATE   + interval se.days_after_delivery day \n"
+            + "             SERVICE_DUE_DT, SGA.DELIVERY_DATE, sga.GATEPASS_ID as gatepassId  from\n"
+            + "             test.ss_gatepass_all SGA,test.ss_event se,test.ss_cust_new sc,ss_vehicle_master svm  \n"
+            + "            WHERE sga.loc_id=se.LOC_ID and sc.cust_id=sga.cust_id and svm.vehicleno=sga.veh_no    \n"
+            + "             and sga.dept_code='SR' AND se.sub_category!='PS' and se.sub_category!='FS1' AND se.sub_category!='FS2' AND se.sub_category!='FS3' \n"
+            + "             and se.sub_category=sga.SERVICE_TYPE   and se.type='C' and se.ACTIVE_STATUS='ACTIVE' and sga.task_id='0'\n"
+            + "            ) A order by a.loc_id", nativeQuery = true)
     public List<Map> getTasksGenAllOtherType();
+
+    @Query(value = "SELECT A.* FROM (select distinct   null task_id,'SERVICE' TASK_TYPE,'NEW' STATUS,null apptmt_id,\n"
+            + "           sga.delivery_date  + interval se.when_to_action day CALL_DUE_DATE, sc.cust_id,sc.cust_name,sga.CUST_ADDRESS1 cust_address1 , sc.cust_name contact_person,\n"
+            + "          sc.cust_type,sc.contact_no1, sc.contact_no2, sc.email_id,sga.veh_no,sga.chassis_no,sga.engine_no, sga.model,\n"
+            + "           svm.dtOfPurchase Date_of_purchase,svm.Dealercode Dealer_code, 'N' AMC, null sales_exec_name, sga.loc_id,\n"
+            + "            sga.org_id, sga.REFERENCE_NO,null servc_grp,sga.item_id,null contacted, null reason, null remarks,null task_reason,\n"
+            + "            SGA.DELIVERY_DATE  last_servc_dt, sga.service_type last_servc_type, SGA.service_loc,sga.last_km ,  \n"
+            + "            sga.delivery_date + interval se.days_after_delivery day next_servc_dt, se.sub_category next_servc_type,\n"
+            + "            curdate() creation_date, '1' created_by,curdate() last_update_date, '1' last_updated_by, 'PS' attribute1,\n"
+            + "            null attribute2,null attribute3,null attribute4, null attribute5 ,  sga.delivery_date   + interval se.days_after_delivery day SERVICE_DUE_DT, \n"
+            + "            SGA.DELIVERY_DATE,sga.GATEPASS_ID as gatepassId from test.ss_gatepass_all sga  ,   test.ss_event se,   test.ss_vehicle_master svm ,test.ss_cust_new sc\n"
+            + "            where   sga.dept_code='SR' and sga.cust_id=sc.cust_id\n"
+            + "            and  sga.service_type='FS3' and se.sub_category='PS3'\n"
+            + "             and svm.custId=sc.CUST_ID AND  sga.loc_id=se.LOC_ID  \n"
+            + "             and se.type='C'  and  svm.vehicleno=sga.veh_no  and se.ACTIVE_STATUS='ACTIVE' \n"
+            + "            ) A  where a.call_due_date > '2023-01-22' order by a.loc_id", nativeQuery = true)
+    public List<Map> getTasksGenPSAft3Month();
 
     public SsTaskDetails findTopByVehicleNoOrderByCallDuDtDesc(String vehicle_no);
 
