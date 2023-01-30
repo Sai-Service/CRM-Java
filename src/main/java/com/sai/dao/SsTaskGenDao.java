@@ -100,6 +100,7 @@ public interface SsTaskGenDao extends CrudRepository<SsTaskDetails, Long> {
             + "            ) A order by a.loc_id", nativeQuery = true)
     public List<Map> getTasksGenAllOtherType();
 
+    ///GENERATED TILL 2023-05-25 00:00:00--DONT RUN
     @Query(value = "SELECT A.* FROM (select distinct   null task_id,'SERVICE' TASK_TYPE,'NEW' STATUS,null apptmt_id,\n"
             + "           sga.delivery_date  + interval se.when_to_action day CALL_DUE_DATE, sc.cust_id,sc.cust_name,sga.CUST_ADDRESS1 cust_address1 , sc.cust_name contact_person,\n"
             + "          sc.cust_type,sc.contact_no1, sc.contact_no2, sc.email_id,sga.veh_no,sga.chassis_no,sga.engine_no, sga.model,\n"
@@ -114,7 +115,7 @@ public interface SsTaskGenDao extends CrudRepository<SsTaskDetails, Long> {
             + "            and  sga.service_type='FS3' and se.sub_category='PS3'\n"
             + "             and svm.custId=sc.CUST_ID AND  sga.loc_id=se.LOC_ID  \n"
             + "             and se.type='C'  and  svm.vehicleno=sga.veh_no  and se.ACTIVE_STATUS='ACTIVE' \n"
-            + "            ) A  where a.call_due_date > '2023-01-22' order by a.loc_id", nativeQuery = true)
+            + "            ) A  where a.call_due_date = '2023-01-22' order by a.loc_id", nativeQuery = true)
     public List<Map> getTasksGenPSAft3Month();
 
     public SsTaskDetails findTopByVehicleNoOrderByCallDuDtDesc(String vehicle_no);

@@ -689,7 +689,9 @@ public class SsTaskGenController {
     }
 
     
-      @Scheduled(cron = "40 2 * * * ?")
+    
+    ///GENERATED TILL 2023-05-25 00:00:00--DONT RUN
+    //  @Scheduled(cron = "40 2 * * * ?")
      //  @Transactional(rollbackFor = Exception.class)
     @RequestMapping(value = "/getTasksGenPSAft3Month", method = RequestMethod.GET, produces = {"application/JSON"})
     public List<SSTaskGen> getTasksGenPSAft3Month() throws Exception {

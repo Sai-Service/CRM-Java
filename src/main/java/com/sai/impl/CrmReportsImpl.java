@@ -136,17 +136,17 @@ public ByteArrayInputStream getCrmInsRepDtls(Map<String, Object> parameters, Str
 
 public ByteArrayInputStream getVehHistPdf(Map<String, Object> parameters, String fileNme) throws Exception {
 
-           File file = ResourceUtils.getFile("classpath:\\serviceHistory\\SS_SERVICE_HISTORY.jrxml");
-          File subFile = ResourceUtils.getFile("classpath:\\serviceHistory\\SS_SERVICE_HIS_DTLS.jrxml");
-//        File file = ResourceUtils.getFile("classpath://serviceHistory//SS_SERVICE_HISTORY.jrxml");//linux
-  //      File subFile = ResourceUtils.getFile("classpath://serviceHistory//SS_SERVICE_HIS_DTLS.jrxml");//linux
+         //  File file = ResourceUtils.getFile("classpath:\\serviceHistory\\SS_SERVICE_HISTORY.jrxml");
+       //   File subFile = ResourceUtils.getFile("classpath:\\serviceHistory\\SS_SERVICE_HIS_DTLS.jrxml");
+        File file = ResourceUtils.getFile("classpath://serviceHistory//SS_SERVICE_HISTORY.jrxml");//linux
+      File subFile = ResourceUtils.getFile("classpath://serviceHistory//SS_SERVICE_HIS_DTLS.jrxml");//linux
 
         System.out.println("VehicleHistory" + file.getAbsolutePath());
         JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
         JasperReport subJasperReport = JasperCompileManager.compileReport(subFile.getAbsolutePath());
         parameters.put("subreportParameter", subJasperReport);
-     //   parameters.put("Subreport1", file.getParent() + "//SS_SERVICE_HIS_DTLS.jasper");
-          parameters.put("Subreport1", file.getParent() + "\\SS_SERVICE_HIS_DTLS.jasper");
+        parameters.put("Subreport1", file.getParent() + "//SS_SERVICE_HIS_DTLS.jasper");
+     //     parameters.put("Subreport1", file.getParent() + "\\SS_SERVICE_HIS_DTLS.jasper");
         java.sql.Connection con = localDataSource.getConnection();
         //JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(gpList);
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, con);
