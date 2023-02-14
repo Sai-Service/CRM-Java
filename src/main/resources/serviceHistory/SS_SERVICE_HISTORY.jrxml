@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SS_SERVICE_HISTORY" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f46b720a-d308-43c3-a4de-5cd6c5dd7e1f">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SAI-ojas-Bajaj"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CRM-Bajaj.xml"/>
 	<parameter name="regNo" class="java.lang.String"/>
 	<parameter name="Subreport1" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT distinct shHead.jobCardNum,shHead.jobCardDate,shHead.locCode,shHead.locAdd,shHead.state,sl.LOC_DESC,
 shHead.srvAdv,shHead.teamName,shHead.chassisNo,shHead.vin,shHead.engineNo,shHead.colorCode,shHead.colorDesc,
 shHead.regNo,shHead.regDate,shHead.custAccountNo,shHead.custName,shHead.custAdd,shHead.placeOfSupply,
-shHead.mobile1,shHead.trxNumber,shHead.trxDate,shHead.gatepassNo,shHead.gatepassDate,shline.item,shline.description,shline.itemType,shline.qty,
-shline.unitprice,shline.taxableAmt,shline.gstPercentage,shline.taxAmt,shline.totAmt,shline.labBasicAmt,
-shline.matBasicAmt,shline.labDisAmt,shline.matDisAmt,hou.ORGANIZATION_NAME,hou.COMPANY_CODE
- FROM test.ss_ser_history_header shHead,test.ss_ser_history_lines shline,ss_location sl,test.hr_operating_units hou
-where shHead.jobcardNum=shline.jobcardNum and sl.loc_name=shHead.locCode
-and sl.ORG_ID=hou.ORG_ID and shHead.regNo= $P{regNo} --'MH12TZ9049']]>
+shHead.mobile1,shHead.trxNumber,shHead.trxDate,shHead.gatepassNo,shHead.gatepassDate,hou.ORGANIZATION_NAME,hou.COMPANY_CODE
+ FROM test.ss_ser_history_header shHead,ss_location sl,test.hr_operating_units hou
+where sl.loc_name=shHead.locCode
+and sl.ORG_ID=hou.ORG_ID  and shHead.regNo= $P{regNo} --'MH12TZ9049']]>
 	</queryString>
 	<field name="jobCardNum" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="jobCardNum"/>
@@ -112,58 +110,6 @@ and sl.ORG_ID=hou.ORG_ID and shHead.regNo= $P{regNo} --'MH12TZ9049']]>
 		<property name="com.jaspersoft.studio.field.label" value="gatepassDate"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_header"/>
 	</field>
-	<field name="item" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="item"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
-	</field>
-	<field name="description" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="description"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
-	</field>
-	<field name="itemType" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="itemType"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
-	</field>
-	<field name="qty" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.label" value="qty"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
-	</field>
-	<field name="unitprice" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.label" value="unitprice"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
-	</field>
-	<field name="taxableAmt" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.label" value="taxableAmt"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
-	</field>
-	<field name="gstPercentage" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.label" value="gstPercentage"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
-	</field>
-	<field name="taxAmt" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.label" value="taxAmt"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
-	</field>
-	<field name="totAmt" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.label" value="totAmt"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
-	</field>
-	<field name="labBasicAmt" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.label" value="labBasicAmt"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
-	</field>
-	<field name="matBasicAmt" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.label" value="matBasicAmt"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
-	</field>
-	<field name="labDisAmt" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.label" value="labDisAmt"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
-	</field>
-	<field name="matDisAmt" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.label" value="matDisAmt"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ss_ser_history_lines"/>
-	</field>
 	<field name="ORGANIZATION_NAME" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="ORGANIZATION_NAME"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="hr_operating_units"/>
@@ -173,13 +119,13 @@ and sl.ORG_ID=hou.ORG_ID and shHead.regNo= $P{regNo} --'MH12TZ9049']]>
 		<property name="com.jaspersoft.studio.field.tree.path" value="hr_operating_units"/>
 	</field>
 	<group name="Group1">
-		<groupExpression><![CDATA[$F{jobCardNum}]]></groupExpression>
+		<groupExpression><![CDATA[$F{trxNumber}]]></groupExpression>
 		<groupHeader>
 			<band height="143">
 				<subreport>
 					<reportElement x="-24" y="104" width="200" height="33" uuid="3c5cd74a-b014-44b8-8465-8fd2637a16a1"/>
-					<subreportParameter name="jobCardNum">
-						<subreportParameterExpression><![CDATA[$F{jobCardNum}]]></subreportParameterExpression>
+					<subreportParameter name="trxNumber">
+						<subreportParameterExpression><![CDATA[$F{trxNumber}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA[$P{Subreport1}]]></subreportExpression>
@@ -304,7 +250,7 @@ and sl.ORG_ID=hou.ORG_ID and shHead.regNo= $P{regNo} --'MH12TZ9049']]>
 					</textElement>
 					<text><![CDATA[Group:]]></text>
 				</staticText>
-				<textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement x="97" y="65" width="100" height="13" uuid="8c723cf7-37c2-4cd9-ba69-91c330b04b21">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e1352d5c-c557-49b8-8086-9640533e8984"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>

@@ -36,6 +36,9 @@
 		<parameter name="jobCardNum" class="java.lang.String">
 			<defaultValueExpression><![CDATA[$P{jobCardNum}]]></defaultValueExpression>
 		</parameter>
+		<parameter name="trxNumber" class="java.lang.String">
+			<defaultValueExpression><![CDATA[$P{trxNumber}]]></defaultValueExpression>
+		</parameter>
 		<queryString language="SQL">
 			<![CDATA[SELECT distinct shHead.jobcardNum,shHead.jobcardDate,shHead.locCode,shHead.locAdd,shHead.state,sl.LOC_DESC,
 shHead.srvAdv,shHead.teamName,shHead.chassisNo,shHead.vin,shHead.engineNo,shHead.colorCode,shHead.colorDesc,
@@ -45,8 +48,8 @@ shline.unitprice,shline.taxableAmt,shline.gstPercentage,shline.taxAmt,shline.tot
 shline.matBasicAmt,shline.labDisAmt,shline.matDisAmt,hou.ORGANIZATION_NAME,hou.COMPANY_CODE
  FROM test.ss_ser_history_header shHead,test.ss_ser_history_lines shline,ss_location sl,test.hr_operating_units hou
 where shHead.jobcardNum=shline.jobcardNum and sl.loc_name=shHead.locCode
-and sl.ORG_ID=hou.ORG_ID and shHead.jobCardNum= $P{jobCardNum} 
-]]>
+and shHead.trxNumber =shLine.trxNumber
+and sl.ORG_ID=hou.ORG_ID and shHead.trxNumber =$P{trxNumber}]]>
 		</queryString>
 		<field name="jobcardNum" class="java.lang.String">
 			<property name="com.jaspersoft.studio.field.label" value="jobcardNum"/>
@@ -208,6 +211,9 @@ and sl.ORG_ID=hou.ORG_ID and shHead.jobCardNum= $P{jobCardNum}
 	<parameter name="jobCardNum" class="java.lang.String">
 		<defaultValueExpression><![CDATA[$P{jobCardNum}]]></defaultValueExpression>
 	</parameter>
+	<parameter name="trxNumber" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{trxNumber}]]></defaultValueExpression>
+	</parameter>
 	<queryString language="SQL">
 		<![CDATA[SELECT distinct shHead.jobcardNum,shHead.jobcardDate,shHead.locCode,shHead.locAdd,shHead.state,sl.LOC_DESC,
 shHead.srvAdv,shHead.teamName,shHead.chassisNo,shHead.vin,shHead.engineNo,shHead.colorCode,shHead.colorDesc,
@@ -217,8 +223,8 @@ shline.unitprice,shline.taxableAmt,shline.gstPercentage,shline.taxAmt,shline.tot
 shline.matBasicAmt,shline.labDisAmt,shline.matDisAmt,hou.ORGANIZATION_NAME,hou.COMPANY_CODE
  FROM test.ss_ser_history_header shHead,test.ss_ser_history_lines shline,ss_location sl,test.hr_operating_units hou
 where shHead.jobcardNum=shline.jobcardNum and sl.loc_name=shHead.locCode
-and sl.ORG_ID=hou.ORG_ID and shHead.jobCardNum= $P{jobCardNum} 
-]]>
+and shHead.trxNumber =shLine.trxNumber
+and sl.ORG_ID=hou.ORG_ID and shHead.trxNumber =$P{trxNumber}]]>
 	</queryString>
 	<field name="jobcardNum" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="jobcardNum"/>
@@ -391,8 +397,8 @@ and sl.ORG_ID=hou.ORG_ID and shHead.jobCardNum= $P{jobCardNum}
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Dataset1" uuid="f3ca7105-4d43-4600-bf0c-966ed4622500">
-						<datasetParameter name="jobCardNum">
-							<datasetParameterExpression><![CDATA[$P{jobCardNum}]]></datasetParameterExpression>
+						<datasetParameter name="trxNumber">
+							<datasetParameterExpression><![CDATA[$P{trxNumber}]]></datasetParameterExpression>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>

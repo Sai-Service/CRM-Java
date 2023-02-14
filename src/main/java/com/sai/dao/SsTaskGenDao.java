@@ -36,7 +36,7 @@ public interface SsTaskGenDao extends CrudRepository<SsTaskDetails, Long> {
 //SGA.DELIVERY_DATE= curdate() AND 
 
     @Query(value = "SELECT A.* FROM (select distinct  distinct null task_id,'SERVICE' TASK_TYPE,'NEW' STATUS,null apptmt_id,\n"
-            + "ifnull(svm.delvDate+ interval se.when_to_action day,svm.dtOfPurchase  + interval se.when_to_action day) CALL_DUE_DATE, sc.cust_id,sc.cust_name,sga.CUST_ADDRESS1 cust_address1 , sc.cust_name contact_person,\n"
+            + "ifnull(ifnull(svm.delvDate+ interval se.when_to_action day,svm.dtOfPurchase  + interval se.when_to_action day),curdate()) CALL_DUE_DATE, sc.cust_id,sc.cust_name,sga.CUST_ADDRESS1 cust_address1 , sc.cust_name contact_person,\n"
             + "sc.cust_type,sc.contact_no1, sc.contact_no2, sc.email_id,sga.veh_no,sga.chassis_no,sga.engine_no, sga.model,\n"
             + "svm.dtOfPurchase Date_of_purchase,svm.Dealercode Dealer_code, 'N' AMC, null sales_exec_name, sga.loc_id,\n"
             + "sga.org_id, sga.REFERENCE_NO,null servc_grp,sga.item_id,null contacted, null reason, null remarks,null task_reason,\n"
@@ -51,7 +51,7 @@ public interface SsTaskGenDao extends CrudRepository<SsTaskDetails, Long> {
     public List<Map> getTasksGeneration2FS();//SGA.DELIVERY_DATE= curdate()   and and SGA.DELIVERY_DATE=curdate()-1
 
     @Query(value = "SELECT A.* FROM (select distinct  null task_id,'SERVICE' TASK_TYPE,'NEW' STATUS,null apptmt_id,\n"
-            + "ifnull(svm.delvDate+ interval se.when_to_action day,svm.dtOfPurchase  + interval se.when_to_action day) CALL_DUE_DATE, sc.cust_id,sc.cust_name,sga.CUST_ADDRESS1 cust_address1 , sc.cust_name contact_person,\n"
+            + "ifnull(ifnull(svm.delvDate+ interval se.when_to_action day,svm.dtOfPurchase  + interval se.when_to_action day),curdate()) CALL_DUE_DATE, sc.cust_id,sc.cust_name,sga.CUST_ADDRESS1 cust_address1 , sc.cust_name contact_person,\n"
             + "sc.cust_type,sc.contact_no1, sc.contact_no2, sc.email_id,sga.veh_no,sga.chassis_no,sga.engine_no, sga.model,\n"
             + "svm.dtOfPurchase Date_of_purchase,svm.Dealercode Dealer_code, 'N' AMC, null sales_exec_name, sga.loc_id,\n"
             + "sga.org_id, sga.REFERENCE_NO,null servc_grp,sga.item_id,null contacted, null reason, null remarks,null task_reason,\n"
