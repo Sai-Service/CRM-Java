@@ -26,7 +26,7 @@ public class NewCustAppt {
     private  String city;
     private  String stateName;
     private  String country;
-    private  BigInteger contactNo1;    
+    private  String contactNo1;    
     private  String contactNo2;
     private  String emailId;
     private  long createdBy;
@@ -165,11 +165,11 @@ private LstServLoc lstServLoc;
         this.country = country;
     }
 
-    public BigInteger getContactNo1() {
+    public String getContactNo1() {
         return contactNo1;
     }
 
-    public void setContactNo1(BigInteger contactNo1) {
+    public void setContactNo1(String contactNo1) {
         this.contactNo1 = contactNo1;
     }
 

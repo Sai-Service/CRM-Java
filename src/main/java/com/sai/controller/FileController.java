@@ -52,18 +52,17 @@ public class FileController {
 
     @Autowired
     private SsCustomerDao customerDao;
-    
-     @Autowired
+
+    @Autowired
     private SsVehicleMasterDao vehicleDao;
 
     @Autowired
     private UserLoginDao userDao;
-    
-      @Autowired
+
+    @Autowired
     private SsInsuranceDetailsDao insuranceRepo;
 
-
-      /////To UPload Slots
+    /////To UPload Slots
     @PostMapping("/uploadFile")
     public SaiResponse uploadFile(@RequestParam("file") MultipartFile file) {
 
@@ -80,8 +79,7 @@ public class FileController {
                 mapper.disable(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES);
                 mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
                 SsSlotAvailable ssSlotAvailable = mapper.convertValue(ssSlotDetails, SsSlotAvailable.class);
-                
-                
+
                 slotRepository.save(ssSlotAvailable);
 
             }
@@ -93,7 +91,7 @@ public class FileController {
         return new SaiResponse(200, "OK", null);
 
     }
-    
+
     @PostMapping("/InsuploadFile")
     public SaiResponse InsuploadFile(@RequestParam("file") MultipartFile file) {
 
@@ -106,20 +104,20 @@ public class FileController {
             for (CSVRecord record : records) {
 
                 Map<String, String> ssInsuDetails = record.toMap();
-                    for (Map.Entry<String, String> entry : ssInsuDetails.entrySet()) {
-                  //  String updatedKey = CaseUtils.toCamelCase(entry.getKey(), false, new char[]{'_'});
-                    if (entry.getKey().equalsIgnoreCase("remittanceDate") &&  entry.getValue().equalsIgnoreCase("NULL") ) {
+                for (Map.Entry<String, String> entry : ssInsuDetails.entrySet()) {
+                    //  String updatedKey = CaseUtils.toCamelCase(entry.getKey(), false, new char[]{'_'});
+                    if (entry.getKey().equalsIgnoreCase("remittanceDate") && entry.getValue().equalsIgnoreCase("NULL")) {
                         entry.setValue(null);
-                    } 
-                    if (entry.getKey().equalsIgnoreCase("inactiveDate") &&  entry.getValue().equalsIgnoreCase("NULL") ) {
+                    }
+                    if (entry.getKey().equalsIgnoreCase("inactiveDate") && entry.getValue().equalsIgnoreCase("NULL")) {
                         entry.setValue(null);
-                    } 
+                    }
                 }
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.disable(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES);
                 mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
                 SsInsuranceDetails insuranceDetails = mapper.convertValue(ssInsuDetails, SsInsuranceDetails.class);
-                
+
                 insuranceRepo.save(insuranceDetails);
 
             }
@@ -145,12 +143,11 @@ public class FileController {
 
             java.util.Date currentDate = Calendar.getInstance().getTime();
 
-           
-            long userId =0;
+            long userId = 0;
             try {
                 String username = new CommonDetail().getLoggedInUser();
                 UserLogin user = userDao.findByUsername(username);
-                userId=new Long(user.getUserId()).intValue();
+                userId = new Long(user.getUserId()).intValue();
             } catch (Exception ex) {
                 java.util.logging.Logger.getLogger(TaskCreationController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -185,31 +182,32 @@ public class FileController {
 
                 String vehicleNo = gatePass.getVehNo();
                 if (vehicleNo != null) {
-                    
+
                     SsVehicleMaster vehicleCustomer = vehicleDao.findByVehicleNo(vehicleNo);
                     if (vehicleCustomer == null) {
                         System.out.println("--new customer entry for veh ----" + vehicleNo);
-                       SsCustomer customer = new SsCustomer();
+                        SsCustomer customer = new SsCustomer();
                         customer.setCreatedBy(new Long(userId).intValue());
                         customer.setCreationDate(currentDate);
                         customer.setCustName(gatePass.getCustName());
                         customer.setCustType(gatePass.getCustType());
                         customer.setAddress1(gatePass.getCustAddress1());
                         //    customer.setEmailId(gatePass.ge);
-                        customer.setContactNo1(new BigInteger(gatePass.getContactNo()));
-                        
-                        Integer custId =  customerDao.findTopByInputTypeOrderByIdDesc("DMS").getCustId();
-                     //  long count = Long.parseLong(custId.substring(3, custId.length()));
-                       System.out.println("--new dms ----" + custId);
-                       custId= custId+1;
-                       customer.setCustId(custId);
-                       customer.setInputType("DMS");
-                       customer.setCreatedBy(new Long(userId).intValue());
+                        //  customer.setContactNo1(new BigInteger(gatePass.getContactNo()));
+                        customer.setContactNo1(gatePass.getContactNo());
+
+                        Integer custId = customerDao.findTopByInputTypeOrderByIdDesc("DMS").getCustId();
+                        //  long count = Long.parseLong(custId.substring(3, custId.length()));
+                        System.out.println("--new dms ----" + custId);
+                        custId = custId + 1;
+                        customer.setCustId(custId);
+                        customer.setInputType("DMS");
+                        customer.setCreatedBy(new Long(userId).intValue());
                         customer.setCreationDate(currentDate);
                         customer.setLastUpdatedBy(new Long(userId).intValue());
                         customer.setLastUpdationDate(currentDate);
                         SsCustomer customer1 = customerDao.save(customer);
-                        
+
                         SsVehicleMaster vehicle = new SsVehicleMaster();
                         vehicle.setCustId(customer1.getId());
                         vehicle.setVehicleNo(gatePass.getVehNo());
@@ -224,13 +222,13 @@ public class FileController {
                         vehicle.setLstUpdatedDt(currentDate);
                         vehicleDao.save(vehicle);
                     }
-                    } else {
-                        System.out.println("-- customer entry for vehicle present----" + vehicleNo  );
-                                }
+                } else {
+                    System.out.println("-- customer entry for vehicle present----" + vehicleNo);
+                }
             }
         } catch (Exception ex) {
             logger.error(ex.getMessage());
-             return new SaiResponse(400, "Error while processing records", null);
+            return new SaiResponse(400, "Error while processing records", null);
         }
         return new SaiResponse(200, "OK", null);
     }

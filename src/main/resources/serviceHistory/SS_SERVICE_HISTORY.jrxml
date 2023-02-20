@@ -12,7 +12,7 @@ shHead.regNo,shHead.regDate,shHead.custAccountNo,shHead.custName,shHead.custAdd,
 shHead.mobile1,shHead.trxNumber,shHead.trxDate,shHead.gatepassNo,shHead.gatepassDate,hou.ORGANIZATION_NAME,hou.COMPANY_CODE
  FROM test.ss_ser_history_header shHead,ss_location sl,test.hr_operating_units hou
 where sl.loc_name=shHead.locCode
-and sl.ORG_ID=hou.ORG_ID  and shHead.regNo= $P{regNo} --'MH12TZ9049']]>
+and sl.ORG_ID=hou.ORG_ID  and shHead.regNo=  $P{regNo}]]>
 	</queryString>
 	<field name="jobCardNum" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="jobCardNum"/>
@@ -123,7 +123,7 @@ and sl.ORG_ID=hou.ORG_ID  and shHead.regNo= $P{regNo} --'MH12TZ9049']]>
 		<groupHeader>
 			<band height="143">
 				<subreport>
-					<reportElement x="-24" y="104" width="200" height="33" uuid="3c5cd74a-b014-44b8-8465-8fd2637a16a1"/>
+					<reportElement x="-24" y="105" width="200" height="33" uuid="3c5cd74a-b014-44b8-8465-8fd2637a16a1"/>
 					<subreportParameter name="trxNumber">
 						<subreportParameterExpression><![CDATA[$F{trxNumber}]]></subreportParameterExpression>
 					</subreportParameter>

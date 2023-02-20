@@ -33,9 +33,6 @@
 	<subDataset name="Dataset1" uuid="add8a76b-286d-45ca-8c75-ba0d5169e556">
 		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CRM-Bajaj.xml"/>
-		<parameter name="jobCardNum" class="java.lang.String">
-			<defaultValueExpression><![CDATA[$P{jobCardNum}]]></defaultValueExpression>
-		</parameter>
 		<parameter name="trxNumber" class="java.lang.String">
 			<defaultValueExpression><![CDATA[$P{trxNumber}]]></defaultValueExpression>
 		</parameter>
@@ -208,9 +205,6 @@ and sl.ORG_ID=hou.ORG_ID and shHead.trxNumber =$P{trxNumber}]]>
 			<property name="com.jaspersoft.studio.field.tree.path" value="hr_operating_units"/>
 		</field>
 	</subDataset>
-	<parameter name="jobCardNum" class="java.lang.String">
-		<defaultValueExpression><![CDATA[$P{jobCardNum}]]></defaultValueExpression>
-	</parameter>
 	<parameter name="trxNumber" class="java.lang.String">
 		<defaultValueExpression><![CDATA[$P{trxNumber}]]></defaultValueExpression>
 	</parameter>

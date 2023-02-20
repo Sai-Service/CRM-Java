@@ -26,6 +26,7 @@ import com.sai.model.SsSlotAvailable;
 import com.sai.model.SsTaskDetails;
 import com.sai.model.SsVehicleMaster;
 import com.sai.model.UserLogin;
+import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -133,8 +134,8 @@ public class SsCustomerController {
         apiResponse = new SaiResponse(200, "OK", Customer);
         return apiResponse;
     }
-    
-        @RequestMapping(value = "/search/vehicle", method = RequestMethod.GET, produces = {"application/JSON"})
+
+    @RequestMapping(value = "/search/vehicle", method = RequestMethod.GET, produces = {"application/JSON"})
     // Map getUsercountList(@PathVariable String vehicle_no)
     VehicleCustomerMap searchVehicle(@RequestParam Map<String, String> map) {
         String chassiNo = null;
@@ -148,7 +149,7 @@ public class SsCustomerController {
             }
         }
         VehicleCustomerMap vehicle = vehicleRepo.findVehicleByChassiNoAndEngineNo(chassiNo, engineNo);
-       
+
         return vehicle;
     }
 
@@ -184,11 +185,10 @@ public class SsCustomerController {
 
     //To Find the Existing Customer Vehicle No///////////used in Existing Customer appoinment booking--working fine
     @RequestMapping(value = "/ssCustomers/ExistCustvehNo/{vehicle_no}", method = RequestMethod.GET, produces = {"application/JSON"})
-    Map getUsercountList(@PathVariable String vehicle_no)
-    {
-    //SsTaskDetails getVehNoExCustomer(@PathVariable String vehicle_no) {
-         return vehicleRepo.getVehNoExCustomer(vehicle_no);
-       // return ssTaskGenDao.findTopByVehicleNoOrderByCallDuDtDesc(vehicle_no);
+    Map getUsercountList(@PathVariable String vehicle_no) {
+        //SsTaskDetails getVehNoExCustomer(@PathVariable String vehicle_no) {
+        return vehicleRepo.getVehNoExCustomer(vehicle_no);
+        // return ssTaskGenDao.findTopByVehicleNoOrderByCallDuDtDesc(vehicle_no);
     }
 
     //To Find the Modelwise Customer Search///////////
@@ -218,7 +218,7 @@ public class SsCustomerController {
             Assignee assignee = req.getAssignee();
 
             String[] serviceGrpDetails = req.getServcGrp().split("-");
-            
+
             String executiveDetails[] = ((String) req.getExename()).split("-");
 
             LstServLoc servcLoc = req.getServcLoc();
@@ -260,10 +260,10 @@ public class SsCustomerController {
             details.setLocId(servcLoc.getLocId());
 
             details.setServcGrp(serviceGrpDetails[0]);
-        //    details.setContacted(req.getContacted());
-        //    details.setReason(req.getReason());
+            //    details.setContacted(req.getContacted());
+            //    details.setReason(req.getReason());
             details.setRemarks(req.getRemarks());
-      //      details.setTaskReason(req.getLastDesposition());//changes done by jyoti t on 09-07-20
+            //      details.setTaskReason(req.getLastDesposition());//changes done by jyoti t on 09-07-20
             if (assignee.getLstServDt() != null) {
                 details.setLastServcDt(assignee.getLstServDt());
             }
@@ -279,9 +279,8 @@ public class SsCustomerController {
 //            details.setServDuDt(assignee.getServDuDt());
 //            details.setDelvDt(assignee.getDelvDt());
             //  details.setAttribute1(req.getAttribute1());
-            
             details.setAssigneeId(executiveDetails[0]);
-             details.setAssignee(executiveDetails[1]);
+            details.setAssignee(executiveDetails[1]);
             details.setOrgId(user.getOrgId()); // get logged in user org Id and location Id
             details.setCreatedBy(user.getUserId());
             details.setCreationDate(currentDate);
@@ -317,18 +316,17 @@ public class SsCustomerController {
 //            adminData.setServcLoc(servcLoc.getLocName());
 //
 //            adminRepository.save(adminData); ///Save Admin Data
-
             ////////****To Add New Appoinment/////
             SSAppoinmentDetails apptDetails = new SSAppoinmentDetails();
 
             //   apptDetails.setAppmntId(appts.getAppmntId());
             apptDetails.setTaskId(sd1.getTaskId());
-          // apptDetails.setAdminId(adminData.getAdmnId());
+            // apptDetails.setAdminId(adminData.getAdmnId());
             apptDetails.setTaskType(sd1.getTaskType());
             apptDetails.setVehicleNo(sd1.getVehicleNo());
             apptDetails.setServType(req.getServcType());
             apptDetails.setServLoc(servcLoc.getLocName());
-           
+
             apptDetails.setApptDate(req.getApptDate());
             apptDetails.setApptTimeSlot(slotDetails[0]);
             apptDetails.setApptStatus("BOOKED");
@@ -342,7 +340,7 @@ public class SsCustomerController {
             apptDetails.setApptAttLoc(servcLoc.getLocName());
             apptDetails.setPickupMms(req.getPickupMms());
             apptDetails.setPickupTime(req.getPickupTime()); // add apptdate+time
-             apptDetails.setServGroup(serviceGrpDetails[0]);
+            apptDetails.setServGroup(serviceGrpDetails[0]);
             apptDetails.setAdvName(serviceGrpDetails[1]);
             apptDetails.setLocationId(servcLoc.getLocId());/////NEED TO PASS SD1.GET LOCID
             apptDetails.setOrgId(user.getOrgId());///FROM SD1.ORG
@@ -351,22 +349,17 @@ public class SsCustomerController {
             apptDetails.setLstUpDt(currentDate);
             apptDetails.setLastUpdatedBy(user.getUserId());
 
-    
-            SsSlotAvailable sltavail = slotAvail.findBySerLocIdAndServiceDateAndTiming(servcLoc.getLocId(),req.getApptDate(), slotDetails[0]);
-            
-            if (sltavail==null)
-            {
-            throw new Exception("Slot not found for given parameters");
-            }
-            else
-            {
-            long quota = sltavail.getQuota();
-           quota = quota - 1;
-//
-            sltavail.setQuota(quota);
-            slotAvail.save(sltavail);
-            }
+            SsSlotAvailable sltavail = slotAvail.findBySerLocIdAndServiceDateAndTiming(servcLoc.getLocId(), req.getApptDate(), slotDetails[0]);
 
+            if (sltavail == null) {
+                throw new Exception("Slot not found for given parameters");
+            } else {
+                long quota = sltavail.getQuota();
+                quota = quota - 1;
+//
+                sltavail.setQuota(quota);
+                slotAvail.save(sltavail);
+            }
 
             SSAppoinmentDetails saveApptDetail = appoinmentRepository.save(apptDetails);
             System.out.println("Appoinment Id is--" + saveApptDetail.getAppmntId());
@@ -382,4 +375,25 @@ public class SsCustomerController {
         return new SaiResponse(200, "OK", null);
     }
 
+    @PutMapping("/ssCustomers/Contact")
+    SaiResponse updateCustomerContact(@RequestParam Integer custId, @RequestParam long taskId, @RequestParam String contact1, @RequestParam String contact2) {
+        SaiResponse apiResponse = null;
+        try {
+            Optional<SsCustomer> optionalCustomer = customerRepo.findByCustId(custId);
+            SsCustomer Customer = optionalCustomer.isPresent() ? optionalCustomer.get() : null;
+            if (Customer != null) {
+
+                customerRepo.updatecontact(contact1, contact2, custId);
+                taskRepository.taskContactUpdate(contact1, contact2,taskId);  
+            } else {
+                apiResponse = new SaiResponse(400, "Customer Master found", null);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new SaiResponse(400, "Invalid Inputs", null);
+        }
+
+        return apiResponse;
+    }
 }

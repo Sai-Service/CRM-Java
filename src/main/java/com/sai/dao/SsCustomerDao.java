@@ -6,11 +6,14 @@
  */
 package com.sai.dao;
 import com.sai.model.SsCustomer;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 /**
  *
  * @author Test
@@ -64,4 +67,10 @@ import org.springframework.data.repository.CrudRepository;
     public Optional<SsCustomer> findByCustAcctNo(String cust_no);
 
     public Optional<SsCustomer> findByCustAcctNo(Integer cust_no);
+    
+        @Modifying
+    @Transactional
+    @Query(value = "update SsCustomer set contactNo1=?1,contactNo2=?2 , lastUpdationDate=curdate() where custId=?3")
+    public void updatecontact(String contact1, String contact2,Integer custid);
+
 }

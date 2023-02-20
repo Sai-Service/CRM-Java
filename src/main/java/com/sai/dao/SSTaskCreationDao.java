@@ -125,6 +125,13 @@ public interface SSTaskCreationDao extends CrudRepository<SsTaskDetails, Long> {
     @Transactional
     @Query(value = "update test.ss_task_details set task_status='CLOSED' WHERE TASK_ID=?1", nativeQuery = true)
     public void TaskStatusUpdate(Long TASK_ID);
+    
+    
+      @Modifying
+    @Transactional
+    @Query(value = "update test.ss_task_details set CONTACT_NO1=?1,CONTACT_NO2=?2 WHERE TASK_ID=?3", nativeQuery = true)
+    public void taskContactUpdate(String contact1,String contat2,Long TASK_ID);
+    
 
     //////TO DISPLAY ALL THE Message for EW and MCP End//////////////////////         
     @Query(value = " select concat(\"Customer EW Ending after 15 Days...Ew End Date is : \" ,ewEnDate) Reminder from\n test.ss_vehicle_master where  vehicleNo=?1 and ewEnDate like (curdate()  + interval 15 day ) ", nativeQuery = true)

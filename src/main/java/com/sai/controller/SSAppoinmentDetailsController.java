@@ -294,7 +294,8 @@ public class SSAppoinmentDetailsController {
             details.setContactPerson(SSCust.getCustName());
             details.setCustId(SSCust.getCustId());
             //        details.setCustType(SSCust.getCustType());
-            details.setContactNo1(String.valueOf(SSCust.getContactNo1().intValue()));
+         //   details.setContactNo1(String.valueOf(SSCust.getContactNo1().intValue()));
+               details.setContactNo1(SSCust.getContactNo1());
             details.setContactNo2(SSCust.getContactNo2());
             details.setEmailAdd(SSCust.getEmailId());
             details.setVehicleNo(vehicleMaster.getVehicleNo());

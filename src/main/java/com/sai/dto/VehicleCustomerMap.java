@@ -25,7 +25,7 @@ public class VehicleCustomerMap {
     private  String city;
     private  String stateName;
     private  String country;
-    private  BigInteger contactNo1;    
+    private  String contactNo1;    
     private  String contactNo2;
     private  String emailId;
     private  String vehicleNo; 
@@ -37,7 +37,7 @@ public class VehicleCustomerMap {
     private BigInteger contactPerNo;
       private String contactPerson;
 
-    public VehicleCustomerMap(Integer custId, String custName, String custType, String address1, String address2, String address3, String location, Integer pincode, String city, String stateName, String country, BigInteger contactNo1, String contactNo2, String emailId, String vehicleNo, String chassisNo, String engineNo, String model, String dealerCd, Date dtOfPurchase, String contactPerson , BigInteger contactPerNo) {
+    public VehicleCustomerMap(Integer custId, String custName, String custType, String address1, String address2, String address3, String location, Integer pincode, String city, String stateName, String country, String contactNo1, String contactNo2, String emailId, String vehicleNo, String chassisNo, String engineNo, String model, String dealerCd, Date dtOfPurchase, String contactPerson , BigInteger contactPerNo) {
         this.custId = custId;
         this.custName = custName;
         this.custType = custType;
@@ -63,7 +63,7 @@ public class VehicleCustomerMap {
     }
 
      public VehicleCustomerMap(){}
-    public VehicleCustomerMap(Integer custId, String custName, String custType, String address1, String address2, String address3, String location, Integer pincode, String city, String stateName, String country, BigInteger contactNo1, String contactNo2, String emailId, String vehicleNo, String chassisNo, String engineNo, String model, String dealerCd, Date dtOfPurchase) {
+    public VehicleCustomerMap(Integer custId, String custName, String custType, String address1, String address2, String address3, String location, Integer pincode, String city, String stateName, String country, String contactNo1, String contactNo2, String emailId, String vehicleNo, String chassisNo, String engineNo, String model, String dealerCd, Date dtOfPurchase) {
         this.custId = custId;
         this.custName = custName;
         this.custType = custType;
@@ -174,11 +174,11 @@ public class VehicleCustomerMap {
         this.country = country;
     }
 
-    public BigInteger getContactNo1() {
+    public String getContactNo1() {
         return contactNo1;
     }
 
-    public void setContactNo1(BigInteger contactNo1) {
+    public void setContactNo1(String contactNo1) {
         this.contactNo1 = contactNo1;
     }
 

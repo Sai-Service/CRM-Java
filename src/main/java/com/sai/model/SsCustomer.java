@@ -112,7 +112,7 @@ public class SsCustomer implements Serializable {
     @Column(name = "PINCODE")
     private Integer pincode;
     @Column(name = "CONTACT_NO1")
-    private BigInteger contactNo1;
+    private String contactNo1;
     @Column(name = "CREATED_BY")
     private Integer createdBy;
     @Column(name = "CREATION_DATE")
@@ -211,11 +211,11 @@ public class SsCustomer implements Serializable {
     }
 
 
-    public BigInteger getContactNo1() {
+    public String getContactNo1() {
         return contactNo1;
     }
 
-    public void setContactNo1(BigInteger contactNo1) {
+    public void setContactNo1(String contactNo1) {
         this.contactNo1 = contactNo1;
     }
 
