@@ -135,7 +135,13 @@ public class SsExecutiveDetailsController {
          return locIdUser;
   }
         
-    
+          //////////////FOR USER SUMMARY/////////////////
+       @GetMapping("/ssExecutiveDetailses/ExenamesSA/{locId}")//////////////
+    public List<ExecutiveName> getExeNamesSA(@PathVariable long locId) {
+        List<ExecutiveName> locIdUser = ExecRepository.getExeNamesSA(locId);
+         return locIdUser;
+  }
+        
      @GetMapping("/ssExecutiveDetailses/{id}")
     public SsExecutiveDetails getSsExecutiveById(@PathVariable Long id){
        Optional<SsExecutiveDetails> optionalUser = ExecRepository.findById(id);

@@ -21,6 +21,9 @@ import org.springframework.data.repository.CrudRepository;
     @Query("select distinct NEW com.sai.model.ExecutiveName(sed.execId, sed.ticketNo,sed.empName,sed.locId)  from SsExecutiveDetails sed where sed.locId=?1 and deptCode ='SR' order by sed.execId")
     public List<ExecutiveName> getExeNames(long locId);
     
+       @Query("select distinct NEW com.sai.model.ExecutiveName(sed.execId, sed.ticketNo,sed.empName,sed.locId)  from SsExecutiveDetails sed where sed.locId=?1 and deptCode ='SA' order by sed.execId")
+    public List<ExecutiveName> getExeNamesSA(long locId);
+    
     public List<SsExecutiveDetails> findExeByLocId(long loc_id, String deptCode);
     
     public List<SsExecutiveDetails> findByLocIdAndDeptCode(long locId, String deptCode);

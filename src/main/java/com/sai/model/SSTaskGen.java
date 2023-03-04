@@ -24,7 +24,7 @@ public class SSTaskGen{
         private String  cust_address1;
         private String contact_person;
         private String cust_type;
-        private BigInteger contact_no1;
+        private String contact_no1;
        private String contact_no2;
         private String  email_id;
         
@@ -69,7 +69,7 @@ public class SSTaskGen{
         
     public SSTaskGen(){}
 
-    public SSTaskGen(String task_id, String TASK_TYPE, String STATUS, String apptmt_id, Date CALL_DUE_DATE, Integer cust_id, String cust_name, String cust_address1, String contact_person, String cust_type, BigInteger contact_no1, String contact_no2, String email_id, String veh_no, String chassis_no, String engine_no, String model, Date Date_of_purchase, String Dealer_code, String AMC, String sales_exec_name, Integer loc_id, Integer org_id, String REFERENCE_NO, String servc_grp, Integer item_id, String contacted, String reason, String remarks, String task_reason, Date last_servc_dt, String last_servc_type, String service_loc, Integer last_km, Date next_servc_dt, String next_servc_type, Date creation_date, String created_by, Date last_update_date, String last_updated_by, String attribute1, String attribute2, String attribute3, String attribute4, String attribute5, Date SERVICE_DUE_DT, Date DELIVERY_DATE, Integer gatepassId) {
+    public SSTaskGen(String task_id, String TASK_TYPE, String STATUS, String apptmt_id, Date CALL_DUE_DATE, Integer cust_id, String cust_name, String cust_address1, String contact_person, String cust_type, String contact_no1, String contact_no2, String email_id, String veh_no, String chassis_no, String engine_no, String model, Date Date_of_purchase, String Dealer_code, String AMC, String sales_exec_name, Integer loc_id, Integer org_id, String REFERENCE_NO, String servc_grp, Integer item_id, String contacted, String reason, String remarks, String task_reason, Date last_servc_dt, String last_servc_type, String service_loc, Integer last_km, Date next_servc_dt, String next_servc_type, Date creation_date, String created_by, Date last_update_date, String last_updated_by, String attribute1, String attribute2, String attribute3, String attribute4, String attribute5, Date SERVICE_DUE_DT, Date DELIVERY_DATE, Integer gatepassId) {
         this.task_id = task_id;
         this.TASK_TYPE = TASK_TYPE;
         this.STATUS = STATUS;
@@ -120,7 +120,7 @@ public class SSTaskGen{
         this.gatepassId = gatepassId;
     }
 
-    public SSTaskGen(String TASK_TYPE, String STATUS, Date CALL_DUE_DATE, Integer cust_id, String cust_name, String cust_address1, String contact_person, String cust_type, BigInteger contact_no1, String contact_no2, String email_id, String chassis_no, String engine_no, String model, Date Date_of_purchase, String Dealer_code, String AMC, String sales_exec_name, Integer loc_id, Integer org_id, String REFERENCE_NO, Date next_servc_dt, String next_servc_type, Date creation_date, String created_by, Date last_update_date, String last_updated_by, String attribute1, Date SERVICE_DUE_DT, Date DELIVERY_DATE, Integer gatepassId) {
+    public SSTaskGen(String TASK_TYPE, String STATUS, Date CALL_DUE_DATE, Integer cust_id, String cust_name, String cust_address1, String contact_person, String cust_type, String contact_no1, String contact_no2, String email_id, String chassis_no, String engine_no, String model, Date Date_of_purchase, String Dealer_code, String AMC, String sales_exec_name, Integer loc_id, Integer org_id, String REFERENCE_NO, Date next_servc_dt, String next_servc_type, Date creation_date, String created_by, Date last_update_date, String last_updated_by, String attribute1, Date SERVICE_DUE_DT, Date DELIVERY_DATE, Integer gatepassId) {
         this.TASK_TYPE = TASK_TYPE;
         this.STATUS = STATUS;
         this.CALL_DUE_DATE = CALL_DUE_DATE;
@@ -238,11 +238,11 @@ public class SSTaskGen{
         this.cust_type = cust_type;
     }
 
-    public BigInteger getContact_no1() {
+    public String getContact_no1() {
         return contact_no1;
     }
 
-    public void setContact_no1(BigInteger contact_no1) {
+    public void setContact_no1(String contact_no1) {
         this.contact_no1 = contact_no1;
     }
 
