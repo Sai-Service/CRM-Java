@@ -9,6 +9,7 @@ import com.sai.SaiResponse;
 import com.sai.dao.SalesTaskDetailsDao;
 import com.sai.dto.prfTaskRegenrate;
 import com.sai.model.SalesTaskDetails;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -50,6 +51,15 @@ public class SalesTaskDetailsController {
     @GetMapping("/SalesTaskDetails/UserSumm/{taskAssigneeId}")
     public List<SalesTaskDetails> getByAssigneeId(@PathVariable String taskAssigneeId)  throws Exception {
         List<SalesTaskDetails> userData = ssTaskDetRepo.findByTaskAssigneeIdAndTaskStatus(taskAssigneeId, "NEW");
+        //  SalesTaskDetails locDet1 = locDet.isPresent() ? locDet.get() : null;
+        return userData;
+    }
+    
+    
+        @GetMapping("/SalesTaskDetails/UserSumm//{taskAssigneeId}")
+    public List<SalesTaskDetails> getByAssigneeIdDate(@PathVariable String taskAssigneeId,@RequestParam String inputDate)  throws Exception {
+       Date frmDt1 = new SimpleDateFormat("yyyy-MM-dd").parse(inputDate);
+        List<SalesTaskDetails> userData = ssTaskDetRepo.findByTaskAssigneeIdAndTaskStatusAndCallDuDt(taskAssigneeId, "NEW",frmDt1);
         //  SalesTaskDetails locDet1 = locDet.isPresent() ? locDet.get() : null;
         return userData;
     }
