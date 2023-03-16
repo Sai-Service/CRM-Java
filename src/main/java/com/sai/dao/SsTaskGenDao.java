@@ -118,6 +118,23 @@ public interface SsTaskGenDao extends CrudRepository<SsTaskDetails, Long> {
             + "            ) A  where a.call_due_date = '2023-01-22' order by a.loc_id", nativeQuery = true)
     public List<Map> getTasksGenPSAft3Month();
 
+    @Query(value = "SELECT A.* FROM (select distinct   null task_id,'SERVICE' TASK_TYPE,'NEW' STATUS,null apptmt_id,\n"
+            + "sga.delivery_date  + interval se.when_to_action day CALL_DUE_DATE, sc.cust_id,sc.cust_name,sga.CUST_ADDRESS1 cust_address1 , sc.cust_name contact_person,\n"
+            + "sc.cust_type,sc.contact_no1, sc.contact_no2, sc.email_id,sga.veh_no,sga.chassis_no,sga.engine_no, sga.model,\n"
+            + "svm.dtOfPurchase Date_of_purchase,svm.Dealercode Dealer_code, 'N' AMC, null sales_exec_name, sga.loc_id,\n"
+            + "sga.org_id, sga.REFERENCE_NO,null servc_grp,sga.item_id,null contacted, null reason, null remarks,null task_reason,\n"
+            + "SGA.DELIVERY_DATE  last_servc_dt, sga.service_type last_servc_type, SGA.service_loc,sga.last_km ,  \n"
+            + "sga.delivery_date + interval se.days_after_delivery day next_servc_dt, se.sub_category next_servc_type,\n"
+            + "curdate() creation_date, '1' created_by,curdate() last_update_date, '1' last_updated_by, 'PS' attribute1,\n"
+            + "sga.delivery_date  attribute2,null attribute3,null attribute4, null attribute5 ,  sga.delivery_date   + interval se.days_after_delivery day SERVICE_DUE_DT, \n"
+            + "SGA.DELIVERY_DATE,sga.GATEPASS_ID as gatepassId from test.ss_gatepass_all sga  ,   test.ss_event se,   test.ss_vehicle_master svm ,test.ss_cust_new sc\n"
+            + "where   sga.dept_code='SR' and sga.cust_id=sc.cust_id \n"
+            + "and  sga.service_type='FS3' and se.sub_category='PS6'\n"
+            + "and svm.custId=sc.CUST_ID AND  sga.loc_id=se.LOC_ID  \n"
+            + "and se.type='C'  and  svm.vehicleno=sga.veh_no  and se.ACTIVE_STATUS='ACTIVE' \n"
+            + ") A where a.DELIVERY_DATE=curdate()-1 order by a.loc_id", nativeQuery = true)
+    public List<Map> getTasksGenPSAft6Month();
+
     public SsTaskDetails findTopByVehicleNoOrderByCallDuDtDesc(String vehicle_no);
 
     @Query(value = "SELECT 'SALES-PROFORMA' TASK_TYPE,'NEW' STATUS,pha.orderedDate+when_to_action CALL_DUE_DATE,\n"

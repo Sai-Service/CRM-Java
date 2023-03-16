@@ -37,7 +37,7 @@ public interface SsInsTaskDetailsDao extends CrudRepository<SsInsTaskDetails, In
             + "std.insEndDate,std.eventStatus,std.custStatus,std.custid,std.printRenewal, std.apptYN,\n"
             + "std.remark,std.disposition,std.apptAddress,std.assignId,std.createdBy,std.lstUpdBy,std.insType,\n"
             + "std.contactYN,std.apptDate \n"
-            + "from test.Ss_Ins_Task_Details std,ss_cust_new sc where sc.cust_id=std.custId and std.locId=?1 \n"
+            + "from test.Ss_Ins_Task_Details std,ss_cust_new sc where std.eventStatus='NEW' and sc.cust_id=std.custId and std.locId=?1 \n"
             + "and std.assignId=?2 and std.callDueDt=?3", nativeQuery = true)
     public List<Map> getTaskData(Integer locId, String User, Date curdate);
 
@@ -45,7 +45,7 @@ public interface SsInsTaskDetailsDao extends CrudRepository<SsInsTaskDetails, In
             + "std.insEndDate,std.eventStatus,std.custStatus,std.custid,std.printRenewal, std.apptYN,\n"
             + "std.remark,std.disposition,std.apptAddress,std.assignId,std.createdBy,std.lstUpdBy,std.insType,\n"
             + "std.contactYN,std.apptDate \n"
-            + "from test.Ss_Ins_Task_Details std,ss_cust_new sc where sc.cust_id=std.custId and std.locId=?1 \n"
+            + "from test.Ss_Ins_Task_Details std,ss_cust_new sc where std.eventStatus='NEW' and sc.cust_id=std.custId and std.locId=?1 \n"
             + "and  std.callDueDt=?2", nativeQuery = true)
     public List<Map> getTaskDataLocWise(Integer locId, Date curdate);
 
@@ -80,5 +80,9 @@ public interface SsInsTaskDetailsDao extends CrudRepository<SsInsTaskDetails, In
     @Transactional
     @Query(value = "update ss_ins_task_details set assignId=?1 WHERE taskId=?2 and eventStatus!='CLOSED'", nativeQuery = true)
     public void UpdateAssigneeTaskIdwise(String assignee, long taskId);
+
+   // public SsInsTaskDetails findByVehicleNoAndStatus(String vehicleNo, String active);
+
+    public SsInsTaskDetails findByVehicleNoAndEventStatus(String vehicleNo, String aNEW);
 
 }

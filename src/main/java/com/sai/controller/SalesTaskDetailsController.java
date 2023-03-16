@@ -56,13 +56,17 @@ public class SalesTaskDetailsController {
     }
     
     
-        @GetMapping("/SalesTaskDetails/UserSumm//{taskAssigneeId}")
-    public List<SalesTaskDetails> getByAssigneeIdDate(@PathVariable String taskAssigneeId,@RequestParam String inputDate)  throws Exception {
+        @GetMapping("/SalesTaskDetails/getByAssigneeIdDate/{taskAssigneeId}")
+    public List<SalesTaskDetails> getByAssigneeIdDate(@PathVariable String taskAssigneeId,@RequestParam String inputDate,@RequestParam String inputDate2)  throws Exception {
        Date frmDt1 = new SimpleDateFormat("yyyy-MM-dd").parse(inputDate);
-        List<SalesTaskDetails> userData = ssTaskDetRepo.findByTaskAssigneeIdAndTaskStatusAndCallDuDt(taskAssigneeId, "NEW",frmDt1);
+        Date todate1 = new SimpleDateFormat("yyyy-MM-dd").parse(inputDate2);
+        List<SalesTaskDetails> userData = ssTaskDetRepo.getTaskProformaByDate(taskAssigneeId, frmDt1,todate1);
         //  SalesTaskDetails locDet1 = locDet.isPresent() ? locDet.get() : null;
         return userData;
     }
+    
+    
+    
 
       @GetMapping("/SalesTaskDetails/UserSummDatewise")
     public List<SalesTaskDetails> UserSummDatewise(@RequestParam String taskAssigneeId,@RequestParam Date fromDate,@RequestParam Date toDate1)  throws Exception  {

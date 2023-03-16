@@ -107,6 +107,7 @@ public class SsInsuranceDetailsController implements Serializable {
 
     @RequestMapping(value = "/policy/byVehicle/{vehicleNo}", method = RequestMethod.GET, produces = {"application/JSON"})
     SsInsCustomer getSsInsuranceDetailsByVehicleNo(@PathVariable String vehicleNo) {
+        
         SsInsuranceDetails details = insuranceDetailsDao.findByVehicleNoAndStatus(vehicleNo, "Active");
         SsVehicleMaster vehicle = vehicleDao.findByVehicleNo(vehicleNo);
     
@@ -116,18 +117,17 @@ public class SsInsuranceDetailsController implements Serializable {
 //        Optional<SsCustomer> optionalCustomer = customerDao.findById(new Long(vehicle.getCustId()));
 //        SsCustomer customer = optionalCustomer.isPresent() ? optionalCustomer.get() : null;
 //       
-        SsInsTaskDetails insTaskDetails = insTaskDetailsDao.findByVehicleNo(vehicleNo);
+        SsInsTaskDetails insTaskDetails = insTaskDetailsDao.findByVehicleNoAndEventStatus(vehicleNo, "NEW");
         SsInsCustomer insCustomer = new SsInsCustomer();
 
         BeanUtils.copyProperties(customer, insCustomer);
 
         BeanUtils.copyProperties(insTaskDetails, insCustomer);
         BeanUtils.copyProperties(details, insCustomer);
-         BeanUtils.copyProperties(vehicle, insCustomer);
-       insCustomer.setChassisNo(vehicle.getChassis());
-       insCustomer.setEngineNo(vehicle.getEngine());
+        BeanUtils.copyProperties(vehicle, insCustomer);
+        insCustomer.setChassisNo(vehicle.getChassis());
+        insCustomer.setEngineNo(vehicle.getEngine());
        
-        
         return insCustomer;
     }
 
