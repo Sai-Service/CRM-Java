@@ -37,10 +37,11 @@
 		<parameter name="toDate" class="java.util.Date"/>
 		<parameter name="ouId" class="java.lang.Integer"/>
 		<parameter name="locId" class="java.lang.Integer"/>
+		<parameter name="status" class="java.lang.String"/>
 		<queryString language="SQL">
 			<![CDATA[SELECT * FROM sales_task_details 
 where locId= ifnull($P{locId},locId)
- and orgId= $P{ouId} 
+ and orgId= $P{ouId} and taskStatus=$P{status}
  and   callDuDt between $P{fromDate} and $P{toDate}]]>
 		</queryString>
 		<field name="taskId" class="java.lang.Integer">
@@ -192,10 +193,11 @@ where locId= ifnull($P{locId},locId)
 	<parameter name="toDate" class="java.util.Date"/>
 	<parameter name="ouId" class="java.lang.Integer"/>
 	<parameter name="locId" class="java.lang.Integer"/>
+	<parameter name="status" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT * FROM sales_task_details 
 where locId= ifnull($P{locId},locId)
- and orgId= $P{ouId} 
+ and orgId= $P{ouId}  and taskStatus=$P{status}
  and   callDuDt between $P{fromDate} and $P{toDate}]]>
 	</queryString>
 	<field name="taskId" class="java.lang.Integer">
@@ -369,6 +371,9 @@ where locId= ifnull($P{locId},locId)
 						</datasetParameter>
 						<datasetParameter name="locId">
 							<datasetParameterExpression><![CDATA[$P{locId}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="status">
+							<datasetParameterExpression><![CDATA[$P{status}]]></datasetParameterExpression>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>

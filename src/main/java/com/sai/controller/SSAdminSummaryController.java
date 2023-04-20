@@ -182,7 +182,7 @@ public class SSAdminSummaryController {
   }*/
 
     @GetMapping("/CommonReport")
-    public ResponseEntity<InputStreamResource> CommonReport(@RequestParam Date fromDate, @RequestParam Date toDate, @RequestParam Integer ouId, @RequestParam(required = false) Integer locId) throws Exception {
+    public ResponseEntity<InputStreamResource> CommonReport(@RequestParam Date fromDate, @RequestParam Date toDate, @RequestParam Integer ouId, @RequestParam(required = false) Integer locId,@RequestParam String status) throws Exception {
         try {
             Map<String, Object> parameter = new HashMap<>();
             String fileName = null;
@@ -192,7 +192,8 @@ public class SSAdminSummaryController {
             parameter.put("toDate", toDate);
             parameter.put("ouId", ouId);
             parameter.put("locId", locId);
-
+             parameter.put("status", status);
+            
             ByteArrayInputStream in;
             try {
                 in = reportPrintService.getSalePrFDet(parameter, fileName);

@@ -50,7 +50,7 @@ public class SsTaskGenController {
     private ProformaHeaderDao proformHead;
     
    //  @Scheduled(cron = "0 0 4 * * *")
-     @Scheduled(cron = "0 55 17 * * ?")
+     @Scheduled(cron = "0 5 2 * * *")
     @Transactional(rollbackFor = Exception.class)
     @RequestMapping(value = "/getTasksGeneration1FS", method = RequestMethod.GET, produces = {"application/JSON"})
     public List<SSTaskGen> getTasksGeneration1FS() throws Exception {
@@ -181,7 +181,7 @@ public class SsTaskGenController {
         return pojos;
     }
 
-     @Scheduled(cron = "0 5 10 * * *")
+     @Scheduled(cron = "0 5 1 * * *")
        @Transactional(rollbackFor = Exception.class)
     @RequestMapping(value = "/getTasksGeneration2FS", method = RequestMethod.GET, produces = {"application/JSON"})
     public List<SSTaskGen> getTasksGeneration2FS() throws Exception {
@@ -295,7 +295,7 @@ public class SsTaskGenController {
     }
 
    
-      @Scheduled(cron = "0 0 5 * * *")
+      @Scheduled(cron = "0 20 2 * * *")
    @Transactional(rollbackFor = Exception.class)
     @RequestMapping(value = "/getTasksGeneration3FS", method = RequestMethod.GET, produces = {"application/JSON"})
     public List<SSTaskGen> getTasksGeneration3FS() throws Exception {
@@ -426,7 +426,7 @@ public class SsTaskGenController {
         return pojos;
     }
 
-      @Scheduled(cron = "0 0/30 5 * * *")
+        @Scheduled(cron = "0 35 2 * * *")
    @Transactional(rollbackFor = Exception.class)
     @RequestMapping(value = "/getTasksGenerationPaidSR", method = RequestMethod.GET, produces = {"application/JSON"})
     public List<SSTaskGen> getTasksGenerationPaidSR() throws Exception {
@@ -557,7 +557,7 @@ public class SsTaskGenController {
         return pojos;
     }
 
-      @Scheduled(cron = "0 8 10 * * *")
+            @Scheduled(cron = "0 20 3 * * *")
      //  @Transactional(rollbackFor = Exception.class)
     @RequestMapping(value = "/getTasksGenAllOtherType", method = RequestMethod.GET, produces = {"application/JSON"})
     public List<SSTaskGen> getTasksGenAllOtherType() throws Exception {

@@ -17,8 +17,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import java.util.Collections;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
- 
+import org.springframework.scheduling.annotation.EnableScheduling;
+
 @SpringBootApplication
+@EnableScheduling
 
 @EnableAutoConfiguration
 @ComponentScan
