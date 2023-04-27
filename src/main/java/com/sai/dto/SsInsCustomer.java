@@ -110,7 +110,7 @@ private Integer lstUpdatedby;
 @JsonProperty("pincode")
 private Integer pincode;
 @JsonProperty("contactNo1")
-private BigInteger contactNo1;
+private String contactNo1;
 @JsonProperty("createdBy")
 
 private Integer lastUpdatedBy;
@@ -667,12 +667,12 @@ this.pincode = pincode;
 }
 
 @JsonProperty("contactNo1")
-public BigInteger getContactNo1() {
+public String getContactNo1() {
 return contactNo1;
 }
 
 @JsonProperty("contactNo1")
-public void setContactNo1(BigInteger contactNo1) {
+public void setContactNo1(String contactNo1) {
 this.contactNo1 = contactNo1;
 }
 

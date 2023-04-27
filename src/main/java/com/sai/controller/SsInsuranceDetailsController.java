@@ -127,6 +127,9 @@ public class SsInsuranceDetailsController implements Serializable {
         BeanUtils.copyProperties(vehicle, insCustomer);
         insCustomer.setChassisNo(vehicle.getChassis());
         insCustomer.setEngineNo(vehicle.getEngine());
+        insCustomer.setContactNo1(customer.getContactNo1());
+       insCustomer.setContactNo2(customer.getContactNo2());
+       
        
         return insCustomer;
     }
