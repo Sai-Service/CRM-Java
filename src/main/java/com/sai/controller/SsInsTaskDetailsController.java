@@ -97,6 +97,7 @@ public class SsInsTaskDetailsController implements Serializable {
          Date frmDt1 = new SimpleDateFormat("yyyy-MM-dd").parse(inputDate);
 
         //   return (List<SsInsTaskDetails>) insTaskDetailsDao.findAll();
+        System.out.println("User Name  :" + user.getLocId() +"--"+ user.getTicketNo());
         int locId = new Long(user.getLocId()).intValue();
         if (user.getRole().equals("USER")) {
             return (List<Map>) insTaskDetailsDao.getTaskData(new Integer(locId), user.getTicketNo(), frmDt1);
