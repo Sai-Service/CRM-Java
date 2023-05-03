@@ -36,8 +36,8 @@ public interface SsInsTaskDetailsDao extends CrudRepository<SsInsTaskDetails, In
     @Query(value = "select distinct std.taskId,sc.cust_Name,sc.custAcctNo ,std.vehicleNo,std.eventName,std.callDueDt,\n"
             + "std.insEndDate,std.eventStatus,std.custStatus,std.custid,std.printRenewal, std.apptYN,\n"
             + "std.remark,std.disposition,std.apptAddress,std.assignId,std.createdBy,std.lstUpdBy,std.insType,\n"
-            + "std.contactYN,std.apptDate \n"
-            + "from test.Ss_Ins_Task_Details std,ss_cust_new sc where std.eventStatus='NEW' and sc.custacctno=std.custId and std.locId=?1 \n"
+            + "std.contactYN,std.apptDate ,vm.dtOfPurchase,vm.model,vm.variant \n"
+            + "from test.Ss_Ins_Task_Details std,ss_cust_new sc , ss_vehicle_master vm where std.eventStatus='NEW' and std.vehicleNo=vm.vehicleNo and sc.custacctno=std.custId and std.locId=?1 \n"
             + "and std.assignId=?2 and std.callDueDt=?3", nativeQuery = true)
     public List<Map> getTaskData(Integer locId, String User, Date curdate);
 

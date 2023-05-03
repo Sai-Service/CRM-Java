@@ -143,7 +143,7 @@ public class SalesTaskDetailsController {
         sd1 = ssTaskDetRepo.save(newTask);
         
            //To close old Task      
-        originalTask1.setTaskStatus("CLOSED");
+        originalTask1.setTaskStatus(input.getTaskStatus());
         originalTask1.setCallDuDt(input.getNextflwupDt());
         originalTask1.setReason(input.getReason());
         originalTask1.setRemark(input.getRemark());
