@@ -85,4 +85,7 @@ public interface SsInsTaskDetailsDao extends CrudRepository<SsInsTaskDetails, In
 
     public SsInsTaskDetails findByVehicleNoAndEventStatus(String vehicleNo, String aNEW);
 
+       @Query("select std from SsInsTaskDetails std where vehicleNo=?1 and eventStatus !='CLOSED'")
+    public SsInsTaskDetails getByVehStatus(String vehicleNo);
+     
 }

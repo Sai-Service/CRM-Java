@@ -117,7 +117,8 @@ public class SsInsuranceDetailsController implements Serializable {
 //        Optional<SsCustomer> optionalCustomer = customerDao.findById(new Long(vehicle.getCustId()));
 //        SsCustomer customer = optionalCustomer.isPresent() ? optionalCustomer.get() : null;
 //       
-        SsInsTaskDetails insTaskDetails = insTaskDetailsDao.findByVehicleNoAndEventStatus(vehicleNo, "NEW");
+      //  SsInsTaskDetails insTaskDetails = insTaskDetailsDao.findByVehicleNoAndEventStatus(vehicleNo, "NEW");
+         SsInsTaskDetails insTaskDetails = insTaskDetailsDao.getByVehStatus(vehicleNo);
         SsInsCustomer insCustomer = new SsInsCustomer();
 
         BeanUtils.copyProperties(customer, insCustomer);
