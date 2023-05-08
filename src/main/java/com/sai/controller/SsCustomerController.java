@@ -375,6 +375,7 @@ public class SsCustomerController {
         return new SaiResponse(200, "OK", null);
     }
 
+    @Transactional
     @PutMapping("/ssCustomers/Contact")
     SaiResponse updateCustomerContact(@RequestParam Integer custId, @RequestParam long taskId, @RequestParam String contact1, @RequestParam String contact2) {
         SaiResponse apiResponse = null;
@@ -382,7 +383,6 @@ public class SsCustomerController {
             Optional<SsCustomer> optionalCustomer = customerRepo.findByCustId(custId);
             SsCustomer Customer = optionalCustomer.isPresent() ? optionalCustomer.get() : null;
             if (Customer != null) {
-
                 customerRepo.updatecontact(contact1, contact2, custId);
                 taskRepository.taskContactUpdate(contact1, contact2,taskId);  
             } else {
