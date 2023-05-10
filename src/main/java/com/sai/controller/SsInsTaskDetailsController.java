@@ -81,8 +81,7 @@ public class SsInsTaskDetailsController implements Serializable {
 
     }
     
-    
-       @GetMapping("/taskNew")
+    @GetMapping("/taskNew")
     public List<Map> getInsTasksNew(@RequestParam String inputDate) throws Exception {
         String username = null;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

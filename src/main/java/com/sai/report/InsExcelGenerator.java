@@ -6,8 +6,7 @@
 package com.sai.report;
 
 import com.sai.dto.SSInsTaskContactYN;
-import com.sai.model.SSAppoinmentDetails;
-import com.sai.model.SsTaskDetails;
+import com.sai.model.insurance.SsInsTaskDetails;
 import com.sai.model.insurance.SsInsuranceDetails;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -45,8 +44,8 @@ public class InsExcelGenerator {
         }
      }
     
-      
- public static ByteArrayInputStream generateInsuDetaiReport(List<SsInsuranceDetails> insdet, String fromDate, String toDate) throws Exception {
+    
+    public static ByteArrayInputStream generateInsuDetaiReport(List<SsInsuranceDetails> insdet, String fromDate, String toDate) throws Exception {
         String[] COLUMNs = {"custId", "miNo",  "insCompName",  "policyNo",  "year",  "insType",  "idvAmt",  "prmAmt", "claimAmt",  "remark",  "financeCompName",  "policyType",  "exShowPrice",  "endorsementTaken",  "policyRenewType", 
        "policySubType",  "dealerName",  "currentNCB",  "driverCover",  "legalLibNoPer",  "driverCoverPremium",  "typeOfCustomer", "paymentMode",  "accountNo",  "bankBranch",  "bankName",  "status",  "orgId",  "locId",  "id",  "vehicleNo", 
               "insStDate",  "insPeriod",  "insEndDt",  "claimCount",  "remittanceDate",  "paymentAmt",  "paymentDate", "inactiveDate",  "creationDt",  "createdBy", "lstUpdationDt",  "lstUpdatedby"};
@@ -172,7 +171,9 @@ public class InsExcelGenerator {
             return new ByteArrayInputStream(out.toByteArray());
         }
     }
-//------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    
+   ////------------------------------------------------------------------------------------------------------------------------------------------------------
  
        public static ByteArrayInputStream getInsContYCustDetails(List<SSInsTaskContactYN> insTask) throws Exception {
         String[] COLUMNs = {"Task Id", "Customer Id", "Vehicle No", "Event Name", "Call Due Date", "Insurance End Date", "Event Status", "Appointment Status", "Remark", "Disposition", "Appointment Date", "Assignee Id", "Customer Status", "Insurance Type", "Contact No"};

@@ -530,5 +530,36 @@ public class CrmReportController {
         return null;
     }
  
+    @GetMapping("/CrmInsuranceTaskDtls")
+    public ResponseEntity<InputStreamResource> CrmInsuTasDtlsRep(@RequestParam Date fromDate, @RequestParam Date toDate, @RequestParam Integer locId  ) throws Exception {
+        try {
+            Map<String, Object> parameter = new HashMap<>();
+            String fileName = null;
+            fileName = filesPath + "CrmInsuTaskDtls" + locId + ".xls";
+            parameter.put("fromDate", fromDate);
+            parameter.put("toDate", toDate);
+            parameter.put("locId", locId);
+            ByteArrayInputStream in;
+            try {
+                in = crmRepService.getCrmInsuTaskDtls(parameter, fileName);
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Content-Disposition", "attachment; filename=/download/" + fileName);
+                return ResponseEntity
+                        .ok()
+                        .headers(headers)
+                        .body(new InputStreamResource(in));
+            } catch (Exception ex) {
+                Logger.getLogger(this.getClass()
+                        .getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(CrmReportController.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            throw ex;
+        }
+
+        return null;
+    }
     
 }

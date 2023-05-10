@@ -158,4 +158,36 @@ public ByteArrayInputStream getVehHistPdf(Map<String, Object> parameters, String
 
     }
         
+public ByteArrayInputStream getCrmInsuTaskDtls(Map<String, Object> parameters, String fileNme) throws Exception {
+
+      File file = ResourceUtils.getFile("classpath:CrmInsuTaskDtls.jrxml");
+        JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+        java.sql.Connection con = localDataSource.getConnection();
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, con);
+        JRXlsExporter exporter = new JRXlsExporter();
+
+        SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();
+        configuration.setOnePagePerSheet(false);
+        configuration.setDetectCellType(true);
+        // configuration.setCollapseRowSpan(false);
+        configuration.setWhitePageBackground(false);
+        configuration.setRemoveEmptySpaceBetweenColumns(true);
+        configuration.setRemoveEmptySpaceBetweenRows(true);
+        configuration.setWhitePageBackground(false);
+        configuration.setCollapseRowSpan(true);
+        configuration.setIgnoreGraphics(false);
+        configuration.setWrapText(false);
+        configuration.setPrintHeaderMargin(10);
+
+        //File outputFile = new File(fileNme);
+        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+        ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(byteArray));
+        exporter.setConfiguration(configuration);
+        exporter.exportReport();
+        con.close();
+        byte[] bytes = byteArray.toByteArray();
+        return new ByteArrayInputStream(bytes);
+
+    }         
 }
