@@ -6,10 +6,10 @@
 package com.sai.controller;
 
 import com.sai.SaiResponse;
-import com.sai.dto.cmnStString;
 import com.sai.dao.SsCustomerDao;
 import com.sai.dao.SsInsTaskDetailsDao;
 import com.sai.dao.SsInsTaskHistoryDao;
+import com.sai.dao.SsInsuranceDetailsDao;
 import com.sai.dao.UserLoginDao;
 import com.sai.dto.SSInsTaskContactYN;
 import com.sai.dto.cmnStString;
@@ -19,6 +19,7 @@ import java.io.Serializable;
 import com.sai.model.insurance.SsInsTaskDetails;
 import com.sai.model.insurance.SsInsTaskHistory;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -57,6 +58,9 @@ public class SsInsTaskDetailsController implements Serializable {
     private SsInsTaskHistoryDao insTaskHistoryDao;
 
     @Autowired
+    SsInsuranceDetailsDao insuranceDetailsDao;
+
+    @Autowired
     private SsCustomerDao customerDao;
 
     @GetMapping("/task")
@@ -80,7 +84,7 @@ public class SsInsTaskDetailsController implements Serializable {
         }
 
     }
-    
+
     @GetMapping("/taskNew")
     public List<Map> getInsTasksNew(@RequestParam String inputDate) throws Exception {
         String username = null;
@@ -93,10 +97,10 @@ public class SsInsTaskDetailsController implements Serializable {
         UserLogin user = userRepository.findByUsername(username);
         Calendar calendar = Calendar.getInstance();
         java.util.Date currentDate = calendar.getTime();
-         Date frmDt1 = new SimpleDateFormat("yyyy-MM-dd").parse(inputDate);
+        Date frmDt1 = new SimpleDateFormat("yyyy-MM-dd").parse(inputDate);
 
         //   return (List<SsInsTaskDetails>) insTaskDetailsDao.findAll();
-        System.out.println("User Name  :" + user.getLocId() +"--"+ user.getTicketNo());
+        System.out.println("User Name  :" + user.getLocId() + "--" + user.getTicketNo());
         int locId = new Long(user.getLocId()).intValue();
         if (user.getRole().equals("USER")) {
             return (List<Map>) insTaskDetailsDao.getTaskData(new Integer(locId), user.getTicketNo(), frmDt1);
@@ -115,8 +119,8 @@ public class SsInsTaskDetailsController implements Serializable {
         } else {
             username = principal.toString();
         }
-          Date frmDt1 = new SimpleDateFormat("yyyy-MM-dd").parse(fromDate);
-          
+        Date frmDt1 = new SimpleDateFormat("yyyy-MM-dd").parse(fromDate);
+
         UserLogin user = userRepository.findByUsername(username);
         Calendar calendar = Calendar.getInstance();
         java.util.Date currentDate = calendar.getTime();
@@ -175,10 +179,11 @@ public class SsInsTaskDetailsController implements Serializable {
         try {
             SsInsTaskDetails taskDetail = insTaskDetailsDao.findByTaskId(id);
             if (taskDetail != null) {
-
+                Calendar calendar = Calendar.getInstance();
+                java.util.Date currentDate = calendar.getTime();
                 //{"taskId":5,"callDueDt":"2020-07-31","custStatus":"HOT","remark":"TEST","disposition":"TEST","apptYN":"Y",
                 //"apptAddress":"PUNE","apptDate":"2020-07-25"}
-                taskDetail.setCallDueDt(insTask.getCallDueDt());
+                taskDetail.setCallDueDt(currentDate);
                 taskDetail.setCustStatus(insTask.getCustStatus());
                 taskDetail.setRemark(insTask.getRemark());
                 taskDetail.setDisposition(insTask.getDisposition());
@@ -196,12 +201,50 @@ public class SsInsTaskDetailsController implements Serializable {
                     username = principal.toString();
                 }
                 UserLogin user = userRepository.findByUsername(username);
-                Calendar calendar = Calendar.getInstance();
-                java.util.Date currentDate = calendar.getTime();
-
-                taskDetail.setEventStatus("INPROGRESS");
-
+                
                 int userId = new Long(user.getUserId()).intValue();
+                if (insTask.getDisposition().equalsIgnoreCase("Policy Done")) {
+                    taskDetail.setEventStatus("CLOSED");
+//                    Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(insTask.getApptDate().toString());
+//                    Calendar cal = Calendar.getInstance();
+//                    cal.setTime(date1);
+//                    // manipulate date
+//                    cal.add(Calendar.DATE, 365);
+//                    Date insEndDate = cal.getTime();
+                    LocalDate date = LocalDate.parse(insTask.getApptDate().toString());
+                    LocalDate insEndDate = date.plusDays(365);
+                    Date insEndDateNew = new SimpleDateFormat("yyyy-MM-dd").parse(insEndDate.toString());
+
+                    LocalDate insDate = LocalDate.parse(insEndDate.toString());
+                    LocalDate callDuDt = insDate.minusDays(15);
+                    Date callDuDtNew = new SimpleDateFormat("yyyy-MM-dd").parse(callDuDt.toString());
+                    
+                    insuranceDetailsDao.updateInsDate(insTask.getApptDate(), insEndDateNew, insTask.getVehicleNo(), insTask.getCustId());
+
+                    SsInsTaskDetails insTaskDetails = new SsInsTaskDetails();
+
+                    insTaskDetails.setCustId(insTask.getCustId());
+                    insTaskDetails.setVehicleNo(insTask.getVehicleNo());
+                    insTaskDetails.setEventName("Insurance Renewal");
+                    insTaskDetails.setCallDueDt(callDuDtNew);
+                    insTaskDetails.setInsEndDate(insEndDateNew);
+                    insTaskDetails.setEventStatus("NEW");
+                    insTaskDetails.setAssignId(user.getTicketNo());
+                    insTaskDetails.setCustStatus("HOT");
+                    insTaskDetails.setCreationDt(currentDate);
+                    insTaskDetails.setCreatedBy(userId);
+                    insTaskDetails.setLstUpdBy(userId);
+                    insTaskDetails.setLstUpdDt(currentDate);
+                    insTaskDetails.setLocId(taskDetail.getLocId());
+                    insTaskDetails.setOrgId(taskDetail.getOrgId());
+                    
+                    insTaskDetailsDao.save(insTaskDetails);
+                    
+
+                } else {
+                    taskDetail.setEventStatus("INPROGRESS");
+                }
+              
 
                 taskDetail.setLstUpdBy(userId);
                 taskDetail.setLstUpdDt(currentDate);
@@ -352,7 +395,7 @@ public class SsInsTaskDetailsController implements Serializable {
         List<cmnStString> userDetail = null;
         try {
             //  userDetail = taskGenImpl.getUserList(login_name, locId);
-           userDetail = userRepository.totalLogins(login_name, locId);
+            userDetail = userRepository.totalLogins(login_name, locId);
 
             List<UpdateAssignee> toAssignee = new ArrayList<>();
 
@@ -414,10 +457,10 @@ public class SsInsTaskDetailsController implements Serializable {
     }
 
     //http://localhost:8081/ins/update/assingee?fromTask=162&toTask=164&assigneeId=Insurance2&locId=2101
- @RequestMapping(value = "/update/assingee", method = RequestMethod.PUT, produces = {"application/JSON"})
-    public SaiResponse assignInsTaskToUsersManually(@RequestParam Integer fromTask,@RequestParam Integer toTask,@RequestParam String assigneeId,@RequestParam Integer locId) {
+    @RequestMapping(value = "/update/assingee", method = RequestMethod.PUT, produces = {"application/JSON"})
+    public SaiResponse assignInsTaskToUsersManually(@RequestParam Integer fromTask, @RequestParam Integer toTask, @RequestParam String assigneeId, @RequestParam Integer locId) {
         try {
-            
+
             insTaskDetailsDao.updateAssignIdwithLoc(assigneeId, fromTask, toTask, locId);
 
         } catch (Exception e) {
@@ -426,8 +469,7 @@ public class SsInsTaskDetailsController implements Serializable {
         }
         return new SaiResponse(200, "Assignee updated successfully", null);
     }
-    
-    
+
 //    @RequestMapping(value = "/update/assingee", method = RequestMethod.GET, produces = {"application/JSON"})
 //    public SaiResponse assignInsTaskToUsersManually(@RequestParam Map<String, Object> map) {
 //        try {
@@ -453,5 +495,4 @@ public class SsInsTaskDetailsController implements Serializable {
 //        return new SaiResponse(200, "Assignee updated successfully", null);
 //    }
 //    
-    
 }
