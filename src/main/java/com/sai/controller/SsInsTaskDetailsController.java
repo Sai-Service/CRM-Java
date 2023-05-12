@@ -201,50 +201,64 @@ public class SsInsTaskDetailsController implements Serializable {
                     username = principal.toString();
                 }
                 UserLogin user = userRepository.findByUsername(username);
-                
+
                 int userId = new Long(user.getUserId()).intValue();
                 if (insTask.getDisposition().equalsIgnoreCase("Policy Done")) {
                     taskDetail.setEventStatus("CLOSED");
+
 //                    Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(insTask.getApptDate().toString());
 //                    Calendar cal = Calendar.getInstance();
 //                    cal.setTime(date1);
 //                    // manipulate date
 //                    cal.add(Calendar.DATE, 365);
 //                    Date insEndDate = cal.getTime();
-                    LocalDate date = LocalDate.parse(insTask.getApptDate().toString());
-                    LocalDate insEndDate = date.plusDays(365);
-                    Date insEndDateNew = new SimpleDateFormat("yyyy-MM-dd").parse(insEndDate.toString());
-
-                    LocalDate insDate = LocalDate.parse(insEndDate.toString());
-                    LocalDate callDuDt = insDate.minusDays(15);
-                    Date callDuDtNew = new SimpleDateFormat("yyyy-MM-dd").parse(callDuDt.toString());
+                    //    LocalDate date = LocalDate.parse(insTask.getApptDate().toString());
                     
-                    insuranceDetailsDao.updateInsDate(insTask.getApptDate(), insEndDateNew, insTask.getVehicleNo(), insTask.getCustId());
+//                    System.out.println("Dat Format" + insTask.getApptDate());
+//                    
+//                    Date insStDate = new SimpleDateFormat("yyyy-MM-dd").parse(insTask.getApptDate().toString());
+//
+//                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//                    Calendar cal = Calendar.getInstance();
+//                    cal.setTime(sdf.parse(insTask.getApptDate().toString()));
+//                    cal.add(Calendar.DAY_OF_MONTH, 365);
+//                    String dateAfter = sdf.format(cal.getTime());
+//                    Date insEndDateNew = new SimpleDateFormat("yyyy-MM-dd").parse(dateAfter);
+//
+//                    SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+//                    Calendar cal1 = Calendar.getInstance();
+//                    cal1.setTime(sdf.parse(insTask.getApptDate().toString()));
+//                    cal1.add(Calendar.DAY_OF_MONTH, 350);
+//                    String callDuDt = sdf1.format(cal1.getTime());
+//                    Date callDuDtNew = new SimpleDateFormat("yyyy-MM-dd").parse(callDuDt);
 
-                    SsInsTaskDetails insTaskDetails = new SsInsTaskDetails();
+                    insuranceDetailsDao.updateInsDate(insTask.getApptDate(), insTask.getInsEndDate(), insTask.getVehicleNo(), insTask.getCustId());
 
-                    insTaskDetails.setCustId(insTask.getCustId());
-                    insTaskDetails.setVehicleNo(insTask.getVehicleNo());
-                    insTaskDetails.setEventName("Insurance Renewal");
-                    insTaskDetails.setCallDueDt(callDuDtNew);
-                    insTaskDetails.setInsEndDate(insEndDateNew);
-                    insTaskDetails.setEventStatus("NEW");
-                    insTaskDetails.setAssignId(user.getTicketNo());
-                    insTaskDetails.setCustStatus("HOT");
-                    insTaskDetails.setCreationDt(currentDate);
-                    insTaskDetails.setCreatedBy(userId);
-                    insTaskDetails.setLstUpdBy(userId);
-                    insTaskDetails.setLstUpdDt(currentDate);
-                    insTaskDetails.setLocId(taskDetail.getLocId());
-                    insTaskDetails.setOrgId(taskDetail.getOrgId());
-                    
-                    insTaskDetailsDao.save(insTaskDetails);
-                    
+//                    SsInsTaskDetails insTaskDetails = new SsInsTaskDetails();
+//
+//                    
+//                    Integer taskid= insTaskDetailsDao.getMaxTaskId();
+//                    insTaskDetails.setTaskId(taskid + 1);
+//                    insTaskDetails.setCustId(insTask.getCustId());
+//                    insTaskDetails.setVehicleNo(insTask.getVehicleNo());
+//                    insTaskDetails.setEventName("Insurance Renewal");
+//                    insTaskDetails.setCallDueDt(currentDate);
+//                    insTaskDetails.setInsEndDate(currentDate);
+//                    insTaskDetails.setEventStatus("NEW");
+//                    insTaskDetails.setAssignId(user.getTicketNo());
+//                    insTaskDetails.setCustStatus("HOT");
+//                    insTaskDetails.setCreationDt(currentDate);
+//                    insTaskDetails.setCreatedBy(userId);
+//                    insTaskDetails.setLstUpdBy(userId);
+//                    insTaskDetails.setLstUpdDt(currentDate);
+//                    insTaskDetails.setLocId(taskDetail.getLocId());
+//                    insTaskDetails.setOrgId(taskDetail.getOrgId());
+//
+//                    insTaskDetailsDao.save(insTaskDetails);
 
                 } else {
                     taskDetail.setEventStatus("INPROGRESS");
                 }
-              
 
                 taskDetail.setLstUpdBy(userId);
                 taskDetail.setLstUpdDt(currentDate);

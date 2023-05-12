@@ -87,5 +87,8 @@ public interface SsInsTaskDetailsDao extends CrudRepository<SsInsTaskDetails, In
 
        @Query("select std from SsInsTaskDetails std where vehicleNo=?1 and eventStatus !='CLOSED'")
     public SsInsTaskDetails getByVehStatus(String vehicleNo);
+    
+     @Query("select max(taskId) from SsInsTaskDetails")
+    public Integer getMaxTaskId();
      
 }

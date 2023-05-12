@@ -33,7 +33,15 @@ import javax.validation.constraints.Size;
 
 public class SsInsTaskDetails implements Serializable {
 
+   
+     private static final long serialVersionUID = 1L;
+    @Id
     @Basic(optional = false)
+    @NotNull
+    @GeneratedValue
+    @Column(name = "taskId")
+    private Integer taskId;
+       @Basic(optional = false)
     @NotNull
     private int custId;
     @Size(max = 45)
@@ -93,19 +101,10 @@ public class SsInsTaskDetails implements Serializable {
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskId")
 //    private Collection<SsInsTaskHistory> ssInsTaskHistoryCollection;
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @GeneratedValue
-    @Column(name = "taskId")
-    private Integer taskId;
     
     @Column(name = "insEndDate")
     @Temporal(TemporalType.DATE)
     private Date insEndDate;
-    @Column(name = "apptDate")
-    @Temporal(TemporalType.DATE)
     private Date apptDate;
     @Column(name = "creationDt")
     @Temporal(TemporalType.DATE)
