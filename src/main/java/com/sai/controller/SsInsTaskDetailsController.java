@@ -232,7 +232,7 @@ public class SsInsTaskDetailsController implements Serializable {
 //                    String callDuDt = sdf1.format(cal1.getTime());
 //                    Date callDuDtNew = new SimpleDateFormat("yyyy-MM-dd").parse(callDuDt);
 
-                    insuranceDetailsDao.updateInsDate(insTask.getApptDate(), insTask.getInsEndDate(), insTask.getVehicleNo(), insTask.getCustId());
+                    insuranceDetailsDao.updateInsDate(insTask.getApptDate(), insTask.getInsEndDate(), taskDetail.getVehicleNo(), taskDetail.getCustId());
 
 //                    SsInsTaskDetails insTaskDetails = new SsInsTaskDetails();
 //
