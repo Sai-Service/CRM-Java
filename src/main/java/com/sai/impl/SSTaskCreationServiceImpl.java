@@ -137,7 +137,7 @@ public class SSTaskCreationServiceImpl implements SSTaskCreationService {
                 + "std.attribute1 as callForService,std.assignee, std.assigneeId from SsTaskDetails std ,SsVehicleMaster svm  where std.custId=svm.custId and std.vehicleNo=svm.vehicleNo and std.callDuDt BETWEEN ?1 and ?2 and std.orgId=?3 ";
 
         String locIdQuery = " and std.locId =?";
-        String taskReasonQuery = "  and std.taskReason=?";
+        String taskReasonQuery = "  and std.Reason=?";
         int i = 4;
         Map<Integer, Object> paramsMap = new HashMap<Integer, Object>();
        
