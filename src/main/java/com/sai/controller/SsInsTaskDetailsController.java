@@ -183,7 +183,7 @@ public class SsInsTaskDetailsController implements Serializable {
                 java.util.Date currentDate = calendar.getTime();
                 //{"taskId":5,"callDueDt":"2020-07-31","custStatus":"HOT","remark":"TEST","disposition":"TEST","apptYN":"Y",
                 //"apptAddress":"PUNE","apptDate":"2020-07-25"}
-                taskDetail.setCallDueDt(currentDate);
+                taskDetail.setCallDueDt(insTask.getCallDueDt());
                 taskDetail.setCustStatus(insTask.getCustStatus());
                 taskDetail.setRemark(insTask.getRemark());
                 taskDetail.setDisposition(insTask.getDisposition());

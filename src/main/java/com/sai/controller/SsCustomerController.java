@@ -385,6 +385,7 @@ public class SsCustomerController {
             if (Customer != null) {
                 customerRepo.updatecontact(contact1, contact2, custId);
                 taskRepository.taskContactUpdate(contact1, contact2,taskId);  
+                apiResponse = new SaiResponse(200, "Customer Contact No Updated Successfully", "Customer Contact No Updated Successfully");
             } else {
                 apiResponse = new SaiResponse(400, "Customer Master found", null);
             }

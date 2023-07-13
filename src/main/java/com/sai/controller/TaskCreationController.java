@@ -6,6 +6,8 @@
 package com.sai.controller;
 //import com.sai.dao.SSAdminSummaryDao;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
 import com.sai.CommonDetail;
 import com.sai.SaiResponse;
 import com.sai.dao.SSAdministratorDataDao;
@@ -355,7 +357,6 @@ public class TaskCreationController {
 //    Map getMCPMessage(@PathVariable String vehicleNo) {
 //        return taskRepository.getMCPMessage(vehicleNo);
 //    }
-
     @RequestMapping(value = "/ssTask/totalApptExewise/{loc_id}", method = RequestMethod.GET, produces = {"application/JSON"})
     // Map getUsercountList(@PathVariable String vehicle_no)
     public List<Map> getTotalApptExewise(@PathVariable Integer loc_id) {
@@ -383,8 +384,7 @@ public class TaskCreationController {
 //        return taskRepository.getUserSummLoginwise(assignee_id);
 //
 //    }
-    
-       @RequestMapping(value = "/ssTask/UserSummLoginwise/{assignee_id}", method = RequestMethod.GET, produces = {"application/JSON"})
+    @RequestMapping(value = "/ssTask/UserSummLoginwise/{assignee_id}", method = RequestMethod.GET, produces = {"application/JSON"})
     // Map getUsercountList(@PathVariable String vehicle_no)
     public List<Map> getUserSummLoginwise(@PathVariable String assignee_id, @RequestParam String inputDate) throws ParseException {
         Date frmDt1 = new SimpleDateFormat("yyyy-MM-dd").parse(inputDate);
@@ -580,21 +580,18 @@ public class TaskCreationController {
 
     }
 
-    
-     @RequestMapping(value = "/ssTask/MCPReminderMessageNew/{vehicleNo}", method = RequestMethod.GET, produces = {"application/JSON"}) 
-       SaiResponse getMCPMessageNew(@PathVariable String vehicleNo) throws Exception {
-               SaiResponse apiResponse;
+    @RequestMapping(value = "/ssTask/MCPReminderMessageNew/{vehicleNo}", method = RequestMethod.GET, produces = {"application/JSON"})
+    SaiResponse getMCPMessageNew(@PathVariable String vehicleNo) throws Exception {
+        SaiResponse apiResponse;
         try {
-       String data= taskRepository.getMCPMessage(vehicleNo);
-           
-       System.out.println("Data++++"+ data);
-       if(data!=null){
-            apiResponse = new SaiResponse(200, "Found Succssfully", data);
-       }
-       else
-       {
-         apiResponse = new SaiResponse(400, " Data Not Found ", data);
-       }
+            String data = taskRepository.getMCPMessage(vehicleNo);
+
+            System.out.println("Data++++" + data);
+            if (data != null) {
+                apiResponse = new SaiResponse(200, "Found Succssfully", data);
+            } else {
+                apiResponse = new SaiResponse(400, " Data Not Found ", data);
+            }
         } catch (Exception e) {
             apiResponse = new SaiResponse(400, "Not Foune", e.getMessage());
             e.printStackTrace();
@@ -602,4 +599,24 @@ public class TaskCreationController {
         return apiResponse;
 
     }
+
+    @PostMapping("/ssTask/autocalling")
+    public SaiResponse postMsg(@RequestParam String mobileNo,@RequestParam Integer from,@RequestParam String IPAdd) throws Exception {
+        SaiResponse apiResponse = null;
+        try {
+            Unirest.setTimeouts(0, 0);
+            HttpResponse<String> response = Unirest.post("http://"+ IPAdd +"/elision-dialer/elision-api/main.php?from="+ from +"&to="+ mobileNo +"&uniqueid=12345&action=click2call")
+                    .header("Content-Type", "application/json")
+                    .body("[{\"applyTo\":\"INVOICE\",\"trxNumber\":\"232103210313434\",\"balDueAmt\":1738,\"balance1\":\"5522.00\",\"paymentAmt\":0,\"applDate\":\"2023-07-06\",\"glDate\":\"2023-07-06\",\"billToCustId\":390,\"billToSiteId\":390,\"invCurrancyCode\":\"INR\",\"refReasonCode\":null,\"customerId\":390,\"custAccountNo\":\"2106\",\"customerSiteId\":21,\"custName\":\"SAMRUDHI AUTO\"}]")
+                    .asString();
+
+            apiResponse = new SaiResponse(200, "Company Details updated Successfully", response);
+
+        } catch (Exception e) {
+            apiResponse = new SaiResponse(400, "Company Details not found", e.getMessage());
+            throw e;
+        }
+        return apiResponse;
+    }
+
 }
