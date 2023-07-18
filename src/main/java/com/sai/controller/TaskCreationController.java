@@ -6,6 +6,7 @@
 package com.sai.controller;
 //import com.sai.dao.SSAdminSummaryDao;
 
+import static com.lowagie.text.pdf.PdfFileSpecification.url;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.sai.CommonDetail;
@@ -31,6 +32,8 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -607,10 +610,44 @@ public class TaskCreationController {
             Unirest.setTimeouts(0, 0);
             HttpResponse<String> response = Unirest.post("http://"+ IPAdd +"/elision-dialer/elision-api/main.php?from="+ from +"&to="+ mobileNo +"&uniqueid=12345&action=click2call")
                     .header("Content-Type", "application/json")
-                    .body("[{\"applyTo\":\"INVOICE\",\"trxNumber\":\"232103210313434\",\"balDueAmt\":1738,\"balance1\":\"5522.00\",\"paymentAmt\":0,\"applDate\":\"2023-07-06\",\"glDate\":\"2023-07-06\",\"billToCustId\":390,\"billToSiteId\":390,\"invCurrancyCode\":\"INR\",\"refReasonCode\":null,\"customerId\":390,\"custAccountNo\":\"2106\",\"customerSiteId\":21,\"custName\":\"SAMRUDHI AUTO\"}]")
+                    .body("")
                     .asString();
 
             apiResponse = new SaiResponse(200, "Company Details updated Successfully", response);
+
+        } catch (Exception e) {
+            apiResponse = new SaiResponse(400, "Company Details not found", e.getMessage());
+            throw e;
+        }
+        return apiResponse;
+    }
+
+     @PostMapping("/ssTask/autocalling1")
+    public SaiResponse postMsg1(@RequestParam String mobileNo,@RequestParam Integer from,@RequestParam String IPAdd) throws Exception {
+        SaiResponse apiResponse = null;
+        try {
+//            Unirest.setTimeouts(0, 0);
+//            HttpResponse<String> response = Unirest.post("http://"+ IPAdd +"/elision-dialer/elision-api/main.php?from="+ from +"&to="+ mobileNo +"&uniqueid=12345&action=click2call")
+//                    .header("Content-Type", "application/json")
+//                    .body("")
+//                    .asString();
+
+             String baseUrl ="http://"+ IPAdd +"/elision-dialer/elision-api/main.php?from="+ from +"&to="+ mobileNo +"&uniqueid=12345&action=click2call";
+             final URL url = new URL(baseUrl);
+                System.out.println(baseUrl);
+                final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setDoOutput(true);
+                conn.setRequestMethod("GET");
+                // conn.setRequestProperty("Content-Type", "text/plain; charset=utf-8");
+
+                conn.setConnectTimeout(10000);
+
+                int responseCode = conn.getResponseCode();
+
+                System.out.println(conn.getResponseMessage() + "GET Response Code :: " + responseCode);
+
+            
+            apiResponse = new SaiResponse(200, "Company Details updated Successfully", responseCode);
 
         } catch (Exception e) {
             apiResponse = new SaiResponse(400, "Company Details not found", e.getMessage());
